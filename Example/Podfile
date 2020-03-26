@@ -1,0 +1,12 @@
+use_frameworks!
+platform :ios, '13.0'
+
+target 'StylableSwiftUI_Example' do
+  pod 'StylableSwiftUI', :path => '../'
+
+  target 'StylableSwiftUI_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

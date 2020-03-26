@@ -1,0 +1,24 @@
+{
+  "name": "SwiftUIStylist",
+  "version": "0.1.0",
+  "summary": "A short description of SwiftUIStylist.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/deanWombourne/SwiftUIStylist",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "deanWombourne": "deanWombourne@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/deanWombourne/SwiftUIStylist.git",
+    "tag": "0.1.0"
+  },
+  "swift_versions": "5.0",
+  "platforms": {
+    "ios": "13.0"
+  },
+  "source_files": "SwiftUIStylist/Classes/**/*",
+  "swift_version": "5.0"
+}

@@ -1,0 +1,16 @@
+PODS:
+  - StylableSwiftUI (1.0.0)
+
+DEPENDENCIES:
+  - StylableSwiftUI (from `../`)
+
+EXTERNAL SOURCES:
+  StylableSwiftUI:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  StylableSwiftUI: d8a2b54ff117824221db80b9f334062058a2751d
+
+PODFILE CHECKSUM: 8a65c017ed74d3ec8cb19d92a6573c5cdb098aa5
+
+COCOAPODS: 1.8.4
