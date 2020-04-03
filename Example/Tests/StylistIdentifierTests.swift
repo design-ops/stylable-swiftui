@@ -181,7 +181,7 @@ final class StylistIdentifierTests: XCTestCase {
     }
 
     func testStylistIdentifier_withState_shouldStringConvert() {
-        let identifier: StylistIdentifier = "sectoin[disabled]/button[highlighted]/atom"
+        let identifier: StylistIdentifier = "section[disabled]/button[highlighted]/atom"
 
         let identifier2 = StylistIdentifier(identifier.description)
 
