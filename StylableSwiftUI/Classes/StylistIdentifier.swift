@@ -160,11 +160,11 @@ extension StylistIdentifier: Comparable {
             var result = result
             result.index += 1
             if component.value != nil {
-                result.score += result.index * result.index
+                result.score |= 1 << result.index
             }
             result.index += 1
             if component.state != nil {
-                result.score += result.index * result.index
+                result.score |= 1 << result.index
             }
             return result
         }
