@@ -152,7 +152,24 @@ extension StylistIdentifier: Comparable {
 
     /// `<` here means `lhs` is definitely more specific than `rhs` - `lhs` matches _less_ than `rhs`
     static public func < (lhs: StylistIdentifier, rhs: StylistIdentifier) -> Bool {
-        return !lhs.matches(rhs) && lhs != rhs
+        return lhs.specificity > rhs.specificity
+    }
+
+    private var specificity: Int {
+        let result = self.components.reversed().reduce((index: 0, score: 0)) { result, component in
+            var result = result
+            result.index += 1
+            if component.value != nil {
+                result.score += result.index * result.index
+            }
+            result.index += 1
+            if component.state != nil {
+                result.score += result.index * result.index
+            }
+            return result
+        }
+
+        return result.score
     }
 }
 
@@ -165,7 +182,7 @@ extension StylistIdentifier {
         let state: String?
 
         init(value: String?, state: String?) {
-            self.value = value
+            self.value = value != "*" ? value : nil
             self.state = state
         }
 
@@ -177,7 +194,9 @@ extension StylistIdentifier {
             let split = string.split(separator: "[", maxSplits: 1, omittingEmptySubsequences: true)
 
             // Store the value
-            self.value = split.first.map(String.init)
+            var value = split.first.map(String.init)
+            if value == "*" { value = nil }
+            self.value = value
 
             // Get, validate, and store the state (or just let it be `nil`)
             guard
@@ -193,7 +212,7 @@ extension StylistIdentifier {
             (self.value ?? "*") + (self.state.map { "[" + $0 + "]" } ?? "")
         }
 
-        var isWildcard: Bool { self.value == "*" && self.state == nil }
+        var isWildcard: Bool { self.value == nil && self.state == nil }
 
         func matches(_ other: Component) -> Bool {
             // Four cases

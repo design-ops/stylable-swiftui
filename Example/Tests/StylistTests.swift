@@ -12,11 +12,13 @@ import SwiftUI
 @testable import StylableSwiftUI
 
 final class StylistTests: XCTestCase {
+
     func testStylist() throws {
         let stylist = Stylist()
 
         var didApplyGeneral = false
         var didApplySpecific = false
+
         stylist.addStyle(identifier: "*/*/element/atom") { view -> AnyView in
             didApplySpecific = true
             return AnyView(view.foregroundColor(.red))
