@@ -23,6 +23,7 @@ struct ExampleViews: View {
             Spacer().frame(height: 50)
             Text("Some more body text").style("body") // body
             Spacer()
+            Text("This should be red").style("organism/element/atom")
         }
         .padding()
     }
