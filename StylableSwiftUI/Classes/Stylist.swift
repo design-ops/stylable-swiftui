@@ -74,7 +74,7 @@ public class Stylist: ObservableObject {
         // Apply the most specific style we can find
         let styles = self.styles
             .filter { $0.identifier.matches(identifier) }
-            .sorted { (a, b) -> Bool in
+            .sorted { a, b in
                 a.identifier < b.identifier
         }
 
