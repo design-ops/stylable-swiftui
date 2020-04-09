@@ -155,6 +155,7 @@ extension StylistIdentifier: Comparable {
         return lhs.specificity > rhs.specificity
     }
 
+    /// A "score" based on how specific this identifier is. The higher the score, the more specific the identifier.
     private var specificity: Int {
         let result = self.components.reversed().reduce((index: 0, score: 0)) { result, component in
             var result = result
