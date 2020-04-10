@@ -9,7 +9,13 @@ import Foundation
 
 extension StylistIdentifier {
 
-    struct Specificity: Equatable, Hashable, Comparable, ExpressibleByIntegerLiteral {
+    /// A structure representing how specific a stylist identifier is.
+    ///
+    /// The actual value isn't useful (and is accordingly private), it's only useful when comparing with
+    /// other `Specificity` values.
+    ///
+    /// - note: These are designed to be accessed via the `SpecificityCache` - they're not trivial to calculate.
+    struct Specificity: Equatable, Hashable, Comparable {
 
         private let value: Int
 
@@ -21,11 +27,11 @@ extension StylistIdentifier {
             return lhs.value < rhs.value
         }
 
-        init(integerLiteral value: Int) {
-            self.value = value
-        }
+        /// A `Specificity` representing the least possible specific-ness.
+        static let zero = Specificity(value: 0)
     }
 
+    /// Responsible for calculating and caching specificity values for a given array of components.
     final class SpecificityCache {
 
         /// Store specificity values for identifiers
