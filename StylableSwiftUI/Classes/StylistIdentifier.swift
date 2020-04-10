@@ -71,8 +71,7 @@ public struct StylistIdentifier: Equatable, Hashable {
 
     /// Create a completely wildcard `StylistIdentifier` - calling `.matches()` on this will return true for all other `StylistIdentifier`s
     public init() {
-        self.components = []
-        self.specificity = .zero
+        self.init(components: [] as [Component])
     }
 
     public init(components: [String]) {

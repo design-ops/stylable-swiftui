@@ -17,18 +17,15 @@ extension StylistIdentifier {
     /// - note: These are designed to be accessed via the `SpecificityCache` - they're not trivial to calculate.
     struct Specificity: Equatable, Hashable, Comparable {
 
-        private let value: Int
+        private let value: UInt
 
-        fileprivate init(value: Int) {
+        fileprivate init(value: UInt) {
             self.value = value
         }
 
         static func < (lhs: Specificity, rhs: Specificity) -> Bool {
             return lhs.value < rhs.value
         }
-
-        /// A `Specificity` representing the least possible specific-ness.
-        static let zero = Specificity(value: 0)
     }
 
     /// Responsible for calculating and caching specificity values for a given array of components.
@@ -49,7 +46,7 @@ extension StylistIdentifier {
                 return specificity
             }
 
-            let result = components.reversed().reduce((index: 0, score: 0)) { result, component in
+            let result = components.reversed().reduce((index: 0, score: UInt(0))) { result, component in
                 var result = result
                 result.index += 1
                 if component.value != nil {
