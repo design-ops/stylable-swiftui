@@ -74,6 +74,15 @@ extension Stylist {
             Style("styledlistitem/name") { $0.font(Font.custom("Gill Sans", size: 14)) }
         ])
 
+
+        stylist.addStyle(identifier: "*/*/element/atom") {
+            $0.foregroundColor(.red)
+        }
+
+        stylist.addStyle(identifier: "*/organism/*/atom") {
+            $0.foregroundColor(.blue)
+        }
+
         // Demonstrate changing the stylist on the fly
 //        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
 //            stylist.addStyles([

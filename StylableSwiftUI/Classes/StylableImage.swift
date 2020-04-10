@@ -129,7 +129,7 @@ struct VariantSequence: Sequence, IteratorProtocol {
         for bit in 0..<(self.base.count*2)-2 {
             let component = self.base[Int(bit/2)]
             if Self.isBitRepresentingValue(bit) {
-                if component.value == wildcard {
+                if component.value == wildcard || component.value == nil {
                     mask += 1 << bit
                 }
             } else {
