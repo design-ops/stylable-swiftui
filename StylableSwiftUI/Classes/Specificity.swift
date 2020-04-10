@@ -31,11 +31,17 @@ extension StylistIdentifier {
     /// Responsible for calculating and caching specificity values for a given array of components.
     final class SpecificityCache {
 
+        private let capacity: Int
+
         /// Store specificity values for identifiers
         private var cache: [[StylistIdentifier.Component]: Specificity] = [:]
 
         /// Global singleton instance of the specificty cache
         static let shared = SpecificityCache()
+
+        init(capacity: Int = Int.max) {
+            self.capacity = capacity
+        }
 
         /// Returns the specificity value from the array of components.
         ///
@@ -61,8 +67,12 @@ extension StylistIdentifier {
 
             let specificity = Specificity(value: result.score)
 
-            self.cache[components] = specificity
-            //print("[SpecificityCache]", "Stored score \(specificity) for \(components)")
+            if cache.values.count < self.capacity {
+                self.cache[components] = specificity
+                //print("[SpecificityCache]", "Stored score \(specificity) for \(components)")
+            } else {
+                //print("[SpecificityCache]", "Calculated but not stored score \(specificity) for \(components)")
+            }
 
             return specificity
         }
