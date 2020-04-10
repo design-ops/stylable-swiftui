@@ -80,7 +80,7 @@ public struct StylistIdentifier: Equatable, Hashable {
 
     init(components: [Component]) {
         self.components = components
-        self.specificity = SpecificityCache.shared.specificity(for: components)
+        self.specificity = Specificity(components: components)
     }
 
     func component(at index: Int) -> Component {

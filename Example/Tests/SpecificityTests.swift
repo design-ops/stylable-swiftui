@@ -13,22 +13,10 @@ import XCTest
 
 final class SpecificityTests: XCTestCase {
 
-    func testSpecifictyCachePerformance() {
-        let cache = StylistIdentifier.SpecificityCache(capacity: Int.max)
-
+    func testSpecifictyPerformance() {
         measure {
             (1..<10000).forEach { _ in
-                _ = cache.specificity(for: ["organism", "*", "element", "*", "atom"])
-            }
-        }
-    }
-
-    func testSpecifictyCachePerformance2() {
-        let cache = StylistIdentifier.SpecificityCache(capacity: 0)
-
-        measure {
-            (1..<10000).forEach { _ in
-                _ = cache.specificity(for: ["organism", "*", "element", "*", "atom"])
+                _ = StylistIdentifier.Specificity(components: ["organism", "*", "element", "*", "atom"])
             }
         }
     }
