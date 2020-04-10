@@ -60,9 +60,19 @@ public struct StylistIdentifier: Equatable, Hashable {
     // i.e. [identifier, element, section, etc]
     let components: [Component]
 
+    /// A value based on how specific this identifier is.
+    ///
+    /// The higher the score, the more specific the identifier i.e. the more specific, the less this identifier can
+    /// match other identifiers.
+    ///
+    /// - note: The actual value of this isn't interesting, it's only really useful to compare this to another
+    ///         identifier's specificity.
+    let specificity: Int
+
     /// Create a completely wildcard `StylistIdentifier` - calling `.matches()` on this will return true for all other `StylistIdentifier`s
     public init() {
         self.components = []
+        self.specificity = 0
     }
 
     public init(components: [String]) {
@@ -71,6 +81,7 @@ public struct StylistIdentifier: Equatable, Hashable {
 
     init(components: [Component]) {
         self.components = components
+        self.specificity = Self.calculateSpecificity(components: components)
     }
 
     func component(at index: Int) -> Component {
@@ -155,9 +166,9 @@ extension StylistIdentifier: Comparable {
         return lhs.specificity > rhs.specificity
     }
 
-    /// A "score" based on how specific this identifier is. The higher the score, the more specific the identifier.
-    private var specificity: Int {
-        let result = self.components.reversed().reduce((index: 0, score: 0)) { result, component in
+    /// Calculate a specificity value from a list of components
+    private static func calculateSpecificity(components: [Component]) -> Int {
+        let result = components.reversed().reduce((index: 0, score: 0)) { result, component in
             var result = result
             result.index += 1
             if component.value != nil {
