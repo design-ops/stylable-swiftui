@@ -67,7 +67,7 @@ public struct StylistIdentifier: Equatable, Hashable {
     ///
     /// - note: The actual value of this isn't interesting, it's only really useful to compare this to another
     ///         identifier's specificity.
-    let specificity: Int
+    let specificity: Specificity
 
     /// Create a completely wildcard `StylistIdentifier` - calling `.matches()` on this will return true for all other `StylistIdentifier`s
     public init() {
@@ -81,7 +81,7 @@ public struct StylistIdentifier: Equatable, Hashable {
 
     init(components: [Component]) {
         self.components = components
-        self.specificity = Self.calculateSpecificity(components: components)
+        self.specificity = SpecificityCache.shared.specificity(for: components)
     }
 
     func component(at index: Int) -> Component {
