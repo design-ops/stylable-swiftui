@@ -71,7 +71,7 @@ public class Stylist: ObservableObject {
 
     func style(view: Stylable, identifier: StylistIdentifier) -> some View {
 
-        // Apply the most specific style we can find
+        // Apply the first matching style in our list of styles
         guard let style = self.styles.first(where: { $0.identifier.matches(identifier) }) else {
             print("No matching style found for", identifier)
             return AnyView(view)
