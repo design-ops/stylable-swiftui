@@ -165,24 +165,6 @@ extension StylistIdentifier: Comparable {
     static public func < (lhs: StylistIdentifier, rhs: StylistIdentifier) -> Bool {
         return lhs.specificity > rhs.specificity
     }
-
-    /// Calculate a specificity value from a list of components
-    private static func calculateSpecificity(components: [Component]) -> Int {
-        let result = components.reversed().reduce((index: 0, score: 0)) { result, component in
-            var result = result
-            result.index += 1
-            if component.value != nil {
-                result.score |= 1 << result.index
-            }
-            result.index += 1
-            if component.state != nil {
-                result.score |= 1 << result.index
-            }
-            return result
-        }
-
-        return result.score
-    }
 }
 
 // MARK: - Component
