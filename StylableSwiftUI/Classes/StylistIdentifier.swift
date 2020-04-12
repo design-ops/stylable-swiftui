@@ -248,7 +248,7 @@ extension StylistIdentifier {
 
     /// Create an identifier representing `self` inside `identifier`
     ///
-    /// i.e. `"close".within("button") == 'close/button'`
+    /// i.e. `"close".within("button") == 'button/close'`
     ///
     public func within(_ identifier: StylistIdentifier?) -> StylistIdentifier {
         guard let identifier = identifier else { return self }
@@ -257,15 +257,31 @@ extension StylistIdentifier {
         components.append(contentsOf: identifier.components)
         return StylistIdentifier(components: components)
     }
+
+    /// Create an new identifier where the passed in identifier is inside `self`
+    ///
+    /// i.e. `"button".contains("close") == 'button/close'`
+    ///
+    public func containing(_ identifier: StylistIdentifier?) -> StylistIdentifier {
+        guard let identifier = identifier else { return self }
+        return identifier.within(self)
+    }
 }
 
 extension String {
 
-    /// Asthetic wrapper around `StylistIdentifier.within(_:)`
+    /// Aesthetic wrapper around `StylistIdentifier.within(_:)`
     ///
     /// Allows code like `"close".within("button")` to compile and return a valid `StylistIdentifier`
     public func within(_ identifier: StylistIdentifier?) -> StylistIdentifier {
-        return StylistIdentifier(self).within(identifier)
+        StylistIdentifier(self).within(identifier)
+    }
+
+    /// Aesthetic wrapper around `StylistIdentifier.containing(_:)`
+    ///
+    /// Allows code like `"button".containing("close")` to compile and return a valid `StylistIdentifier`
+    public func containing(_ identifier: StylistIdentifier?) -> StylistIdentifier {
+        StylistIdentifier(self).containing(identifier)
     }
 }
 

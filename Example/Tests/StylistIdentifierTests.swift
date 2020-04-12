@@ -95,29 +95,6 @@ final class StylistIdentifierTests: XCTestCase {
         XCTAssertTrue(StylistIdentifier("*/*/*/identifier").matches("section/*/identifier"))
     }
 
-    func testStylistIdentifier_concat() {
-        let id1 = StylistIdentifier("element/section/identifier")
-        let id2 = StylistIdentifier("screen/section")
-
-        XCTAssertEqual(id1.within(id2), "screen/section/element/section/identifier")
-    }
-
-    func testStylistIdentifier_concatWithEmptyComponents() {
-        let id1 = StylistIdentifier("element/*/identifier")
-        let id2 = StylistIdentifier("screen/section")
-
-        XCTAssertEqual(id1.within(id2), "screen/section/element/*/identifier")
-    }
-
-    func testStylistIdentifier_concatEmptyIdentifier() {
-        let empty = StylistIdentifier()
-
-        let i = StylistIdentifier("a/b/c")
-        XCTAssertEqual(i.within(empty), i)
-
-        XCTAssertEqual(empty.within(empty), empty)
-    }
-
     func testStylistIdentifier_comparable() {
         let i1 = StylistIdentifier("a/b/c")
         let i2 = StylistIdentifier("*/*/c")
@@ -150,7 +127,33 @@ final class StylistIdentifierTests: XCTestCase {
     }
 
     func testStylistIdentifier_within() {
-        XCTAssertEqual("atom".within("element").within("section").description, "section/element/atom")
+        let id1 = StylistIdentifier("element/section/identifier")
+        let id2 = StylistIdentifier("screen/section")
+
+        XCTAssertEqual(id1.within(id2), "screen/section/element/section/identifier")
+    }
+
+    func testStylistIdentifier_containing() {
+        let id1 = StylistIdentifier("element/section/identifier")
+        let id2 = StylistIdentifier("screen/section")
+
+        XCTAssertEqual(id2.containing(id1), "screen/section/element/section/identifier")
+    }
+
+    func testStylistIdentifier_withinWithEmptyComponents() {
+        let id1 = StylistIdentifier("element/*/identifier")
+        let id2 = StylistIdentifier("screen/section")
+
+        XCTAssertEqual(id1.within(id2), "screen/section/element/*/identifier")
+    }
+
+    func testStylistIdentifier_withinEmptyIdentifier() {
+        let empty = StylistIdentifier()
+
+        let i = StylistIdentifier("a/b/c")
+        XCTAssertEqual(i.within(empty), i)
+
+        XCTAssertEqual(empty.within(empty), empty)
     }
 
     func testStylistIdentifier_withinNil() {
