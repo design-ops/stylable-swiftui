@@ -2,7 +2,7 @@
 
 # SwiftUIStylable
 
-An attempt to make SwiftUI components stylable by an external type and reusable across apps.
+An attempt to make SwiftUI components stylable by an external type and reusable across apps, based on the principles of Atomic Design (https://bradfrost.com/blog/post/atomic-web-design/).
 
 ### Goals
 
@@ -30,7 +30,9 @@ Create a Stylist object, and pass into the main SwiftUI object as an environment
 
 Configure the Stylist object by passing in identifiers and a method to modify any views matching that identifier.
 
-Add a view modifier method (`.style(<identifier>)`) which won't actually use a ViewModifier, but will inject a `Stylist` view which wraps the View being styled.
+Add a view modifier method (`.style(<identifier>)`) which won't actually use a ViewModifier, but will inject a `Stylist` view which wraps the View being styled (i.e. allow the 'atom' concept from Atomic Design).
+
+Add a View `StylistGroup` which will namespace all subsequence views' identifiers (i.e. allow section/element concept from Atomic Design).
 
 The `Styled` view type will apply the correct styling to the view it's wrapping, but will be generic so we can pass it around in the Stylist. Type-erasure will feature heavily here, and I'm sorry for how some of the code looks.
 
