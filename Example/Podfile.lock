@@ -1,5 +1,5 @@
 PODS:
-  - StylableSwiftUI (1.0.0)
+  - StylableSwiftUI (1.0.1)
 
 DEPENDENCIES:
   - StylableSwiftUI (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  StylableSwiftUI: d8a2b54ff117824221db80b9f334062058a2751d
+  StylableSwiftUI: 335edb0af1dc203a5e6414e4176a162919793ae8
 
 PODFILE CHECKSUM: 8a65c017ed74d3ec8cb19d92a6573c5cdb098aa5
 

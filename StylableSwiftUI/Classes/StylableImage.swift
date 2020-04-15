@@ -75,7 +75,7 @@ extension Image {
         let name = variants.lazy.first { UIImage(named: $0, in: bundle, compatibleWith: nil) != nil }
 
         if name == nil {
-            print("No image found for \(identifier), including checking with prefix \(wildcard) to depth \(maxLength)")
+            Logger.default.log("No image found for \(identifier), including checking with prefix \(wildcard) to depth \(maxLength)", level: .warning)
         }
 
         // Return it, or a dummy image view
@@ -138,7 +138,7 @@ struct VariantSequence: Sequence, IteratorProtocol {
                 }
             }
         }
-        //print("Mask calculated as", String(format: "%X", mask))
+        Logger.default.log("Mask calculated as", String(format: "%X", mask), level: .debug)
         self.quickSkipBitmask = mask
     }
 
@@ -207,7 +207,8 @@ struct VariantSequence: Sequence, IteratorProtocol {
             // Make a mutable copy of the original components array
             var o = self.base
 
-            //print("total component count", self.base.count, ", bits to iterate over", (self.base.count*2)-2)
+            Logger.default.log("total component count", self.base.count, ", bits to iterate over", (self.base.count*2)-2,
+                               level: .debug)
 
             for index in 0..<(self.base.count*2)-2 {
                 // Get the component we are going to work on - this is index/2 truncated i.e
@@ -234,7 +235,8 @@ struct VariantSequence: Sequence, IteratorProtocol {
                     }
                 }
 
-                //print(affectedIndex, index, combinationNumber & (1 << index) > 0 ? "(set)" : "(not set)", component, "->", StylistIdentifier.Component(value: value, state: state))
+                Logger.default.log(affectedIndex, index, combinationNumber & (1 << index) > 0 ? "(set)" : "(not set)", component, "->", StylistIdentifier.Component(value: value, state: state),
+                                   level: .debug)
 
                 o[affectedIndex] = StylistIdentifier.Component(value: value, state: state)
             }

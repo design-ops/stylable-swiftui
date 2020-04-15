@@ -1,16 +1,16 @@
 {
   "name": "StylableSwiftUI",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "summary": "StylableSwiftUI - Style SwifTUI apps and libraries",
   "description": "Easily tag a SwiftUI library so it can be styled by multiple apps.",
   "homepage": "https://github.com/design-ops/stylable-swiftUI",
   "license": {
-    "type": "private"
+    "type": "MIT"
   },
   "authors": "deanWombourne",
   "source": {
-    "git": "git@github.com:design-ops/stylable-swiftUI.git",
-    "tag": "1.0.0"
+    "git": "https://github.com/design-ops/stylable-swiftUI.git",
+    "tag": "v1.0.1"
   },
   "swift_versions": "5.0",
   "platforms": {
