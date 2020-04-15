@@ -22,7 +22,7 @@ public struct DebugCurrentStyleGroup<Content>: View where Content: View {
     }
 
     public var body: some View {
-        print(tag.map { "StyleIdentifier (\($0)):" } ?? "StyleIdentifier:", self.currentStylableGroup ?? "*")
+        Logger.default.log(tag.map { "StyleIdentifier (\($0)):" } ?? "StyleIdentifier:", self.currentStylableGroup ?? "*", level: .debug)
         return self.content
     }
 }

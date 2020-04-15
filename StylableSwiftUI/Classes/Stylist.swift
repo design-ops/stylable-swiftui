@@ -73,11 +73,11 @@ public class Stylist: ObservableObject {
 
         // Apply the first matching style in our list of styles
         guard let style = self.styles.first(where: { $0.identifier.matches(identifier) }) else {
-            print("No matching style found for", identifier)
+            Logger.default.log("No matching style found for", identifier, level: .error)
             return AnyView(view)
         }
 
-        print("Applying", style.identifier.description, "to", identifier)
+        Logger.default.log("Applying", style.identifier.description, "to", identifier, level: .debug)
         return AnyView(style.apply(view))
     }
 }
