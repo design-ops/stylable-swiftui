@@ -270,18 +270,11 @@ extension StylistIdentifier {
 
 extension String {
 
-    /// Aesthetic wrapper around `StylistIdentifier.within(_:)`
+    /// Asthetic wrapper around `StylistIdentifier.within(_:)`
     ///
     /// Allows code like `"close".within("button")` to compile and return a valid `StylistIdentifier`
     public func within(_ identifier: StylistIdentifier?) -> StylistIdentifier {
-        StylistIdentifier(self).within(identifier)
-    }
-
-    /// Aesthetic wrapper around `StylistIdentifier.containing(_:)`
-    ///
-    /// Allows code like `"button".containing("close")` to compile and return a valid `StylistIdentifier`
-    public func containing(_ identifier: StylistIdentifier?) -> StylistIdentifier {
-        StylistIdentifier(self).containing(identifier)
+        return StylistIdentifier(self).within(identifier)
     }
 }
 
