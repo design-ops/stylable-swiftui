@@ -157,7 +157,7 @@ final class StylistIdentifierTests: XCTestCase {
     }
 
     func testStylistIdentifier_withinNil() {
-        XCTAssertEqual("atom".within(nil).description, "atom")
+        XCTAssertEqual(StylistIdentifier("atom").within(nil).description, "atom")
     }
 
     func testStylistIdentifier_withState_shouldCompare() {

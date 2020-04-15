@@ -268,16 +268,6 @@ extension StylistIdentifier {
     }
 }
 
-extension String {
-
-    /// Asthetic wrapper around `StylistIdentifier.within(_:)`
-    ///
-    /// Allows code like `"close".within("button")` to compile and return a valid `StylistIdentifier`
-    public func within(_ identifier: StylistIdentifier?) -> StylistIdentifier {
-        return StylistIdentifier(self).within(identifier)
-    }
-}
-
 // MARK: - Some helpers
 
 private extension Collection {
