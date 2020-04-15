@@ -248,7 +248,7 @@ extension StylistIdentifier {
 
     /// Create an identifier representing `self` inside `identifier`
     ///
-    /// i.e. `"close".within("button") == 'close/button'`
+    /// i.e. `"close".within("button") == 'button/close'`
     ///
     public func within(_ identifier: StylistIdentifier?) -> StylistIdentifier {
         guard let identifier = identifier else { return self }
@@ -256,6 +256,15 @@ extension StylistIdentifier {
         var components = self.components
         components.append(contentsOf: identifier.components)
         return StylistIdentifier(components: components)
+    }
+
+    /// Create an new identifier where the passed in identifier is inside `self`
+    ///
+    /// i.e. `"button".containing("close") == 'button/close'`
+    ///
+    public func containing(_ identifier: StylistIdentifier?) -> StylistIdentifier {
+        guard let identifier = identifier else { return self }
+        return identifier.within(self)
     }
 }
 
