@@ -75,7 +75,7 @@ extension Image {
         let name = variants.lazy.first { UIImage(named: $0, in: bundle, compatibleWith: nil) != nil }
 
         if name == nil {
-            Logger.default.log("No image found for \(identifier), including checking with prefix \(wildcard) to depth \(maxLength)", level: .warning)
+            Logger.default.log("No image found for \(identifier), including checking with prefix \(wildcard) to depth \(maxLength)", level: .error)
         }
 
         // Return it, or a dummy image view
