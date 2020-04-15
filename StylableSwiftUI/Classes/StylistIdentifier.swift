@@ -260,7 +260,7 @@ extension StylistIdentifier {
 
     /// Create an new identifier where the passed in identifier is inside `self`
     ///
-    /// i.e. `"button".contains("close") == 'button/close'`
+    /// i.e. `"button".containing("close") == 'button/close'`
     ///
     public func containing(_ identifier: StylistIdentifier?) -> StylistIdentifier {
         guard let identifier = identifier else { return self }
