@@ -51,7 +51,7 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* StylistIdentifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylistIdentifierTests.swift; sourceTree = "<group>"; };
 		6B7E8EBAAB701E047107E149 /* Pods-StylableSwiftUI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StylableSwiftUI_Tests.debug.xcconfig"; path = "Target Support Files/Pods-StylableSwiftUI_Tests/Pods-StylableSwiftUI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		7382401CAE1383A5CF87691F /* SwiftUIStylist.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SwiftUIStylist.podspec; path = ../SwiftUIStylist.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		7382401CAE1383A5CF87691F /* StylableSwiftUI.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = StylableSwiftUI.podspec; path = ../StylableSwiftUI.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7596EC2279A0F53ADC9CDFE2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		7DCB87A2860E3FA71FCC49EE /* Pods-SwiftUIStylist_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIStylist_Tests.debug.xcconfig"; path = "Target Support Files/Pods-SwiftUIStylist_Tests/Pods-SwiftUIStylist_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8418D4F9E00D256AAE0306FF /* Pods-SwiftUIStylist_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIStylist_Example.release.xcconfig"; path = "Target Support Files/Pods-SwiftUIStylist_Example/Pods-SwiftUIStylist_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				7382401CAE1383A5CF87691F /* SwiftUIStylist.podspec */,
+				7382401CAE1383A5CF87691F /* StylableSwiftUI.podspec */,
 				31259389E366C487830DA17F /* README.md */,
 				7596EC2279A0F53ADC9CDFE2 /* LICENSE */,
 			);
