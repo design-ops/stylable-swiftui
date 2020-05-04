@@ -59,6 +59,15 @@ Similar to states, **Variants** can be used to describe a specific state of a **
 * `carousel[fullWidth]`
 * `carousel[paged]`
 
+## Modifiers
+Modifiers are extra properties that are applied to Tokens, which are not included in Sketch's Text Style or Layer Style. Currently, we only support the Radius (` --radius`) modifier.
+
+#### Example for Radius Modifier
+If we need to apply a radius to a background layer, we would use a radius modifier like so:
+
+Create a new artboard named `tag/background --radius`, and in that artboard we would include a single layer with the required radius.
+
+
 ## WIP - Token Inheritance
 There are cases where we need to specifically target a component's direct descendant. In these cases, we can specifically declare the target by prepending a `>` in the Token name.
 
