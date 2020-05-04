@@ -42,8 +42,9 @@ Given the above structure `home/header/searchBar/label`, the matching hierarchy 
 3. `home/searchBar/label`
 4. `home/header/label`
 5. `searchBar/label`
-6. `home/label`
-7. `label`
+6. `header/label`
+7. `home/label`
+8. `label`
 
 ## Component Variants
 Similar to states, **Variants** can be used to describe a specific state of a **Component** but they can also be used to specifiy a variant of that **Component** as well. Variants are specified by appending the variant name enclosed in brackets to the Component name.
