@@ -4,7 +4,11 @@ Creating applications does not necessarily mean creating complex processes. We'r
 ## The system
 Swapping out library files is a fairly ubiquitous task, and there are plenty of plugins that can do this for you. But we're not just swapping out one library for another. We're creating a system that empowers you to create any number of libraries based on a simple Component & Token structure, interchange them with each other and ultimately hand them over to dev for quick implementation.
 
-#### 💎 Layout & Components < > 💎 Token File > ⚙️ Convertor > 🎨 Code Stylist > 📱Application
+### Workflow
+
+##### 💎 Layout & Components ↔︎ 💎 Token File ⇾ ⚙️ Convertor ⇾ ⚙️ Stylist in Product
+
+
 
 ## Components & Tokens
 
@@ -68,10 +72,10 @@ If we need to apply a radius to a background layer, we would use a radius modifi
 Create a new artboard named `tag/background --radius`, and in that artboard we would include a single layer with the required radius.
 
 
-## WIP - Token Inheritance
-There are cases where we need to specifically target a component's direct descendant. In these cases, we can specifically declare the target by prepending a `>` in the Token name.
+## Token Inheritance
+If we need to specifically target a component's direct descendant, we can specifically declare the target by prepending a `>` in the Token name.
 
-eg `>card/background` will not be inherited by `card/tag/background`
+eg `>card/background` will only be applied to the `background` directly nested in `card` and will not be inherited by anything else eg. `card/tag/background`. 
 
 ## Glossary
 
