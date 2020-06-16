@@ -66,16 +66,15 @@ Similar to states, **Variants** can be used to describe a specific state of a **
 ## Modifiers
 Modifiers are extra properties that are applied to Tokens, which are not included in Sketch's Text Style or Layer Style. Currently, we only support the Radius (` --radius`) modifier.
 
-#### Example for Radius Modifier
-If we need to apply a radius to a background layer, we would use a radius modifier like so:
+#### Radius Modifier
+If we need to apply a radius to a layer, we would use a radius modifier:
 
 Create a new artboard named `tag/background --radius`, and in that artboard we would include a single layer with the required radius.
 
-
-## Token Inheritance
+## Direct Inheritance [TBA]
 If we need to specifically target a component's direct descendant, we can specifically declare the target by prepending a `>` in the Token name.
 
-eg `>card/background` will only be applied to the `background` directly nested in `card` and will not be inherited by anything else eg. `card/tag/background`. 
+eg `card/>background` will only be applied to the `background` directly nested in `card` and will not be inherited by anything else eg. `card/tag/background`. 
 
 ## Glossary
 
