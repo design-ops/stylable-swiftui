@@ -14,7 +14,7 @@ import SwiftUI
 extension Stylist {
 
     static func create(debugUnstyledViews: Bool = false) -> Stylist {
-        let stylist = Stylist()
+        let stylist = Stylist(mode: .nds)
 
         if debugUnstyledViews {
             stylist.addStyle(identifier: "*") { $0.background(Color.green).opacity(0.5) }
