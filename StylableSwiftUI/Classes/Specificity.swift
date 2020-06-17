@@ -36,6 +36,7 @@ extension StylistIdentifier {
     }
 }
 
+// TODO: This needs more tests and perhaps to be moved somewhere else. Into the Specificity maybe?
 extension StylistIdentifier {
     func score(against other: StylistIdentifier) -> Int {
         var result = 0
