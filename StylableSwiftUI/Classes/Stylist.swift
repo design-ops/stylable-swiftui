@@ -26,19 +26,14 @@ public struct Style {
 @available(iOS 13.0.0, *)
 public class Stylist: ObservableObject {
 
-    public enum Mode {
-        case atomicDesign
-        case nds
-    }
-
     // All the styles this stylist knows about, in order of specificity (more specific -> more general)
     @Published private var styles: [Style]
 
-    public let mode: Mode
+    private let matchingMode: StylistMatchingMode
 
-    public init(mode: Mode = .atomicDesign) {
+    public init(matchingMode: StylistMatchingMode = AtomicDesign()) {
         self.styles = []
-        self.mode = mode
+        self.matchingMode = matchingMode
     }
 
     /// Convenience method to easily create and add a single style.
@@ -64,14 +59,8 @@ public class Stylist: ObservableObject {
             }
         }
 
-        // Append new styles and sort them if we are able to
-        styles.append(contentsOf: newStyles)
-        if self.mode == .atomicDesign {
-            styles.sort { $0.identifier < $1.identifier }
-        }
-
         // Publish our changes
-        self.styles = styles
+        self.styles = self.matchingMode.insert(styles: newStyles, into: styles)
     }
 
     /// Add multiple styles, publishing a single notification when all the styles have been stored.
@@ -82,25 +71,13 @@ public class Stylist: ObservableObject {
     func style(view: Stylable, identifier: StylistIdentifier) -> some View {
 
         // Apply the first matching style in our list of styles
-        guard let style = self.getFirstMatchingSyle(for: identifier) else {
+        guard let style = self.matchingMode.firstMatch(styles: self.styles, toIdentifier: identifier) else {
             Logger.default.log("No matching style found for", identifier, level: .error)
             return AnyView(view)
         }
 
         Logger.default.log("Applying", style.identifier.description, "to", identifier, level: .debug)
         return AnyView(style.apply(view))
-    }
-
-    private func getFirstMatchingSyle(for identifier: StylistIdentifier) -> Style? {
-        switch self.mode {
-        case .atomicDesign:
-            return self.styles.first(where: { $0.identifier.matches(identifier) })
-        case .nds:
-            return self.styles.filter { $0.identifier.matches(identifier) }
-                .sorted { a, b in
-                    a.identifier.score(against: identifier) > b.identifier.score(against: identifier)
-            }.first
-        }
     }
 }
 

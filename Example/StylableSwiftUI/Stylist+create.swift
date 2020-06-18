@@ -13,8 +13,8 @@ import SwiftUI
 
 extension Stylist {
 
-    static func create(debugUnstyledViews: Bool = false, mode: Stylist.Mode = .atomicDesign) -> Stylist {
-        let stylist = Stylist(mode: mode)
+    static func create(debugUnstyledViews: Bool = false, matchingMode: StylistMatchingMode = AtomicDesign()) -> Stylist {
+        let stylist = Stylist(matchingMode: matchingMode)
 
         if debugUnstyledViews {
             stylist.addStyle(identifier: "*") { $0.background(Color.green).opacity(0.5) }

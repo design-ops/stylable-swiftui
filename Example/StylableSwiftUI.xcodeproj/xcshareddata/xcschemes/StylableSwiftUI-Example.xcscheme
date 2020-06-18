@@ -55,9 +55,9 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "873146A0488CF8F2E4A597C381B2FA3C"
-            BuildableName = "SwiftUIStylist.framework"
-            BlueprintName = "SwiftUIStylist"
+            BlueprintIdentifier = "0E12E449EA31D5414AB180DDBF51184C"
+            BuildableName = "StylableSwiftUI.framework"
+            BlueprintName = "StylableSwiftUI"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>

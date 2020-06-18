@@ -36,36 +36,6 @@ extension StylistIdentifier {
     }
 }
 
-// TODO: This needs more tests and perhaps to be moved somewhere else. Into the Specificity maybe?
-extension StylistIdentifier {
-    func score(against other: StylistIdentifier) -> Int {
-        var result = 0
-        var scores: [String: Int] = [:]
-        var score = 0
-        for (index, component) in other.components.reversed().enumerated() {
-            score += 1
-            // One score if we only match the value, and more if we match the value
-            // and the state
-            if let value = component.value {
-                scores[value] = score << index
-                if let state = component.state {
-                    score += 1
-                    scores["\(value)-\(state)"] = score << index
-                }
-            }
-        }
-        for component in self.components {
-            if let value = component.value,
-                let score = scores[value] {
-                result += score
-                if let state = component.state, let stateScore = scores["\(value)-\(state)"] {
-                    result += stateScore
-                }
-            }
-        }
-        return result
-    }
-}
 
 extension StylistIdentifier.Specificity: Equatable, Hashable, Comparable {
 
