@@ -36,7 +36,6 @@ extension StylistIdentifier {
     }
 }
 
-
 extension StylistIdentifier.Specificity: Equatable, Hashable, Comparable {
 
     static func < (lhs: StylistIdentifier.Specificity, rhs: StylistIdentifier.Specificity) -> Bool {
