@@ -59,7 +59,7 @@ final class NaturalDesignMatchingModeTests: XCTestCase {
         XCTAssertEqual(styles.last?.identifier, "this/is/a/test")
     }
 
-    func testNaturalDesgn_shouldMatchStyles_accoringToReadme() {
+    func testNaturalDesgn_shouldMatchStyles_accordingToReadme() {
         // From the readme, an element with identifier "home/header/searchBar/label" should be matched by
         //
         // home/header/searchBar/label
@@ -87,7 +87,7 @@ final class NaturalDesignMatchingModeTests: XCTestCase {
         ]
 
         for identifier in tests {
-            let style = Style(StylistIdentifier(identifier), apply: { _ in EmptyView() })
+            let style = Style(StylistIdentifier(identifier), apply: { $0 })
 
             let mode = NaturalDesign()
 
