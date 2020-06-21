@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import StylableSwiftUI
+import SwiftUI
 
 final class NaturalDesignMatchingModeTests: XCTestCase {
 
@@ -56,5 +57,44 @@ final class NaturalDesignMatchingModeTests: XCTestCase {
         let styles = matchingMode.insert(styles: [styleA], into: initialStyles)
         XCTAssertTrue(styles.count == 4)
         XCTAssertEqual(styles.last?.identifier, "this/is/a/test")
+    }
+
+    func testNaturalDesgn_shouldMatchStyles_accoringToReadme() {
+        // From the readme, an element with identifier "home/header/searchBar/label" should be matched by
+        //
+        // home/header/searchBar/label
+        // header/searchBar/label
+        // home/searchBar/label
+        // home/header/label
+        // searchBar/label
+        // header/label
+        // home/label
+        // label
+        //
+        // We're going to test that NaturalDesign maqtches these, in turn.
+        //
+        // This test _doesn't_ test for matching in the right order, just santy checks that they all match
+
+        let tests = [
+            "home/header/searchBar/label",
+            "header/searchBar/label",
+            "home/searchBar/label",
+            "home/header/label",
+            "searchBar/label",
+            "header/label",
+            "home/label",
+            "label"
+        ]
+
+        for identifier in tests {
+            let style = Style(StylistIdentifier(identifier), apply: { _ in EmptyView() })
+
+            let mode = NaturalDesign()
+
+            let styles = mode.insert(styles: [style], into: [])
+
+            let match = mode.firstMatch(styles: styles, toIdentifier: "home/header/searchBar/label")
+            XCTAssertNotNil(match, "Expected style with identifier '\(identifier)' to match element with identifier 'home/header/searchBar/label'")
+        }
     }
 }
