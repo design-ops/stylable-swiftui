@@ -195,4 +195,28 @@ final class StylistIdentifierTests: XCTestCase {
         let identifier = StylistIdentifier(components: [ "atom", "element[disabled]", "section" ])
         XCTAssertEqual(identifier.description, "section/element[disabled]/atom")
     }
+
+    func testStylistIdentifer_matchesMakeSense_usingNDS() {
+        // Given the element with identifier "home/header/searchBar/label"
+        //
+        // These styles should all match (taken from the NDS readme):
+        //
+        // home/header/searchBar/label
+        // header/searchBar/label
+        // home/searchBar/label
+        // home/header/label
+        // searchBar/label
+        // header/label
+        // home/label
+        // label
+
+        XCTAssertTrue(StylistIdentifier("home/header/searchBar/label").matches("home/header/searchBar/label"))
+        XCTAssertTrue(StylistIdentifier("header/searchBar/label").matches("home/header/searchBar/label"))
+        XCTAssertTrue(StylistIdentifier("home/searchBar/label").matches("home/header/searchBar/label"))
+        XCTAssertTrue(StylistIdentifier("home/header/label").matches("home/header/searchBar/label"))
+        XCTAssertTrue(StylistIdentifier("searchBar/label").matches("home/header/searchBar/label"))
+        XCTAssertTrue(StylistIdentifier("header/label").matches("home/header/searchBar/label"))
+        XCTAssertTrue(StylistIdentifier("home/label").matches("home/header/searchBar/label"))
+        XCTAssertTrue(StylistIdentifier("label").matches("home/header/searchBar/label"))
+    }
 }
