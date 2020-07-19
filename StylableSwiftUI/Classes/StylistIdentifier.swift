@@ -120,6 +120,12 @@ extension StylistIdentifier: ExpressibleByStringLiteral {
     }
 }
 
+extension StylistIdentifier {
+
+    public static var unique: StylistIdentifier { StylistIdentifier(UUID().uuidString) }
+}
+
+
 // MARK: - Component
 
 extension StylistIdentifier {

@@ -12,6 +12,12 @@ import Foundation
 /// Specifically, this will tell if a stylist identifier is a more general version of another.
 struct StylistIdentifierMatcher {
 
+    private let logger: Logger
+
+    init(logger: Logger = .default) {
+        self.logger = logger
+    }
+
     /// Returns a value > `0` if the lhs matches the partial identifier on the rhs, `0` otherwise.
     ///
     /// i.e.
@@ -22,14 +28,14 @@ struct StylistIdentifierMatcher {
     /// matches("home/header/searchBar/label", "home/potato") == 0
     ///
     func match(specific lhs: StylistIdentifier, general rhs: StylistIdentifier) -> Int {
-        print("Attempting to match \(lhs) with \(rhs)")
+        self.logger.debug("Attempting to match \(lhs) with \(rhs)")
 
         // Let's just assume that empty identifiers (which are technically invalid) won't match or be matched with.
         guard !lhs.components.isEmpty else { return 0 }
         guard !rhs.components.isEmpty else { return 0 }
 
         guard lhs != rhs else {
-            print("  Exact match")
+            self.logger.debug("  Exact match")
             return (1<<lhs.components.count) - 1
         }
 
@@ -51,15 +57,15 @@ struct StylistIdentifierMatcher {
                 nextScore /= 2
             }
 
-            print("  Comparing \(lhsComponent) to \(rhsComponent ?? "<nil>")")
+            self.logger.debug("  Comparing \(lhsComponent) to \(rhsComponent ?? "<nil>")")
 
             // If this doesn't match the rhs component, move on to the next one
             if lhsComponent != rhsComponent {
-                print("   └─No match - movng on to next lhs component")
+                self.logger.debug("   └─No match - movng on to next lhs component")
                 continue
             }
 
-            print("   └─Match")
+            self.logger.debug("   └─Match")
 
             // Increment the score
             // TODO: Make the score reflect the position of a match i.e. a atom match isn't worth as much as a section match
@@ -69,13 +75,13 @@ struct StylistIdentifierMatcher {
             rhsComponent = rhsIterator.next()
 
             if rhsComponent == nil {
-                print("  End of rhs - match found")
+                self.logger.debug("  End of rhs - match found")
                 return score
             }
         }
 
         // If we have got to the end of the lhs then we haven't matched everything in the rhs - no match
-        print("  End of lhs, but rhs still has matches - no match")
+        self.logger.debug("  End of lhs, but rhs still has matches - no match")
 
         return 0
     }

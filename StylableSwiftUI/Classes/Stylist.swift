@@ -31,8 +31,14 @@ public class Stylist: ObservableObject {
 
     private let matcher = StylistIdentifierMatcher()
 
+    private var defaultStyle: Style?
+
     public init() {
         self.styles = []
+    }
+
+    public func setDefaultStyle<V: View>(style: @escaping (Stylable) -> V) {
+        self.defaultStyle = Style(.unique, apply: style)
     }
 
     /// Convenience method to easily create and add a single style.
@@ -82,15 +88,19 @@ public class Stylist: ObservableObject {
             .max { $0.score < $1.score }?
             .style
 
-        // I hope we found one!
-        guard let style = bestMatch else {
+        if let style = bestMatch {
+            // Apply the style
+            Logger.default.log("Applying", style.identifier.description, "to", identifier, level: .debug)
+            return AnyView(style.apply(view))
+        } else if let style = self.defaultStyle {
+            // Apply the default style
+            Logger.default.log("Applying default style", "to", identifier, level: .debug)
+            return AnyView(style.apply(view))
+        } else {
+            // There is no style to apply
             Logger.default.log("No matching style found for", identifier, level: .error)
             return AnyView(view)
         }
-
-        // Apply the style
-        Logger.default.log("Applying", style.identifier.description, "to", identifier, level: .debug)
-        return AnyView(style.apply(view))
     }
 }
 
