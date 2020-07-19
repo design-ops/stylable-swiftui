@@ -17,7 +17,7 @@ extension Stylist {
         let stylist = Stylist()
 
         if debugUnstyledViews {
-            stylist.addStyle(identifier: "*") { $0.background(Color.green).opacity(0.5) }
+            stylist.addStyle(identifier: "") { $0.background(Color.green).opacity(0.5) }
         }
 
         stylist.addStyles([
@@ -75,11 +75,11 @@ extension Stylist {
         ])
 
 
-        stylist.addStyle(identifier: "*/*/element/atom") {
+        stylist.addStyle(identifier: "element/atom") {
             $0.foregroundColor(.red)
         }
 
-        stylist.addStyle(identifier: "*/organism/*/atom") {
+        stylist.addStyle(identifier: "organism/atom") {
             $0.foregroundColor(.blue)
         }
 
