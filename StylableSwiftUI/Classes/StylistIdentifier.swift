@@ -60,15 +60,6 @@ public struct StylistIdentifier: Equatable, Hashable {
     // i.e. [identifier, element, section, etc]
     let components: [Component]
 
-    /// A value based on how specific this identifier is.
-    ///
-    /// The higher the score, the more specific the identifier i.e. the more specific, the less this identifier can
-    /// match other identifiers.
-    ///
-    /// - note: The actual value of this isn't interesting, it's only really useful to compare this to another
-    ///         identifier's specificity.
-    let specificity: Specificity
-
     /// Create a completely wildcard `StylistIdentifier` - calling `.matches()` on this will return true for all other `StylistIdentifier`s
     public init() {
         self.init(components: [] as [Component])
@@ -80,11 +71,10 @@ public struct StylistIdentifier: Equatable, Hashable {
 
     init(components: [Component]) {
         self.components = components
-        self.specificity = Specificity(components: components)
     }
 
-    func component(at index: Int) -> Component {
-        guard index < self.components.count else { return "*" }
+    func component(at index: Int) -> Component? {
+        guard index < self.components.count else { return nil }
         return self.components[index]
     }
 
@@ -100,13 +90,6 @@ public struct StylistIdentifier: Equatable, Hashable {
         components[index] = value.map { Component($0) } ?? Component("*")
 
         return StylistIdentifier(components: components)
-    }
-
-    /// An identifier is a wildcard if all of it's components are wildcards (i.e. "*" with no state)
-    ///
-    /// - note: An identifier with no components (`""`) is also a wildcard.
-    var isWildcard: Bool {
-        !self.components.contains { !$0.isWildcard }
     }
 }
 
@@ -137,35 +120,6 @@ extension StylistIdentifier: ExpressibleByStringLiteral {
     }
 }
 
-extension StylistIdentifier: Comparable {
-
-    /// Returns true if `identifier` is a more specific version of `self`
-    ///
-    /// `*/specific/identifier` matches `very/specific/identifier`
-    func matches(_ identifier: StylistIdentifier) -> Bool {
-        guard self != identifier else { return true }
-
-        // */*/* is a special case (technically it has no identifier) and it matches _everything_
-        guard !self.isWildcard else { return true }
-
-        // Loop through the components, comparing them
-        let count = max(self.components.count, identifier.components.count)
-        for index in 0..<count {
-            let lhs = self.component(at: index)
-            let rhs = identifier.component(at: index)
-
-            if !lhs.matches(rhs) { return false }
-        }
-
-        return true
-    }
-
-    /// `<` here means `lhs` is definitely more specific than `rhs` - `lhs` matches _less_ than `rhs`
-    static public func < (lhs: StylistIdentifier, rhs: StylistIdentifier) -> Bool {
-        return lhs.specificity > rhs.specificity
-    }
-}
-
 // MARK: - Component
 
 extension StylistIdentifier {
@@ -175,7 +129,7 @@ extension StylistIdentifier {
         let state: String?
 
         init(value: String?, state: String?) {
-            self.value = value != "*" ? value : nil
+            self.value = value
             self.state = state
         }
 
@@ -187,9 +141,7 @@ extension StylistIdentifier {
             let split = string.split(separator: "[", maxSplits: 1, omittingEmptySubsequences: true)
 
             // Store the value
-            var value = split.first.map(String.init)
-            if value == "*" { value = nil }
-            self.value = value
+            self.value = split.first.map(String.init)
 
             // Get, validate, and store the state (or just let it be `nil`)
             guard
@@ -205,8 +157,6 @@ extension StylistIdentifier {
             (self.value ?? "*") + (self.state.map { "[" + $0 + "]" } ?? "")
         }
 
-        var isWildcard: Bool { self.value == nil && self.state == nil }
-
         func matches(_ other: Component) -> Bool {
             // Four cases
             //
@@ -214,9 +164,6 @@ extension StylistIdentifier {
             // b: value
             // c: *[state]
             // d: *
-
-            // If we are a wildcard component, we match everything
-            if self.isWildcard { return true }
 
             // If we have state and they don't, then we don't match
             if self.state != nil && other.state == nil { return false }
@@ -270,7 +217,7 @@ extension StylistIdentifier {
 
 // MARK: - Some helpers
 
-private extension Collection {
+private extension RandomAccessCollection  {
 
     /// Helper property - exactly the same as `first` but returns the second element, if it exists.
     var second: Element? {

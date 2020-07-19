@@ -8,22 +8,12 @@ import XCTest
 @testable import StylableSwiftUI
 
 private extension StylistIdentifier {
-    var identifier: String? { self.component(at: 0).description }
-    var element: String? { self.component(at: 1).description }
-    var section: String? { self.component(at: 2).description }
+    var identifier: String? { self.component(at: 0)?.description }
+    var element: String? { self.component(at: 1)?.description }
+    var section: String? { self.component(at: 2)?.description }
 }
 
 final class StylistIdentifierTests: XCTestCase {
-
-    func testStylistIdentifier_isWildcard() {
-        XCTAssertTrue(StylistIdentifier("").isWildcard)
-        XCTAssertTrue(StylistIdentifier("*").isWildcard)
-        XCTAssertTrue(StylistIdentifier("*/*/*").isWildcard)
-
-        XCTAssertFalse(StylistIdentifier("a").isWildcard)
-        XCTAssertFalse(StylistIdentifier("*/a").isWildcard)
-        XCTAssertFalse(StylistIdentifier("*/a/*").isWildcard)
-    }
 
     func testStylistIdentifier_stringLiteral() {
         let identifier: StylistIdentifier = "a/b/c"
@@ -34,10 +24,11 @@ final class StylistIdentifierTests: XCTestCase {
     }
 
     func testStylistIdentifier_emptySectionElement() {
+        // Will resolve to just "identfier"
         let identifier = StylistIdentifier("//identifier")
 
-        XCTAssertEqual(identifier.section, "*")
-        XCTAssertEqual(identifier.element, "*")
+        XCTAssertEqual(identifier.section, nil)
+        XCTAssertEqual(identifier.element, nil)
         XCTAssertEqual(identifier.identifier, "identifier")
     }
 
@@ -57,52 +48,6 @@ final class StylistIdentifierTests: XCTestCase {
         XCTAssertEqual(identifier.identifier, identifier2.identifier)
         XCTAssertEqual(identifier.element, identifier2.element)
         XCTAssertEqual(identifier.section, identifier2.section)
-    }
-
-    func testStylistIdentifier_matches() {
-        XCTAssertTrue(StylistIdentifier("*").matches("*/*/*"))
-
-        XCTAssertTrue(StylistIdentifier("*/*/*").matches("*/*/*"))
-        XCTAssertTrue(StylistIdentifier("very/specific/identifier").matches("very/specific/identifier"))
-
-        XCTAssertFalse(StylistIdentifier("*/*/identifier").matches("*/*/*"))
-        XCTAssertTrue(StylistIdentifier("*/*/*").matches("*/*/identifier"))
-        XCTAssertTrue(StylistIdentifier("*").matches("*/*/identifier"))
-
-        XCTAssertTrue(StylistIdentifier("*/*/*").matches("should/*/*"))
-        XCTAssertTrue(StylistIdentifier("*/*/*").matches("*/contain/*"))
-        XCTAssertTrue(StylistIdentifier("*/*/*").matches("*/*/everything"))
-
-        XCTAssertFalse(StylistIdentifier("*/*/identifier").matches("*/*/*"))
-        XCTAssertFalse(StylistIdentifier("*/*/identifier").matches("*/*/identifier2"))
-
-        XCTAssertFalse(StylistIdentifier("*/element/identifier").matches("*/*/identifier"))
-        XCTAssertFalse(StylistIdentifier("*/element/identifier").matches("*/element2/identifier"))
-        XCTAssertTrue(StylistIdentifier("*/*/identifier").matches("*/element/identifier"))
-
-        XCTAssertFalse(StylistIdentifier("section/*/identifier").matches("*/*/identifier"))
-        XCTAssertFalse(StylistIdentifier("section/*/identifier").matches("section2/*/identifier"))
-        XCTAssertTrue(StylistIdentifier("*/*/identifier").matches("section/*/identifier"))
-
-        XCTAssertTrue(StylistIdentifier("section/*/atom").matches("section/element/atom"))
-    }
-
-    func testStyleIdentifier_matchesDifferentIdentifier() {
-        XCTAssertFalse(StylistIdentifier("*/*/identifier").matches("section/element/different-identifier"))
-    }
-
-    func testStylistIdentifier_longMatches() {
-        XCTAssertTrue(StylistIdentifier("*/*/*/identifier").matches("section/*/identifier"))
-    }
-
-    func testStylistIdentifier_comparable() {
-        let i1 = StylistIdentifier("a/b/c")
-        let i2 = StylistIdentifier("*/*/c")
-        let i3 = StylistIdentifier("*/*/*/*")
-
-        XCTAssertGreaterThan(i3, i2)
-        XCTAssertGreaterThan(i2, i1)
-        XCTAssertGreaterThan(i3, i1)
     }
 
     func testStylistIdentifier_addingComponentsInRange() {
@@ -160,29 +105,6 @@ final class StylistIdentifierTests: XCTestCase {
         XCTAssertEqual(StylistIdentifier("atom").within(nil).description, "atom")
     }
 
-    func testStylistIdentifier_withState_shouldCompare() {
-        XCTAssertGreaterThan(StylistIdentifier("element/atom"), StylistIdentifier("element[selected]/atom"))
-    }
-
-    func testStylistIdentifier_withState_shouldMatch() {
-        // Identical should match
-        XCTAssertTrue(StylistIdentifier("element[selected]/atom").matches("element[selected]/atom"))
-
-        // Not specifying a state matches components with a state
-        XCTAssertTrue(StylistIdentifier("element/atom").matches("element[selected]/atom"))
-        XCTAssertFalse(StylistIdentifier("element[selected]/atom").matches("element/atom"))
-
-        // State matching should work if the value is a wildcard (though this isn't going to be used much)
-        XCTAssertTrue(StylistIdentifier("*/atom").matches("*[selected]/atom"))
-        XCTAssertFalse(StylistIdentifier("*[selected]/atom").matches("*/atom"))
-
-        // State matching should work at any level
-        XCTAssertTrue(StylistIdentifier("section/element/atom").matches("section/element[selected]/atom"))
-        XCTAssertFalse(StylistIdentifier("section/element[selected]/atom").matches("section/element/atom"))
-        XCTAssertTrue(StylistIdentifier("section/element/atom").matches("section[disabled]/element/atom"))
-        XCTAssertFalse(StylistIdentifier("section[disabled]/element/atom").matches("section/element/atom"))
-    }
-
     func testStylistIdentifier_withState_shouldStringConvert() {
         let identifier: StylistIdentifier = "section[disabled]/button[highlighted]/atom"
 
@@ -194,29 +116,5 @@ final class StylistIdentifierTests: XCTestCase {
     func testStylistIdentifier_shouldDescribeWithOrWithoutState() {
         let identifier = StylistIdentifier(components: [ "atom", "element[disabled]", "section" ])
         XCTAssertEqual(identifier.description, "section/element[disabled]/atom")
-    }
-
-    func testStylistIdentifer_matchesMakeSense_usingNDS() {
-        // Given the element with identifier "home/header/searchBar/label"
-        //
-        // These styles should all match (taken from the NDS readme):
-        //
-        // home/header/searchBar/label
-        // header/searchBar/label
-        // home/searchBar/label
-        // home/header/label
-        // searchBar/label
-        // header/label
-        // home/label
-        // label
-
-        XCTAssertTrue(StylistIdentifier("home/header/searchBar/label").matches("home/header/searchBar/label"))
-        XCTAssertTrue(StylistIdentifier("header/searchBar/label").matches("home/header/searchBar/label"))
-        XCTAssertTrue(StylistIdentifier("home/searchBar/label").matches("home/header/searchBar/label"))
-        XCTAssertTrue(StylistIdentifier("home/header/label").matches("home/header/searchBar/label"))
-        XCTAssertTrue(StylistIdentifier("searchBar/label").matches("home/header/searchBar/label"))
-        XCTAssertTrue(StylistIdentifier("header/label").matches("home/header/searchBar/label"))
-        XCTAssertTrue(StylistIdentifier("home/label").matches("home/header/searchBar/label"))
-        XCTAssertTrue(StylistIdentifier("label").matches("home/header/searchBar/label"))
     }
 }

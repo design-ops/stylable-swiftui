@@ -19,12 +19,12 @@ final class StylistTests: XCTestCase {
         var didApplyGeneral = false
         var didApplySpecific = false
 
-        stylist.addStyle(identifier: "*/*/element/atom") { view -> AnyView in
+        stylist.addStyle(identifier: "element/atom") { view -> AnyView in
             didApplySpecific = true
             return AnyView(view.foregroundColor(.red))
         }
 
-        stylist.addStyle(identifier: "*/organism/*/atom") { view -> AnyView in
+        stylist.addStyle(identifier: "organism/atom") { view -> AnyView in
             didApplyGeneral = true
             return AnyView(view.foregroundColor(.blue))
         }

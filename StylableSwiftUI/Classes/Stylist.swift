@@ -29,11 +29,10 @@ public class Stylist: ObservableObject {
     // All the styles this stylist knows about, in order of specificity (more specific -> more general)
     @Published private var styles: [Style]
 
-    private let matchingMode: StylistMatchingMode
+    private let matcher = StylistIdentifierMatcher()
 
-    public init(matchingMode: StylistMatchingMode = AtomicDesign()) {
+    public init() {
         self.styles = []
-        self.matchingMode = matchingMode
     }
 
     /// Convenience method to easily create and add a single style.
@@ -60,7 +59,7 @@ public class Stylist: ObservableObject {
         }
 
         // Publish our changes
-        self.styles = self.matchingMode.insert(styles: newStyles, into: styles)
+        self.styles.append(contentsOf: newStyles)
     }
 
     /// Add multiple styles, publishing a single notification when all the styles have been stored.
@@ -70,12 +69,26 @@ public class Stylist: ObservableObject {
 
     func style(view: Stylable, identifier: StylistIdentifier) -> some View {
 
-        // Apply the first matching style in our list of styles
-        guard let style = self.matchingMode.firstMatch(styles: self.styles, toIdentifier: identifier) else {
+        // Apply the best matching style
+        let scored = self.styles
+            .compactMap { (candidate: Style) -> (score: Int, style: Style)? in
+                let score = self.matcher.match(specific: identifier, general: candidate.identifier)
+                guard score > 0 else { return nil }
+                return (score, candidate)
+            }
+
+        // The best match is the highest scoring match
+        let bestMatch = scored
+            .max { $0.score < $1.score }?
+            .style
+
+        // I hope we found one!
+        guard let style = bestMatch else {
             Logger.default.log("No matching style found for", identifier, level: .error)
             return AnyView(view)
         }
 
+        // Apply the style
         Logger.default.log("Applying", style.identifier.description, "to", identifier, level: .debug)
         return AnyView(style.apply(view))
     }

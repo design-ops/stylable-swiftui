@@ -27,7 +27,7 @@ public final class Logger {
         return self.level.rawValue <= level.rawValue
     }
 
-    func log(_ items: Any..., separator: String = " ", level: OSLogType = .default) {
+    private func log(_ items: [Any], separator: String = " ", level: OSLogType = .default) {
         guard self.shouldLog(level) else {
             return
         }
@@ -36,5 +36,25 @@ public final class Logger {
             .joined(separator: separator)
 
         os_log("%@", log: .default, type: level, printString)
+    }
+
+    func log(_ items: Any..., separator: String = " ", level: OSLogType = .default) {
+        self.log(items, separator: separator, level: level)
+    }
+
+    func info(_ items: Any, separator: String = " ") {
+        self.log(items, separator: separator, level: .info)
+    }
+
+    func debug(_ items: Any, separator: String = " ") {
+        self.log(items, separator: separator, level: .debug)
+    }
+
+    func error(_ items: Any, separator: String = " ") {
+        self.log(items, separator: separator, level: .error)
+    }
+
+    func fault(_ items: Any, separator: String = " ") {
+        self.log(items, separator: separator, level: .fault)
     }
 }
