@@ -126,11 +126,11 @@ extension StylistIdentifier {
 
     struct Component: CustomStringConvertible, Equatable, Hashable {
         let value: String
-        let state: String?
+        let variant: String?
 
         init(value: String, state: String?) {
             self.value = value
-            self.state = state
+            self.variant = state
         }
 
         init(_ string: String) {
@@ -143,18 +143,18 @@ extension StylistIdentifier {
             // Store the value
             self.value = split.first.map(String.init) ?? ""
 
-            // Get, validate, and store the state (or just let it be `nil`)
+            // Get, validate, and store the variant (or just let it be `nil`)
             guard
                 let state = split.second.map(String.init).map({ $0.hasSuffix("]") ? String($0.dropLast()) : $0 }),
                 !state.isEmpty else {
-                    self.state = nil
+                    self.variant = nil
                     return
             }
-            self.state = state
+            self.variant = state
         }
 
         var description: String {
-            self.value + (self.state.map { "[" + $0 + "]" } ?? "")
+            self.value + (self.variant.map { "[" + $0 + "]" } ?? "")
         }
     }
 }

@@ -130,11 +130,11 @@ struct VariantSequence: Sequence, IteratorProtocol {
         for bit in 0..<(self.base.count*2)-2 {
             let component = self.base[Int(bit/2)]
             if Self.isBitRepresentingValue(bit) {
-                if component.value == wildcard || component.value == nil {
+                if component.value == wildcard {
                     mask += 1 << bit
                 }
             } else {
-                if component.state == nil {
+                if component.variant == nil {
                     mask += 1 << bit
                 }
             }
@@ -221,7 +221,7 @@ struct VariantSequence: Sequence, IteratorProtocol {
                 let affectedIndex = Int(index/2)
                 let component = o[affectedIndex]
                 var value = component.value
-                var state = component.state
+                var state = component.variant
 
                 // Each component is represented by 2 bits, the first represents replacing the value with *, and the second represents replacing the state with *
 

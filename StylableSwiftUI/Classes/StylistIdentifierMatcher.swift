@@ -41,7 +41,7 @@ struct StylistIdentifierMatcher {
         // Sanity skip of some maths. If they are identical, it's the best possible match.
         guard lhs != rhs else {
             self.logger.debug("  Exact match")
-            return (2<<lhs.path.components.count) - 1
+            return Int.max
         }
 
         // We are going to manually step over the rhs, so we will need an iterator
@@ -49,7 +49,8 @@ struct StylistIdentifierMatcher {
         var rhsComponent = rhsIterator.next()
 
         var score = 0 // The score we will return if it turns out to be a match
-        var nextScore = 2<<(lhs.path.components.count-1) // The score value of the current component - this goes up each time
+        var nextScore = 1<<(lhs.path.components.count * 2)// The score value of the current component - this goes up each time
+        self.logger.debug("  Starting score delta \(nextScore)")
 
         // Go through each component of each identifier in turn.
         //
@@ -59,22 +60,42 @@ struct StylistIdentifierMatcher {
             defer {
                 // Each component in the lhs which matches is more important than the last one. Increase it's score to take that
                 // into account
-                nextScore /= 2
+                nextScore /= 4
+                self.logger.debug("  Next score delta \(nextScore)")
             }
 
-            self.logger.debug("  Comparing \(lhsComponent) to \(rhsComponent ?? "<nil>")")
+            self.logger.debug("  Comparing '\(lhsComponent)' to '\(rhsComponent ?? "<nil>")'")
 
-            // If this doesn't match the rhs component, move on to the next one
-            if lhsComponent != rhsComponent {
-                self.logger.debug("   └─No match - movng on to next lhs component")
+            // If the lhs doesn't match the rhs component, move on to the next one
+            if lhsComponent.value != rhsComponent?.value {
+                self.logger.debug("   └─ No match - moving on to next lhs component")
                 continue
             }
 
-            self.logger.debug("   └─Match")
+            self.logger.debug("   └─ Value Match")
 
             // Increment the score
             // TODO: Make the score reflect the position of a match i.e. a atom match isn't worth as much as a section match
-            score += nextScore
+            score += nextScore/2
+            self.logger.debug("   └─ Score now \(score)")
+
+            // If neither side has a variant don't increment the score
+            // If they both have the same variant, increment the score
+            // If the variants are different, this isn't a match - abort
+            switch (lhsComponent.variant, rhsComponent?.variant) {
+            case (nil, nil):
+                self.logger.debug("   └─ Variants not present")
+            case (_, nil):
+                self.logger.debug("   └─ Specific has variant, general doesn't care")
+            case (let lhsVariant, let rhsVariant) where lhsVariant == rhsVariant:
+                self.logger.debug("   └─ Variants Match")
+                score += nextScore
+                self.logger.debug("   └─ Score now \(score)")
+            default:
+                // If there are variants which don't match, this is a hard fail
+                self.logger.debug("   └─ Values match, but variants don't match - abort")
+                return 0
+            }
 
             // Move on to the next rhs component - and if we are at the end, we have matched and just return the score
             rhsComponent = rhsIterator.next()

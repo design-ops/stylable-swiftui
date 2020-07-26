@@ -31,15 +31,15 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         // label
 
         let specific = StylistIdentifier("home/header/searchBar/label")
-        // NOTE - scores per component are: 2    4       8
+        // NOTE - scores per component:   2(4)  8(16)  32(64)
         // NOTE - there is no score attached to 'label' as it always matches.
 
-        XCTAssertEqual(matcher.match(specific: specific, general: "home/header/searchBar/label"), 15)
-        XCTAssertEqual(matcher.match(specific: specific, general: "header/searchBar/label"), 12)
-        XCTAssertEqual(matcher.match(specific: specific, general: "home/searchBar/label"), 10)
-        XCTAssertEqual(matcher.match(specific: specific, general: "home/header/label"), 6)
-        XCTAssertEqual(matcher.match(specific: specific, general: "searchBar/label"), 8)
-        XCTAssertEqual(matcher.match(specific: specific, general: "header/label"), 4)
+        XCTAssertEqual(matcher.match(specific: specific, general: "home/header/searchBar/label"), Int.max)
+        XCTAssertEqual(matcher.match(specific: specific, general: "header/searchBar/label"), 40)
+        XCTAssertEqual(matcher.match(specific: specific, general: "home/searchBar/label"), 34)
+        XCTAssertEqual(matcher.match(specific: specific, general: "home/header/label"), 10)
+        XCTAssertEqual(matcher.match(specific: specific, general: "searchBar/label"), 32)
+        XCTAssertEqual(matcher.match(specific: specific, general: "header/label"), 8)
         XCTAssertEqual(matcher.match(specific: specific, general: "home/label"), 2)
         XCTAssertEqual(matcher.match(specific: specific, general: "label"), 1)
     }
@@ -51,5 +51,36 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         XCTAssertEqual(matcher.match(specific: specific, general: ""), 0)
         XCTAssertEqual(matcher.match(specific: specific, general: "label/searchBar"), 0)
         XCTAssertEqual(matcher.match(specific: specific, general: "home/header/searchBar/label/extra"), 0)
+    }
+
+    func testStylistIdentifier_matchesWithVariants() {
+        let matcher = StylistIdentifierMatcher()
+
+        let specific: StylistIdentifier = "home/header[selected]/searchBar[deselected]/label"
+        // NOTE - scores per component:    2(4)  8        16        32         64
+
+        // Sanity - this should match with a score of 1
+        XCTAssertEqual(matcher.match(specific: specific, general: "label"), 1)
+
+        XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label"), Int.max)
+        XCTAssertEqual(matcher.match(specific: specific, general: "header[selected]/searchBar[deselected]/label"), 120)
+        XCTAssertEqual(matcher.match(specific: specific, general: "header[selected]/searchBar/label"), 56)
+        XCTAssertEqual(matcher.match(specific: specific, general: "header/searchBar[deselected]/label"), 104)
+        XCTAssertEqual(matcher.match(specific: specific, general: "header[selected]/label"), 24)
+        XCTAssertEqual(matcher.match(specific: specific, general: "header/searchBar/label"), 40)
+        XCTAssertEqual(matcher.match(specific: specific, general: "home/label"), 2)
+    }
+
+    func testStylistIdentifier_invalidMatchesWithVariants() {
+        let matcher = StylistIdentifierMatcher()
+
+        let specific: StylistIdentifier = "home/header[selected]/searchBar[deselected]/label"
+        // NOTE - scores per component:    2(4)  8        16        32         64
+
+        // If the general has a variant but the specific doesn't then it won't match
+        XCTAssertEqual(matcher.match(specific: specific, general: "home[selected]/label"), 0)
+
+        // If the variants don't match between the general and the specific, then it's not a match
+        XCTAssertEqual(matcher.match(specific: specific, general: "header[normal]/label"), 0)
     }
 }
