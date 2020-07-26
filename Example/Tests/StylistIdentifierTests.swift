@@ -50,27 +50,6 @@ final class StylistIdentifierTests: XCTestCase {
         XCTAssertEqual(identifier.section, identifier2.section)
     }
 
-    func testStylistIdentifier_addingComponentsInRange() {
-        let identifier = StylistIdentifier("a/b")
-
-        XCTAssertEqual(identifier.withComponent(value: "x", atIndex: 0), "a/x")
-        XCTAssertEqual(identifier.withComponent(value: "x", atIndex: 1), "x/b")
-    }
-
-    func testStylistIdentifier_addingComponentsOutOfRange() {
-        let identifier = StylistIdentifier("a/b")
-
-        XCTAssertEqual(identifier.withComponent(value: "x", atIndex: 2), "x/a/b")
-        XCTAssertEqual(identifier.withComponent(value: "x", atIndex: 3), "x/*/a/b")
-    }
-
-    func testStylistIdentifier_removingComponents() {
-        let identifier = StylistIdentifier("a/b/c")
-
-        XCTAssertEqual(identifier.withComponent(value: nil, atIndex: 0), "a/b/*")
-        XCTAssertEqual(identifier.withComponent(value: nil, atIndex: 4), "*/*/a/b/c")
-    }
-
     func testStylistIdentifier_within() {
         let id1 = StylistIdentifier("element/section/identifier")
         let id2 = StylistIdentifier("screen/section")

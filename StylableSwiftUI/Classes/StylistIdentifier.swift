@@ -77,20 +77,6 @@ public struct StylistIdentifier: Equatable, Hashable {
         guard index < self.components.count else { return nil }
         return self.components[index]
     }
-
-    func withComponent(value: String?, atIndex index: Int) -> Self {
-        var components = self.components
-
-        // If the index is greater than the number of components we have, pad our array
-        if index >= self.components.count {
-            let padding = repeatElement(Component("*"), count: index - self.components.count + 1)
-            components.append(contentsOf: padding)
-        }
-
-        components[index] = value.map { Component($0) } ?? Component("*")
-
-        return StylistIdentifier(components: components)
-    }
 }
 
 extension StylistIdentifier: LosslessStringConvertible {
@@ -131,10 +117,10 @@ extension StylistIdentifier {
 extension StylistIdentifier {
 
     struct Component: CustomStringConvertible, Equatable, Hashable {
-        let value: String?
+        let value: String
         let state: String?
 
-        init(value: String?, state: String?) {
+        init(value: String, state: String?) {
             self.value = value
             self.state = state
         }
@@ -147,7 +133,7 @@ extension StylistIdentifier {
             let split = string.split(separator: "[", maxSplits: 1, omittingEmptySubsequences: true)
 
             // Store the value
-            self.value = split.first.map(String.init)
+            self.value = split.first.map(String.init) ?? ""
 
             // Get, validate, and store the state (or just let it be `nil`)
             guard
@@ -160,30 +146,7 @@ extension StylistIdentifier {
         }
 
         var description: String {
-            (self.value ?? "*") + (self.state.map { "[" + $0 + "]" } ?? "")
-        }
-
-        func matches(_ other: Component) -> Bool {
-            // Four cases
-            //
-            // a: value[state]
-            // b: value
-            // c: *[state]
-            // d: *
-
-            // If we have state and they don't, then we don't match
-            if self.state != nil && other.state == nil { return false }
-
-            // if we both have state then they much be equal or we don't match
-            if self.state != nil && self.state != other.state { return false }
-
-            // If we have a value but the other is a wildcard then we are more specific i.e. no match
-            if self.value != nil && other.value == nil { return false }
-
-            // The values must be the same
-            if self.value != other.value { return false }
-
-            return true
+            self.value + (self.state.map { "[" + $0 + "]" } ?? "")
         }
     }
 }
