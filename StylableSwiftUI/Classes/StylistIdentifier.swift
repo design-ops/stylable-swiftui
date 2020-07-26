@@ -16,40 +16,14 @@ import Foundation
 ///
 /// There is no limit to the number of components an identifier can have.
 ///
-/// A StylistIdentifier can also contain wildcards i.e. these are also valid identifiers
-///
-/// ```
-/// */close
-/// */button/close
-/// customer/*/close
-/// ```
-///
-/// - Creating Identifiers
+/// # Creating Identifiers
 ///
 /// Identifiers have a construct like `StylistIdentifier("button/close")`, but also implement `ExpressibleByStringLiteral`, so passing a string literal into
 /// a method expecting a StylistIdentifier is (usually) far less code.
 ///
 /// Identifiers can be combined using `within(_:)` i.e. `"close".within("button")` would return the identifier "button/close".
 ///
-/// - Comparing Identifiers
-///
-/// When comparing identifiers, these are considered equal:
-///
-/// ```
-/// close === close (obviously)
-/// close === */close
-/// close === */*/close
-/// ```
-///
-/// Identifiers also have a `matches(_:)` method, which will let you know whether an identifier is a more general version of another identifier. i.e.
-///
-/// ```
-/// "close".matches("*") // true
-/// "*/close".matches("button/close") // true
-/// "button/close".matches("*/close") // false
-/// ```
-///
-/// - State
+/// # State
 ///
 /// Identifiers can also contain the idea of state i.e.
 ///
