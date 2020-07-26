@@ -30,27 +30,32 @@ struct StylistIdentifierMatcher {
     func match(specific lhs: StylistIdentifier, general rhs: StylistIdentifier) -> Int {
         self.logger.debug("Attempting to match \(lhs) with \(rhs)")
 
-        // Let's just assume that empty identifiers (which are technically invalid) won't match or be matched with.
-        guard !lhs.components.isEmpty else { return 0 }
-        guard !rhs.components.isEmpty else { return 0 }
+        guard lhs.token == rhs.token else { return 0 }
 
+        // If the rhs was just a token (and it's matched to get this far) then it's the weakest possible match
+        guard !rhs.path.components.isEmpty else { return 1 }
+
+        // If the lhs is just a token, but the rhs was more than that then the rhs doesn't match
+        guard !lhs.path.components.isEmpty else { return 0 }
+
+        // Sanity skip of some maths. If they are identical, it's the best possible match.
         guard lhs != rhs else {
             self.logger.debug("  Exact match")
-            return (1<<lhs.components.count) - 1
+            return (2<<lhs.path.components.count) - 1
         }
 
         // We are going to manually step over the rhs, so we will need an iterator
-        var rhsIterator = rhs.components.makeIterator()
+        var rhsIterator = rhs.path.components.makeIterator()
         var rhsComponent = rhsIterator.next()
 
         var score = 0 // The score we will return if it turns out to be a match
-        var nextScore = 1<<(lhs.components.count-1) // The score value of the current component - this goes up each time
+        var nextScore = 2<<(lhs.path.components.count-1) // The score value of the current component - this goes up each time
 
         // Go through each component of each identifier in turn.
         //
         // If the lhs one doesn't match, move on to the next.
         // If the rhs one doesn't match then abort and return 0.
-        for lhsComponent in lhs.components {
+        for lhsComponent in lhs.path.components {
             defer {
                 // Each component in the lhs which matches is more important than the last one. Increase it's score to take that
                 // into account

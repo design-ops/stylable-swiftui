@@ -76,7 +76,7 @@ struct SearchBar: View {
     }
 
     /// Creates a button with an image inside. Use this to make sure the scan and search buttons are the same layout.
-    private func generateButton(groupIdentifier: StylistIdentifier, action: @escaping () -> Void) -> some View {
+    private func generateButton(groupIdentifier: StylistIdentifier.Path, action: @escaping () -> Void) -> some View {
         StylableGroup(groupIdentifier) {
             Button(action: { action() }) {
                 HStack {

@@ -57,44 +57,37 @@ import Foundation
 ///
 public struct StylistIdentifier: Equatable, Hashable {
 
-    // i.e. [identifier, element, section, etc]
-    let components: [Component]
+    /// Given the identifier `header/searchBar/title` then `title` is the token
+    let token: String
 
-    /// Create a completely wildcard `StylistIdentifier` - calling `.matches()` on this will return true for all other `StylistIdentifier`s
-    public init() {
-        self.init(components: [] as [Component])
-    }
-
-    public init(components: [String]) {
-        self.init(components: components.map { Component($0) })
-    }
-
-    init(components: [Component]) {
-        self.components = components
-    }
-
-    func component(at index: Int) -> Component? {
-        guard index < self.components.count else { return nil }
-        return self.components[index]
-    }
+    /// Given the identifier `header/searchBar/title` then the components are `[ "header", "searchBar" ]`
+    let path: Path
 }
 
 extension StylistIdentifier: LosslessStringConvertible {
 
     /// Create an instance of StylistIdentifier from a String, specifying the separator to use
     ///
+    /// - note: Given this method cannot throw or fail, it's possible to create insane identifiers i.e. an empty string. You have been warned.
+    ///
     /// - parameter description: The string to parse into an identifier
     public init(_ description: String) {
-        let split = Array(description.split(separator: "/").reversed()).map(String.init)
+        let split = description.split(separator: "/").map(String.init)
 
-        self.init(components: split)
+        let token = split.last ?? ""
+        let path = Path(split.dropLast().joined(separator: "/"))
+
+        self.init(token: token, path: path)
     }
 
     public var description: String {
-        self.components
-            .reversed()
-            .map { $0.description }
-            .joined(separator: "/")
+        let pathDescription = self.path.description
+
+        guard !pathDescription.isEmpty else {
+            return self.token
+        }
+
+        return pathDescription + "/" + self.token
     }
 }
 
@@ -115,6 +108,47 @@ extension StylistIdentifier {
 // MARK: - Component
 
 extension StylistIdentifier {
+
+    public struct Path: CustomStringConvertible, LosslessStringConvertible, ExpressibleByStringLiteral, Equatable, Hashable {
+
+        let components: [Component]
+
+        init(components: [Component]) {
+            self.components = components
+        }
+
+        public init(_ value: String) {
+            self.components = value
+                .split(separator: "/")
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty }
+                .reversed()
+                .map { Component($0) }
+        }
+
+        public init(stringLiteral value: String) {
+            self.init(value)
+        }
+
+        public var description: String {
+            self.components.reversed().map(String.init).joined(separator: "/")
+        }
+
+        var isEmpty: Bool { self.components.isEmpty }
+
+        func component(at index: Int) -> Component? {
+            guard index < self.components.count else { return nil }
+            return self.components[index]
+        }
+
+        func within(_ path: Path?) -> Path {
+            guard let path = path else { return self }
+
+            var components = self.components
+            components.append(contentsOf: path.components)
+            return Path(components: components)
+        }
+    }
 
     struct Component: CustomStringConvertible, Equatable, Hashable {
         let value: String
@@ -162,25 +196,15 @@ extension StylistIdentifier.Component: ExpressibleByStringLiteral {
 
 extension StylistIdentifier {
 
-    /// Create an identifier representing `self` inside `identifier`
+    /// Create an identifier representing `self` inside `path`
     ///
     /// i.e. `"close".within("button") == 'button/close'`
     ///
-    public func within(_ identifier: StylistIdentifier?) -> StylistIdentifier {
-        guard let identifier = identifier else { return self }
+    public func within(_ path: Path?) -> StylistIdentifier {
+        guard let path = path else { return self }
 
-        var components = self.components
-        components.append(contentsOf: identifier.components)
-        return StylistIdentifier(components: components)
-    }
-
-    /// Create an new identifier where the passed in identifier is inside `self`
-    ///
-    /// i.e. `"button".containing("close") == 'button/close'`
-    ///
-    public func containing(_ identifier: StylistIdentifier?) -> StylistIdentifier {
-        guard let identifier = identifier else { return self }
-        return identifier.within(self)
+        return StylistIdentifier(token: self.token,
+                                 path: self.path.within(path))
     }
 }
 

@@ -90,8 +90,9 @@ extension StylistIdentifier {
                              separator: String = StylableImage.defaultSeparator,
                              maxLength: Int = StylableImage.defaultMaxLength) -> AnySequence<String> {
 
-        let components = self.components.reversed()
-        let options = VariantSequence(from: Array(components), wildcard: wildcard, maxLength: maxLength)
+        var components = Array(self.path.components.reversed())
+        components.append(Component(value: self.token, state: nil))
+        let options = VariantSequence(from: components, wildcard: wildcard, maxLength: maxLength)
         return AnySequence(options.lazy.map { $0.joined(separator: separator) })
     }
 }

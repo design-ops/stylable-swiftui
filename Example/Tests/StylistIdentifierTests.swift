@@ -8,9 +8,9 @@ import XCTest
 @testable import StylableSwiftUI
 
 private extension StylistIdentifier {
-    var identifier: String? { self.component(at: 0)?.description }
-    var element: String? { self.component(at: 1)?.description }
-    var section: String? { self.component(at: 2)?.description }
+    var identifier: String? { self.token }
+    var element: String? { self.path.component(at: 0)?.description }
+    var section: String? { self.path.component(at: 1)?.description }
 }
 
 final class StylistIdentifierTests: XCTestCase {
@@ -51,33 +51,10 @@ final class StylistIdentifierTests: XCTestCase {
     }
 
     func testStylistIdentifier_within() {
-        let id1 = StylistIdentifier("element/section/identifier")
-        let id2 = StylistIdentifier("screen/section")
+        let identifier = StylistIdentifier("element/section/identifier")
+        let path = StylistIdentifier.Path("screen/section")
 
-        XCTAssertEqual(id1.within(id2), "screen/section/element/section/identifier")
-    }
-
-    func testStylistIdentifier_containing() {
-        let id1 = StylistIdentifier("element/section/identifier")
-        let id2 = StylistIdentifier("screen/section")
-
-        XCTAssertEqual(id2.containing(id1), "screen/section/element/section/identifier")
-    }
-
-    func testStylistIdentifier_withinWithEmptyComponents() {
-        let id1 = StylistIdentifier("element/*/identifier")
-        let id2 = StylistIdentifier("screen/section")
-
-        XCTAssertEqual(id1.within(id2), "screen/section/element/*/identifier")
-    }
-
-    func testStylistIdentifier_withinEmptyIdentifier() {
-        let empty = StylistIdentifier()
-
-        let i = StylistIdentifier("a/b/c")
-        XCTAssertEqual(i.within(empty), i)
-
-        XCTAssertEqual(empty.within(empty), empty)
+        XCTAssertEqual(identifier.within(path), "screen/section/element/section/identifier")
     }
 
     func testStylistIdentifier_withinNil() {
@@ -93,7 +70,8 @@ final class StylistIdentifierTests: XCTestCase {
     }
 
     func testStylistIdentifier_shouldDescribeWithOrWithoutState() {
-        let identifier = StylistIdentifier(components: [ "atom", "element[disabled]", "section" ])
+        let path = StylistIdentifier.Path(components: [ "element[disabled]", "section" ])
+        let identifier = StylistIdentifier(token: "atom", path: path)
         XCTAssertEqual(identifier.description, "section/element[disabled]/atom")
     }
 }
