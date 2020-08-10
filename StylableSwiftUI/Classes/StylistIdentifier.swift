@@ -115,9 +115,7 @@ extension StylistIdentifier {
             return self.components[index]
         }
 
-        func within(_ path: Path?) -> Path {
-            guard let path = path else { return self }
-
+        func within(_ path: Path) -> Path {
             var components = self.components
             components.append(contentsOf: path.components)
             return Path(components: components)
