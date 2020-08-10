@@ -111,7 +111,7 @@ extension StylistIdentifier {
         var isEmpty: Bool { self.components.isEmpty }
 
         func component(at index: Int) -> Component? {
-            guard index < self.components.count else { return nil }
+            guard index >= 0 && index < self.components.count else { return nil }
             return self.components[index]
         }
 
