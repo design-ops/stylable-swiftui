@@ -37,16 +37,6 @@ public struct StylableGroup<Content>: View where Content: View {
     }
 
     public var body: some View {
-        // If we are already nested within a stylable group, join the together.
-        // Otherwise, just use our path
-        let path: StylistIdentifier.Path?
-        if let currentStylableGroup = self.currentStylableGroup {
-            path = self.path?.within(currentStylableGroup)
-        } else {
-            path = self.path
-        }
-
-        // Just return our nested content, but with the environment stylable path updated
-        return self.content().environment(\.currentStylableGroup, path)
+        self.content().environment(\.currentStylableGroup, self.path?.within(self.currentStylableGroup))
     }
 }

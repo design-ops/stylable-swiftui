@@ -115,7 +115,9 @@ extension StylistIdentifier {
             return self.components[index]
         }
 
-        func within(_ path: Path) -> Path {
+        func within(_ path: Path?) -> Path {
+            guard let path = path, !path.isEmpty else { return self }
+
             var components = self.components
             components.append(contentsOf: path.components)
             return Path(components: components)
@@ -173,10 +175,7 @@ extension StylistIdentifier {
     /// i.e. `"close".within("button") == 'button/close'`
     ///
     public func within(_ path: Path?) -> StylistIdentifier {
-        guard let path = path else { return self }
-
-        return StylistIdentifier(token: self.token,
-                                 path: self.path.within(path))
+        StylistIdentifier(token: self.token, path: self.path.within(path))
     }
 }
 
