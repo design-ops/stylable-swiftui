@@ -91,7 +91,7 @@ extension StylistIdentifier {
                              maxLength: Int = StylableImage.defaultMaxLength) -> AnySequence<String> {
 
         var components = Array(self.path.components.reversed())
-        components.append(Component(value: self.token, state: nil))
+        components.append(Component(value: self.token, variant: nil))
         let options = VariantSequence(from: components, wildcard: wildcard, maxLength: maxLength)
         return AnySequence(options.lazy.map { $0.joined(separator: separator) })
     }
@@ -120,11 +120,11 @@ struct VariantSequence: Sequence, IteratorProtocol {
         self.maxLength = maxLength
 
         // We can work out the max number of possible variants - it's 2 ^ (count*2)
-        // Why *2? beacuse each component has 4 possible options by combining value and state (a[b], a[*], *[b] and *[*])
+        // Why *2? beacuse each component has 4 possible options by combining value and variant (a[b], a[*], *[b] and *[*])
         // Why -1? Beacuse we don't touch the atom
         self.combinationCount = self.base.isEmpty ? 0 : NSDecimalNumber(decimal: pow(2, (self.base.count-1)*2)).intValue
 
-        // The quick-skip bitmask will let us skip variants which aren't any different i.e. where the value or state will be set to *, _but are already *_
+        // The quick-skip bitmask will let us skip variants which aren't any different i.e. where the value or variant will be set to *, _but are already *_
         // Any combination number with bits set in this maks can be safely skipped without testing.
         var mask = 0
         for bit in 0..<(self.base.count*2)-2 {
@@ -221,25 +221,25 @@ struct VariantSequence: Sequence, IteratorProtocol {
                 let affectedIndex = Int(index/2)
                 let component = o[affectedIndex]
                 var value = component.value
-                var state = component.variant
+                var variant = component.variant
 
-                // Each component is represented by 2 bits, the first represents replacing the value with *, and the second represents replacing the state with *
+                // Each component is represented by 2 bits, the first represents replacing the value with *, and the second represents replacing the variant with *
 
                 // Is the bit set?
                 if combinationNumber & (1 << index) > 0 {
-                    // Should this bit affect the value (i.e not a multiple of 2) or affect the state (i.e. a multiple of 2)
-                    // NB If this index is setting a state or value which is already a wildcard then we don't need to carry on - it's already been added from when this bit was not set.
+                    // Should this bit affect the value (i.e not a multiple of 2) or affect the variant (i.e. a multiple of 2)
+                    // NB If this index is setting a variant or value which is already a wildcard then we don't need to carry on - it's already been added from when this bit was not set.
                     if Self.isBitRepresentingValue(index) {
                         value = self.wildcard
                     } else {
-                        state = nil
+                        variant = nil
                     }
                 }
 
-                Logger.default.log(affectedIndex, index, combinationNumber & (1 << index) > 0 ? "(set)" : "(not set)", component, "->", StylistIdentifier.Component(value: value, state: state),
+                Logger.default.log(affectedIndex, index, combinationNumber & (1 << index) > 0 ? "(set)" : "(not set)", component, "->", StylistIdentifier.Component(value: value, variant: variant),
                                    level: .debug)
 
-                o[affectedIndex] = StylistIdentifier.Component(value: value, state: state)
+                o[affectedIndex] = StylistIdentifier.Component(value: value, variant: variant)
             }
 
             combinationNumber += 1
@@ -252,7 +252,7 @@ struct VariantSequence: Sequence, IteratorProtocol {
         return variant
     }
 
-    // true if a bit set at this index represents a component's value, false if it represents state
+    // true if a bit set at this index represents a component's value, false if it represents variant
     private static func isBitRepresentingValue(_ index: Int) -> Bool {
         return index % 2 != 0
     }
@@ -292,7 +292,7 @@ extension Sequence where Element: Equatable {
 
  2 bits per component
  first bit is value
- second bit is state
+ second bit is variant
 
  possible values = 2^((3-1)*2) = 16
   NB: 3-1 is the number of components, minus 1 beacuse we don't touch the atom

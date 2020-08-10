@@ -23,9 +23,9 @@ import Foundation
 ///
 /// Identifiers can be combined using `within(_:)` i.e. `"close".within("button")` would return the identifier "button/close".
 ///
-/// # State
+/// # Variant
 ///
-/// Identifiers can also contain the idea of state i.e.
+/// Identifiers can also contain the idea of variant i.e.
 ///
 /// `button[selected]/close` is a valid identifier. `button/close` will match this identifier, as will `*/close`.
 ///
@@ -126,15 +126,15 @@ extension StylistIdentifier {
         let value: String
         let variant: String?
 
-        init(value: String, state: String?) {
+        init(value: String, variant: String?) {
             self.value = value
-            self.variant = state
+            self.variant = variant
         }
 
         init(_ string: String) {
             // Split on [
             //  lhs: store as value
-            //  rhs: trim trailing ] and store as state
+            //  rhs: trim trailing ] and store as variant
 
             let split = string.split(separator: "[", maxSplits: 1, omittingEmptySubsequences: true)
 
@@ -143,12 +143,12 @@ extension StylistIdentifier {
 
             // Get, validate, and store the variant (or just let it be `nil`)
             guard
-                let state = split.second.map(String.init).map({ $0.hasSuffix("]") ? String($0.dropLast()) : $0 }),
-                !state.isEmpty else {
+                let variant = split.second.map(String.init).map({ $0.hasSuffix("]") ? String($0.dropLast()) : $0 }),
+                !variant.isEmpty else {
                     self.variant = nil
                     return
             }
-            self.variant = state
+            self.variant = variant
         }
 
         var description: String {
