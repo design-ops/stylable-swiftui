@@ -17,7 +17,7 @@ extension Stylist {
         let stylist = Stylist()
 
         if debugUnstyledViews {
-            stylist.addStyle(identifier: "*") { $0.background(Color.green).opacity(0.5) }
+            stylist.setDefaultStyle { $0.background(Color.green).opacity(0.5) }
         }
 
         stylist.addStyles([
@@ -74,23 +74,22 @@ extension Stylist {
             Style("styledlistitem/name") { $0.font(Font.custom("Gill Sans", size: 14)) }
         ])
 
-
-        stylist.addStyle(identifier: "*/*/element/atom") {
+        stylist.addStyle(identifier: "element/atom") {
             $0.foregroundColor(.red)
         }
 
-        stylist.addStyle(identifier: "*/organism/*/atom") {
+        stylist.addStyle(identifier: "organism/atom") {
             $0.foregroundColor(.blue)
         }
 
         // Demonstrate changing the stylist on the fly
-//        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-//            stylist.addStyles([
-//                Style("title") {
-//                    $0.font(.title).foregroundColor(.green)
-//                }
-//            ])
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+            stylist.addStyles([
+                Style("title") {
+                    $0.font(.title).foregroundColor(.green)
+                }
+            ])
+        }
 
         return stylist
     }

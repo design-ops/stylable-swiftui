@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //
 //        Thread.sleep(forTimeInterval: 100)
 
+        Logger.default.level = .error
+
         // Override point for customization after application launch.
         return true
     }

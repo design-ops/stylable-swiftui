@@ -29,8 +29,16 @@ public class Stylist: ObservableObject {
     // All the styles this stylist knows about, in order of specificity (more specific -> more general)
     @Published private var styles: [Style]
 
+    private let matcher = StylistIdentifierMatcher()
+
+    private var defaultStyle: Style?
+
     public init() {
         self.styles = []
+    }
+
+    public func setDefaultStyle<V: View>(style: @escaping (Stylable) -> V) {
+        self.defaultStyle = Style(.unique, apply: style)
     }
 
     /// Convenience method to easily create and add a single style.
@@ -56,12 +64,8 @@ public class Stylist: ObservableObject {
             }
         }
 
-        // Append and sort new styles
-        styles.append(contentsOf: newStyles)
-        styles.sort { $0.identifier < $1.identifier }
-
         // Publish our changes
-        self.styles = styles
+        self.styles.append(contentsOf: newStyles)
     }
 
     /// Add multiple styles, publishing a single notification when all the styles have been stored.
@@ -71,14 +75,32 @@ public class Stylist: ObservableObject {
 
     func style(view: Stylable, identifier: StylistIdentifier) -> some View {
 
-        // Apply the first matching style in our list of styles
-        guard let style = self.styles.first(where: { $0.identifier.matches(identifier) }) else {
+        // Apply the best matching style
+        let scored = self.styles
+            .compactMap { (candidate: Style) -> (score: Int, style: Style)? in
+                let score = self.matcher.match(specific: identifier, general: candidate.identifier)
+                guard score > 0 else { return nil }
+                return (score, candidate)
+            }
+
+        // The best match is the highest scoring match
+        let bestMatch = scored
+            .max { $0.score < $1.score }?
+            .style
+
+        if let style = bestMatch {
+            // Apply the style
+            Logger.default.log("Applying", style.identifier.description, "to", identifier, level: .debug)
+            return AnyView(style.apply(view))
+        } else if let style = self.defaultStyle {
+            // Apply the default style
+            Logger.default.log("Applying default style", "to", identifier, level: .debug)
+            return AnyView(style.apply(view))
+        } else {
+            // There is no style to apply
             Logger.default.log("No matching style found for", identifier, level: .error)
             return AnyView(view)
         }
-
-        Logger.default.log("Applying", style.identifier.description, "to", identifier, level: .debug)
-        return AnyView(style.apply(view))
     }
 }
 

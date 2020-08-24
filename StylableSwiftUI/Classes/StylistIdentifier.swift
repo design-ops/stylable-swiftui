@@ -16,116 +16,52 @@ import Foundation
 ///
 /// There is no limit to the number of components an identifier can have.
 ///
-/// A StylistIdentifier can also contain wildcards i.e. these are also valid identifiers
-///
-/// ```
-/// */close
-/// */button/close
-/// customer/*/close
-/// ```
-///
-/// - Creating Identifiers
+/// # Creating Identifiers
 ///
 /// Identifiers have a construct like `StylistIdentifier("button/close")`, but also implement `ExpressibleByStringLiteral`, so passing a string literal into
 /// a method expecting a StylistIdentifier is (usually) far less code.
 ///
 /// Identifiers can be combined using `within(_:)` i.e. `"close".within("button")` would return the identifier "button/close".
 ///
-/// - Comparing Identifiers
+/// # Variant
 ///
-/// When comparing identifiers, these are considered equal:
-///
-/// ```
-/// close === close (obviously)
-/// close === */close
-/// close === */*/close
-/// ```
-///
-/// Identifiers also have a `matches(_:)` method, which will let you know whether an identifier is a more general version of another identifier. i.e.
-///
-/// ```
-/// "close".matches("*") // true
-/// "*/close".matches("button/close") // true
-/// "button/close".matches("*/close") // false
-/// ```
-///
-/// - State
-///
-/// Identifiers can also contain the idea of state i.e.
+/// Identifiers can also contain the idea of variant i.e.
 ///
 /// `button[selected]/close` is a valid identifier. `button/close` will match this identifier, as will `*/close`.
 ///
 public struct StylistIdentifier: Equatable, Hashable {
 
-    // i.e. [identifier, element, section, etc]
-    let components: [Component]
+    /// Given the identifier `header/searchBar/title` then `title` is the token
+    let token: String
 
-    /// A value based on how specific this identifier is.
-    ///
-    /// The higher the score, the more specific the identifier i.e. the more specific, the less this identifier can
-    /// match other identifiers.
-    ///
-    /// - note: The actual value of this isn't interesting, it's only really useful to compare this to another
-    ///         identifier's specificity.
-    let specificity: Specificity
-
-    /// Create a completely wildcard `StylistIdentifier` - calling `.matches()` on this will return true for all other `StylistIdentifier`s
-    public init() {
-        self.init(components: [] as [Component])
-    }
-
-    public init(components: [String]) {
-        self.init(components: components.map { Component($0) })
-    }
-
-    init(components: [Component]) {
-        self.components = components
-        self.specificity = Specificity(components: components)
-    }
-
-    func component(at index: Int) -> Component {
-        guard index < self.components.count else { return "*" }
-        return self.components[index]
-    }
-
-    func withComponent(value: String?, atIndex index: Int) -> Self {
-        var components = self.components
-
-        // If the index is greater than the number of components we have, pad our array
-        if index >= self.components.count {
-            let padding = repeatElement(Component("*"), count: index - self.components.count + 1)
-            components.append(contentsOf: padding)
-        }
-
-        components[index] = value.map { Component($0) } ?? Component("*")
-
-        return StylistIdentifier(components: components)
-    }
-
-    /// An identifier is a wildcard if all of it's components are wildcards (i.e. "*" with no state)
-    ///
-    /// - note: An identifier with no components (`""`) is also a wildcard.
-    var isWildcard: Bool {
-        !self.components.contains { !$0.isWildcard }
-    }
+    /// Given the identifier `header/searchBar/title` then the components are `[ "header", "searchBar" ]`
+    let path: Path
 }
 
 extension StylistIdentifier: LosslessStringConvertible {
 
     /// Create an instance of StylistIdentifier from a String, specifying the separator to use
     ///
+    /// - note: Given this method cannot throw or fail, it's possible to create insane identifiers i.e. an empty string. You have been warned.
+    ///
     /// - parameter description: The string to parse into an identifier
     public init(_ description: String) {
-        let split = Array(description.split(separator: "/").reversed()).map(String.init)
+        let split = description.split(separator: "/").map(String.init)
 
-        self.init(components: split)
+        let token = split.last ?? ""
+        let path = Path(split.dropLast().joined(separator: "/"))
+
+        self.init(token: token, path: path)
     }
 
     public var description: String {
-        self.components
-            .reversed()
-            .map { $0.description }
-            .joined(separator: "/")
+        let pathDescription = self.path.description
+
+        guard !pathDescription.isEmpty else {
+            return self.token
+        }
+
+        return pathDescription + "/" + self.token
     }
 }
 
@@ -137,100 +73,88 @@ extension StylistIdentifier: ExpressibleByStringLiteral {
     }
 }
 
-extension StylistIdentifier: Comparable {
+extension StylistIdentifier {
 
-    /// Returns true if `identifier` is a more specific version of `self`
-    ///
-    /// `*/specific/identifier` matches `very/specific/identifier`
-    func matches(_ identifier: StylistIdentifier) -> Bool {
-        guard self != identifier else { return true }
-
-        // */*/* is a special case (technically it has no identifier) and it matches _everything_
-        guard !self.isWildcard else { return true }
-
-        // Loop through the components, comparing them
-        let count = max(self.components.count, identifier.components.count)
-        for index in 0..<count {
-            let lhs = self.component(at: index)
-            let rhs = identifier.component(at: index)
-
-            if !lhs.matches(rhs) { return false }
-        }
-
-        return true
-    }
-
-    /// `<` here means `lhs` is definitely more specific than `rhs` - `lhs` matches _less_ than `rhs`
-    static public func < (lhs: StylistIdentifier, rhs: StylistIdentifier) -> Bool {
-        return lhs.specificity > rhs.specificity
-    }
+    public static var unique: StylistIdentifier { StylistIdentifier(UUID().uuidString) }
 }
+
 
 // MARK: - Component
 
 extension StylistIdentifier {
 
-    struct Component: CustomStringConvertible, Equatable, Hashable {
-        let value: String?
-        let state: String?
+    public struct Path: CustomStringConvertible, LosslessStringConvertible, ExpressibleByStringLiteral, Equatable, Hashable {
 
-        init(value: String?, state: String?) {
-            self.value = value != "*" ? value : nil
-            self.state = state
+        let components: [Component]
+
+        init(components: [Component]) {
+            self.components = components
+        }
+
+        public init(_ value: String) {
+            self.components = value
+                .split(separator: "/")
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty }
+                .reversed()
+                .map { Component($0) }
+        }
+
+        public init(stringLiteral value: String) {
+            self.init(value)
+        }
+
+        public var description: String {
+            self.components.reversed().map(String.init).joined(separator: "/")
+        }
+
+        var isEmpty: Bool { self.components.isEmpty }
+
+        func component(at index: Int) -> Component? {
+            guard index >= 0 && index < self.components.count else { return nil }
+            return self.components[index]
+        }
+
+        func within(_ path: Path?) -> Path {
+            guard let path = path, !path.isEmpty else { return self }
+
+            var components = self.components
+            components.append(contentsOf: path.components)
+            return Path(components: components)
+        }
+    }
+
+    struct Component: CustomStringConvertible, Equatable, Hashable {
+        let value: String
+        let variant: String?
+
+        init(value: String, variant: String?) {
+            self.value = value
+            self.variant = variant
         }
 
         init(_ string: String) {
             // Split on [
             //  lhs: store as value
-            //  rhs: trim trailing ] and store as state
+            //  rhs: trim trailing ] and store as variant
 
             let split = string.split(separator: "[", maxSplits: 1, omittingEmptySubsequences: true)
 
             // Store the value
-            var value = split.first.map(String.init)
-            if value == "*" { value = nil }
-            self.value = value
+            self.value = split.first.map(String.init) ?? ""
 
-            // Get, validate, and store the state (or just let it be `nil`)
+            // Get, validate, and store the variant (or just let it be `nil`)
             guard
-                let state = split.second.map(String.init).map({ $0.hasSuffix("]") ? String($0.dropLast()) : $0 }),
-                !state.isEmpty else {
-                    self.state = nil
+                let variant = split.second.map(String.init).map({ $0.hasSuffix("]") ? String($0.dropLast()) : $0 }),
+                !variant.isEmpty else {
+                    self.variant = nil
                     return
             }
-            self.state = state
+            self.variant = variant
         }
 
         var description: String {
-            (self.value ?? "*") + (self.state.map { "[" + $0 + "]" } ?? "")
-        }
-
-        var isWildcard: Bool { self.value == nil && self.state == nil }
-
-        func matches(_ other: Component) -> Bool {
-            // Four cases
-            //
-            // a: value[state]
-            // b: value
-            // c: *[state]
-            // d: *
-
-            // If we are a wildcard component, we match everything
-            if self.isWildcard { return true }
-
-            // If we have state and they don't, then we don't match
-            if self.state != nil && other.state == nil { return false }
-
-            // if we both have state then they much be equal or we don't match
-            if self.state != nil && self.state != other.state { return false }
-
-            // If we have a value but the other is a wildcard then we are more specific i.e. no match
-            if self.value != nil && other.value == nil { return false }
-
-            // The values must be the same
-            if self.value != other.value { return false }
-
-            return true
+            self.value + (self.variant.map { "[" + $0 + "]" } ?? "")
         }
     }
 }
@@ -246,31 +170,18 @@ extension StylistIdentifier.Component: ExpressibleByStringLiteral {
 
 extension StylistIdentifier {
 
-    /// Create an identifier representing `self` inside `identifier`
+    /// Create an identifier representing `self` inside `path`
     ///
     /// i.e. `"close".within("button") == 'button/close'`
     ///
-    public func within(_ identifier: StylistIdentifier?) -> StylistIdentifier {
-        guard let identifier = identifier else { return self }
-
-        var components = self.components
-        components.append(contentsOf: identifier.components)
-        return StylistIdentifier(components: components)
-    }
-
-    /// Create an new identifier where the passed in identifier is inside `self`
-    ///
-    /// i.e. `"button".containing("close") == 'button/close'`
-    ///
-    public func containing(_ identifier: StylistIdentifier?) -> StylistIdentifier {
-        guard let identifier = identifier else { return self }
-        return identifier.within(self)
+    public func within(_ path: Path?) -> StylistIdentifier {
+        StylistIdentifier(token: self.token, path: self.path.within(path))
     }
 }
 
 // MARK: - Some helpers
 
-private extension Collection {
+private extension RandomAccessCollection  {
 
     /// Helper property - exactly the same as `first` but returns the second element, if it exists.
     var second: Element? {
