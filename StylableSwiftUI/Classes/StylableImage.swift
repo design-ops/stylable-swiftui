@@ -86,10 +86,10 @@ extension Image {
 // Sometimes, we want to get a UIImage from an identifier when interacting with UIKit
 public extension UIImage {
     convenience init?(identifier: StylistIdentifier,
-                             wildcard: String = StylableImage.defaultWildcard,
-                             separator: String = StylableImage.defaultSeparator,
-                             maxLength: Int = StylableImage.defaultMaxLength,
-                             bundle: Bundle? = nil) {
+                      wildcard: String = StylableImage.defaultWildcard,
+                      separator: String = StylableImage.defaultSeparator,
+                      maxLength: Int = StylableImage.defaultMaxLength,
+                      bundle: Bundle? = nil) {
 
         // Get all the name variants
         let variants = identifier.potentialImageNames(wildcard: wildcard, separator: separator, maxLength: maxLength)
