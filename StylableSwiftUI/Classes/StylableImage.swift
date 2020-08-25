@@ -100,11 +100,7 @@ public extension UIImage {
             return nil
         }
 
-        guard let cgImage = UIImage(named: name, in: bundle, compatibleWith: nil)?.cgImage else {
-            return nil
-        }
-
-        self.init(cgImage: cgImage)
+        self.init(named: name, in: bundle, compatibleWith: nil)
     }
 }
 
