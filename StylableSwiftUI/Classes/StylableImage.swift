@@ -83,6 +83,31 @@ extension Image {
     }
 }
 
+// Sometimes, we want to get a UIImage from an identifier when interacting with UIKit
+public extension UIImage {
+    convenience init?(identifier: StylistIdentifier,
+                             wildcard: String = StylableImage.defaultWildcard,
+                             separator: String = StylableImage.defaultSeparator,
+                             maxLength: Int = StylableImage.defaultMaxLength,
+                             bundle: Bundle? = nil) {
+
+        // Get all the name variants
+        let variants = identifier.potentialImageNames(wildcard: wildcard, separator: separator, maxLength: maxLength)
+
+        // Use the first variant which is in the bundle
+        // Is there a lazy first + map? Otherwise we're initializing this image twice...
+        guard let name = variants.lazy.first(where: { UIImage(named: $0, in: bundle, compatibleWith: nil) != nil }) else {
+            return nil
+        }
+
+        guard let cgImage = UIImage(named: name, in: bundle, compatibleWith: nil)?.cgImage else {
+            return nil
+        }
+
+        self.init(cgImage: cgImage)
+    }
+}
+
 extension StylistIdentifier {
 
     /// All the possible names for a image based on this identifier
