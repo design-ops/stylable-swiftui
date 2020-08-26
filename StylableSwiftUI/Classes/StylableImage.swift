@@ -136,12 +136,13 @@ struct VariantSequence: Sequence, IteratorProtocol {
 
                     // Each component can have either the value, the variant, or neither masked out
                     let valueMask = 1 << (index*2+1)
-                    let variantMask = 1 << (index*2)
 
                     // If we are masking out the value, then we don't care about the variant so just return nil
                     if self.index & valueMask != 0 {
                         return nil
                     }
+
+                    let variantMask = 1 << (index*2)
 
                     // If we are masking out the variant, return a new component
                     if self.index & variantMask != 0 {
