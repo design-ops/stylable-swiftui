@@ -86,7 +86,7 @@ extension StylistIdentifier {
         // Append the token to the end - it's always there.
         let optionsWithToken = options
             .lazy
-            .map { $0.map(\.description) + [self.token] }
+            .map { $0.map { $0.description } + [self.token] }
 
         // Return the sequence, joining the components with the requested separator
         return AnySequence(optionsWithToken.map { $0.joined(separator: separator) })
