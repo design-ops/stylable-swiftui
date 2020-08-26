@@ -92,7 +92,7 @@ extension StylistIdentifier {
     }
 }
 
-struct VariantSequence: Sequence, IteratorProtocol {
+private struct VariantSequence: Sequence, IteratorProtocol {
 
     /// Save some typing in here.
     typealias Component = StylistIdentifier.Component
