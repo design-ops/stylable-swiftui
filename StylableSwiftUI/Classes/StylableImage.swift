@@ -86,7 +86,7 @@ extension StylistIdentifier {
         // Append the token to the end - it's always there.
         let optionsWithToken = options
             .lazy
-            .map { $0.map(\.description) + [self.token.description] }
+            .map { $0.map(\.description) + [self.token] }
 
         // Return the sequence, joining the components with the requested separator
         return AnySequence(optionsWithToken.map { $0.joined(separator: separator) })
@@ -117,7 +117,6 @@ struct VariantSequence: Sequence, IteratorProtocol {
     init(from components: [Component]) {
         self.components = Array(components)
         self.maxIndex = Int(pow(2.0, Double(components.count)*2))
-        print(self.components, self.maxIndex)
     }
 
     mutating func next() -> [Component]? {
@@ -126,8 +125,7 @@ struct VariantSequence: Sequence, IteratorProtocol {
         // Originally, I recursed but Swift won't do tail-optimisation and the stack suffered :)
 
         var result: [Component]?
-        var found = false
-        while !found {
+        while result == nil {
 
             // If we hit the end of the sequence, just bail.
             guard self.index < self.maxIndex else { return nil }
@@ -156,11 +154,12 @@ struct VariantSequence: Sequence, IteratorProtocol {
 
             self.index += 1
 
-            if let result = result {
-                found = !deduplicate.contains(result)
-
-                if found {
-                    deduplicate.insert(result)
+            // If we have a result, is it a duplicate?
+            if let foundResult = result {
+                if deduplicate.contains(foundResult) {
+                    result = nil
+                } else {
+                    deduplicate.insert(foundResult)
                 }
             }
         }
