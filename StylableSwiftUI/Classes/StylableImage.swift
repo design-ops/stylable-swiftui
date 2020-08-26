@@ -80,7 +80,6 @@ extension StylistIdentifier {
     /// All the possible names for a image based on this identifier
     func potentialImageNames(separator: String = StylableImage.defaultSeparator) -> AnySequence<String> {
         let components = Array(self.path.components.reversed())
-        // components.append(Component(value: self.token, variant: nil))
         let options = VariantSequence(from: components)
 
         // Append the token to the end - it's always there.
