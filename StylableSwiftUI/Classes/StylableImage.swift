@@ -61,17 +61,20 @@ extension Image {
     ///
     init(identifier: StylistIdentifier,
          separator: String = StylableImage.defaultSeparator,
-         bundle: Bundle? = nil,
-         compatibleWith traits: UITraitCollection? = nil) {
+         bundle: Bundle? = nil) {
 
-        let image = identifier.image(separator: separator, in: bundle, compatibleWith: traits)
+        // Get all the name variants
+        let variants = identifier.potentialImageNames(separator: separator)
 
-        if image == nil {
+        // Use the first variant which is in the bundle
+        let name = variants.lazy.first { UIImage(named: $0, in: bundle, compatibleWith: nil) != nil }
+
+        if name == nil {
             Logger.default.log("No image found for \(identifier)", level: .error)
         }
 
         // Return it, or a dummy image view
-        self = image.map { Image(uiImage: $0) } ?? Image(identifier.description, bundle: bundle)
+        self = name.map { Image($0, bundle: bundle) } ?? Image(identifier.description)
     }
 }
 
@@ -165,19 +168,5 @@ private struct VariantSequence: Sequence, IteratorProtocol {
         }
 
         return result
-    }
-}
-
-public extension StylistIdentifier {
-
-    /// Returns a UIImage instance from the local asset bundle, with the specified user interface traits.
-    func image(separator: String = StylableImage.defaultSeparator,
-               in bundle: Bundle? = nil,
-               compatibleWith traits: UITraitCollection? = nil) -> UIImage? {
-
-        self.potentialImageNames(separator: separator)
-            .lazy
-            .compactMap { UIImage(named: $0, in: bundle, compatibleWith: traits) }
-            .first
     }
 }
