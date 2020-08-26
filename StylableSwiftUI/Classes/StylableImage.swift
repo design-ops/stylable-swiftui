@@ -8,9 +8,7 @@ import UIKit
 
 public struct StylableImage: View {
 
-    public static let defaultWildcard = "*"
     public static let defaultSeparator = "_"
-    public static let defaultMaxLength = 6
 
     private let identifier: StylistIdentifier
     private let factory: (StylistIdentifier) -> Image
@@ -22,9 +20,9 @@ public struct StylableImage: View {
         self.factory = factory
     }
 
-    public init(_ identifier: StylistIdentifier, wildcard: String = defaultWildcard, separator: String = defaultSeparator, maxLength: Int = defaultMaxLength, bundle: Bundle? = nil) {
+    public init(_ identifier: StylistIdentifier, separator: String = defaultSeparator, bundle: Bundle? = nil) {
         self.identifier = identifier
-        self.factory = { identifier in Image(identifier: identifier, wildcard: wildcard, separator: separator, maxLength: maxLength, bundle: bundle) }
+        self.factory = { identifier in Image(identifier: identifier, separator: separator, bundle: bundle) }
     }
 
     public var body: some View {
@@ -58,24 +56,21 @@ extension Image {
     /// `section_element_atom` then `*_element_atom` then `section_*_atom`, finally `*_*_atom`.
     ///
     /// - parameter identifier: The StylistIdentifier to use when attempting to find/load an image
-    /// - parameter wildcard: _(optional)_ The wildcard character to use when replacing component names (defaults to `*`)
     /// - parameter separator: _(optional)_ The character to use when joining the components together to create the resource name (defaults to `_`)
     /// - parameter bundle: _(optional)_ The bundle to search for the image (defaults to the main bundle)
     ///
     init(identifier: StylistIdentifier,
-         wildcard: String = StylableImage.defaultWildcard,
          separator: String = StylableImage.defaultSeparator,
-         maxLength: Int = StylableImage.defaultMaxLength,
          bundle: Bundle? = nil) {
 
         // Get all the name variants
-        let variants = identifier.potentialImageNames(wildcard: wildcard, separator: separator, maxLength: maxLength)
+        let variants = identifier.potentialImageNames(separator: separator)
 
         // Use the first variant which is in the bundle
         let name = variants.lazy.first { UIImage(named: $0, in: bundle, compatibleWith: nil) != nil }
 
         if name == nil {
-            Logger.default.log("No image found for \(identifier), including checking with prefix \(wildcard) to depth \(maxLength)", level: .error)
+            Logger.default.log("No image found for \(identifier)", level: .error)
         }
 
         // Return it, or a dummy image view
@@ -86,17 +81,98 @@ extension Image {
 extension StylistIdentifier {
 
     /// All the possible names for a image based on this identifier
-    func potentialImageNames(wildcard: String = StylableImage.defaultWildcard,
-                             separator: String = StylableImage.defaultSeparator,
-                             maxLength: Int = StylableImage.defaultMaxLength) -> AnySequence<String> {
+    func potentialImageNames(separator: String = StylableImage.defaultSeparator) -> AnySequence<String> {
+        let components = Array(self.path.components.reversed())
+        // components.append(Component(value: self.token, variant: nil))
+        let options = VariantSequence(from: components)
 
-        var components = Array(self.path.components.reversed())
-        components.append(Component(value: self.token, variant: nil))
-        let options = VariantSequence(from: components, wildcard: wildcard, maxLength: maxLength)
-        return AnySequence(options.lazy.map { $0.joined(separator: separator) })
+        // Append the token to the end - it's always there.
+        let optionsWithToken = options
+            .lazy
+            .map { $0.map(\.description) + [self.token.description] }
+
+        // Return the sequence, joining the components with the requested separator
+        return AnySequence(optionsWithToken.map { $0.joined(separator: separator) })
     }
 }
 
+struct VariantSequence: Sequence, IteratorProtocol {
+
+    /// Save some typing in here.
+    typealias Component = StylistIdentifier.Component
+
+    /// The original components used to create the breakdown
+    private let components: [Component]
+
+    /// Calculate the maximum possible options to output for this sequence.
+    private let maxIndex: Int
+
+    /// The current index into the sequence.
+    private var index = 0
+
+    /// This prevents this sequence from outputing duplicate values.
+    ///
+    /// This is pretty inefficient - it would be better to work out how to not calculate them in the first place,
+    /// but to keep the code 'simple' it's easier to use a bitmask and just drop masks which produce a component with
+    /// a variant but not value - which is impossible in NDS.
+    private var deduplicate = Set<[Component]>()
+
+    init(from components: [Component]) {
+        self.components = Array(components)
+        self.maxIndex = Int(pow(2.0, Double(components.count)*2))
+        print(self.components, self.maxIndex)
+    }
+
+    mutating func next() -> [Component]? {
+
+        // There's a bit of a while here - we don't want to return duplicate values from the sequence.
+        // Originally, I recursed but Swift won't do tail-optimisation and the stack suffered :)
+
+        var result: [Component]?
+        var found = false
+        while !found {
+
+            // If we hit the end of the sequence, just bail.
+            guard self.index < self.maxIndex else { return nil }
+
+            result = self.components
+                .enumerated()
+                .compactMap { (index, component) -> Component? in
+
+                    // Each component can have either the value, the variant, or neither masked out
+                    let valueMask = 1 << (index*2+1)
+                    let variantMask = 1 << (index*2)
+
+                    // If we are masking out the value, then we don't care about the variant so just return nil
+                    if self.index & valueMask != 0 {
+                        return nil
+                    }
+
+                    // If we are masking out the variant, return a new component
+                    if self.index & variantMask != 0 {
+                        return Component(value: component.value, variant: nil)
+                    }
+
+                    // If we aren't masking anything in this component, just return it as-is
+                    return component
+            }
+
+            self.index += 1
+
+            if let result = result {
+                found = !deduplicate.contains(result)
+
+                if found {
+                    deduplicate.insert(result)
+                }
+            }
+        }
+
+        return result
+    }
+}
+
+/*
 struct VariantSequence: Sequence, IteratorProtocol {
 
     private let base: [StylistIdentifier.Component]
@@ -257,35 +333,36 @@ struct VariantSequence: Sequence, IteratorProtocol {
         return index % 2 != 0
     }
 }
+*/
 
-extension Sequence {
+//extension Sequence {
+//
+//    func leftPad<E>(with prefix: E, count: Int = 1) -> [Element] where Element == [E] {
+//        self.map { repeatElement(prefix, count: count) + $0 }
+//    }
+//}
 
-    func leftPad<E>(with prefix: E, count: Int = 1) -> [Element] where Element == [E] {
-        self.map { repeatElement(prefix, count: count) + $0 }
-    }
-}
-
-extension Sequence where Element: Equatable {
-
-    /// Returns versions of this collection created by trimming _n_ `replacement` from the start of the sequence.
-    ///
-    /// i.e. [ *, *, c, d ] would return [ [ *, c, d ], [ c, d ] ]
-    ///
-    /// - parameter replacing: The value to check for, and trim from the start of `self`
-    /// - returns: An array of versions of `self` where the first matching elements have been removed one by one.
-    ///
-    func trimmed(replacing: Element) -> [[Element]] {
-        var trimmed = [[Element]]()
-
-        var candidate = Array(self)
-        while candidate.first == replacing {
-            candidate = Array(candidate.dropFirst())
-            trimmed.append(candidate)
-        }
-
-        return trimmed
-    }
-}
+//extension Sequence where Element: Equatable {
+//
+//    /// Returns versions of this collection created by trimming _n_ `replacement` from the start of the sequence.
+//    ///
+//    /// i.e. [ *, *, c, d ] would return [ [ *, c, d ], [ c, d ] ]
+//    ///
+//    /// - parameter replacing: The value to check for, and trim from the start of `self`
+//    /// - returns: An array of versions of `self` where the first matching elements have been removed one by one.
+//    ///
+//    func trimmed(replacing: Element) -> [[Element]] {
+//        var trimmed = [[Element]]()
+//
+//        var candidate = Array(self)
+//        while candidate.first == replacing {
+//            candidate = Array(candidate.dropFirst())
+//            trimmed.append(candidate)
+//        }
+//
+//        return trimmed
+//    }
+//}
 
 /*
  a/b/c
