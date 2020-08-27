@@ -19,6 +19,7 @@
 		8A41BD5D13621C67DB57A811A2870B9A /* Pods-StylableSwiftUI_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DFACA3F314B71639262F45835CBBB15D /* Pods-StylableSwiftUI_Tests-dummy.m */; };
 		9022374383D0BDD37CC4C3822FE1FA2B /* DebugStylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB07C61C2D44CF244196BBC1A71E23B /* DebugStylist.swift */; };
 		9745DB18642CE7C840674AF994EE2712 /* Pods-StylableSwiftUI_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F723C8194BB296B289FFA791D3BCF72D /* Pods-StylableSwiftUI_Example-dummy.m */; };
+		A07C922924F8598100E6C9D5 /* WithStyleIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07C922724F857DD00E6C9D5 /* WithStyleIdentifier.swift */; };
 		A0DF068CBDD055A1D8E51549D3C7148C /* StylableSwiftUI-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5144DA9A8DAB007792717A1EE93310D2 /* StylableSwiftUI-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3087BD29CF35221B91AA725D838C318 /* Pods-StylableSwiftUI_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D1DD3D846172B29A86C7B9A95EF86EE7 /* Pods-StylableSwiftUI_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B8D3DC1D186151BCB60AEF2FF3B125C5 /* StylableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D9F234EC7ECEE46AF30D06F459A312 /* StylableView.swift */; };
@@ -69,6 +70,7 @@
 		94DA90434E0D0EAAB0CF3526CEB83492 /* StylableSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StylableSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D914646A79C31B47D08118842297A7B /* StylistIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylistIdentifier.swift; path = StylableSwiftUI/Classes/StylistIdentifier.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A07C922724F857DD00E6C9D5 /* WithStyleIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithStyleIdentifier.swift; sourceTree = "<group>"; };
 		A0D8A8F58959D6FD0BDB343BD432549A /* StylableSwiftUI.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = StylableSwiftUI.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A2AD1A2E6AACDD358DC0F2512A798033 /* Pods-StylableSwiftUI_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-StylableSwiftUI_Tests-Info.plist"; sourceTree = "<group>"; };
 		A451727DE13A1A1C748A7BD7A555C8E9 /* StylableSwiftUI-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "StylableSwiftUI-dummy.m"; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				9D914646A79C31B47D08118842297A7B /* StylistIdentifier.swift */,
 				BC44088104EFB5463704DE6C6EF65FBA /* StylistIdentifierMatcher.swift */,
 				F8C80FB9CE5F98D6202BA46EF1C248F2 /* View+style.swift */,
+				A07C922724F857DD00E6C9D5 /* WithStyleIdentifier.swift */,
 				FA8D42DC234E8DEBE34EE7BBB8EFAB26 /* Pod */,
 				367578FBC35B829A8906DD5761B94D16 /* Support Files */,
 			);
@@ -339,6 +342,11 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1100;
+				TargetAttributes = {
+					4E0384231A8EAAB431B4C45C84245A95 = {
+						LastSwiftMigration = 1160;
+					};
+				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -394,6 +402,7 @@
 				5A911BA79DECFD07FD83BD58CF5A503A /* StylableGroup.swift in Sources */,
 				13018954430A4CED899BA6EC8F097B80 /* StylableImage.swift in Sources */,
 				6DC1F2CB63D74B7D2E74077319231D7B /* StylableSwiftUI-dummy.m in Sources */,
+				A07C922924F8598100E6C9D5 /* WithStyleIdentifier.swift in Sources */,
 				B8D3DC1D186151BCB60AEF2FF3B125C5 /* StylableView.swift in Sources */,
 				56D11FD0E8FAD0234814D6E2A4364876 /* Stylist.swift in Sources */,
 				208390E0B5DFA2CFF0DBB7AFA056FE83 /* StylistIdentifier.swift in Sources */,
@@ -535,6 +544,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -558,6 +568,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -604,6 +615,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -627,6 +639,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
