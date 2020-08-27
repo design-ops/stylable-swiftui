@@ -9,6 +9,30 @@ import Foundation
 
 import SwiftUI
 
+/// Extracts out the current stylist identfier to pass into the block to create this `View`'s contents.
+///
+/// This struct will take the current `StylableGroup` into account when calling it's creation block.
+///
+/// ```
+/// var body: some View {
+///   WithStylistIdentifier(token: "title") { identifier in
+///     ... create views using
+///         the identifier ...
+///   }
+/// }
+/// ```
+///
+/// Multiple tokens can be passed in to save deeply nesting if multiple identifiers are needed.
+///
+/// ```
+/// var body: some View {
+///   WithStylistIdentifier(tokens: "title", "icon") { titleIdentifier, iconIdentifier in
+///     ... create views using
+///         the identifier ...
+///   }
+/// }
+/// ```
+///
 public struct WithStylistIdentifier<Content: View>: View {
 
     @Environment(\.currentStylableGroup) private var currentStylableGroup
@@ -16,6 +40,8 @@ public struct WithStylistIdentifier<Content: View>: View {
     private let tokens: [String]
 
     private let contents: ([StylistIdentifier]) -> Content
+
+    // MARK: Constructors
 
     public init(token: String,
                 @ViewBuilder contents: @escaping (StylistIdentifier) -> Content) {
@@ -29,17 +55,25 @@ public struct WithStylistIdentifier<Content: View>: View {
         self.contents = { contents($0[0], $0[1]) }
     }
 
-    public init(tokens token1: String, token2: String, token3: String,
+    public init(tokens token1: String, _ token2: String, _ token3: String,
                 @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.tokens = [ token1, token2, token3 ]
         self.contents = { contents($0[0], $0[1], $0[2]) }
     }
 
-    public init(tokens token1: String, token2: String, token3: String, token4: String,
+    public init(tokens token1: String, _ token2: String, _ token3: String, _ token4: String,
                 @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.tokens = [ token1, token2, token3, token4 ]
         self.contents = { contents($0[0], $0[1], $0[2], $0[3]) }
     }
+
+    public init(tokens token1: String, _ token2: String, _ token3: String, _ token4: String, _ token5: String,
+                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
+        self.tokens = [ token1, token2, token3, token4, token5 ]
+        self.contents = { contents($0[0], $0[1], $0[2], $0[3], $0[4]) }
+    }
+
+    // MARK: View methods
 
     public var body: some View {
         // Create the identifier from the current stylist group and our tokens
