@@ -9,7 +9,7 @@ import Foundation
 
 import SwiftUI
 
-struct WithStylistIdentifier<Content: View>: View {
+public struct WithStylistIdentifier<Content: View>: View {
 
     @Environment(\.currentStylableGroup) private var currentStylableGroup
 
@@ -17,31 +17,31 @@ struct WithStylistIdentifier<Content: View>: View {
 
     private let contents: ([StylistIdentifier]) -> Content
 
-    init(token: String,
-         @ViewBuilder contents: @escaping (StylistIdentifier) -> Content) {
+    public init(token: String,
+                @ViewBuilder contents: @escaping (StylistIdentifier) -> Content) {
         self.tokens = [ token ]
         self.contents = { contents($0[0]) }
     }
 
-    init(tokens token1: String, _ token2: String,
-         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier) -> Content) {
+    public init(tokens token1: String, _ token2: String,
+                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier) -> Content) {
         self.tokens = [ token1, token2 ]
         self.contents = { contents($0[0], $0[1]) }
     }
 
-    init(tokens token1: String, token2: String, token3: String,
-         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
+    public init(tokens token1: String, token2: String, token3: String,
+                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.tokens = [ token1, token2, token3 ]
         self.contents = { contents($0[0], $0[1], $0[2]) }
     }
 
-    init(tokens token1: String, token2: String, token3: String, token4: String,
-         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
+    public init(tokens token1: String, token2: String, token3: String, token4: String,
+                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.tokens = [ token1, token2, token3, token4 ]
         self.contents = { contents($0[0], $0[1], $0[2], $0[3]) }
     }
 
-    var body: some View {
+    public var body: some View {
         // Create the identifier from the current stylist group and our tokens
         let path = self.currentStylableGroup ?? .empty
         let identifiers = self.tokens.map { StylistIdentifier(token: $0, path: path) }
