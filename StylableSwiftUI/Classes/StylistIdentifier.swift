@@ -122,6 +122,9 @@ extension StylistIdentifier {
             components.append(contentsOf: path.components)
             return Path(components: components)
         }
+
+        // A path with no components.
+        static let empty = Path(components: [])
     }
 
     struct Component: CustomStringConvertible, Equatable, Hashable {

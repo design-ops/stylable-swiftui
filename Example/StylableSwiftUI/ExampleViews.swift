@@ -15,6 +15,14 @@ struct ExampleViews: View {
 
     var body: some View {
         VStack {
+            StylableGroup("section") {
+                WithStylistIdentifier(tokens: "a", "b") { identifier1, identifier2 in
+                    VStack {
+                        Text(identifier1.description)
+                        Text(identifier2.description)
+                    }
+                }
+            }
             StylableGroup("example") {
                 Spacer()
                 Text("Some Title").style("title") // example/title
