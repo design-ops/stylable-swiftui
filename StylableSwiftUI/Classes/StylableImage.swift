@@ -63,18 +63,15 @@ extension Image {
          separator: String = StylableImage.defaultSeparator,
          bundle: Bundle? = nil) {
 
-        // Get all the name variants
-        let variants = identifier.potentialImageNames(separator: separator)
+        // Get the image if it exists
+        let image = identifier.uiImage(separator: separator, bundle: bundle)
 
-        // Use the first variant which is in the bundle
-        let name = variants.lazy.first { UIImage(named: $0, in: bundle, compatibleWith: nil) != nil }
-
-        if name == nil {
+        if image == nil {
             Logger.default.log("No image found for \(identifier)", level: .error)
         }
 
         // Return it, or a dummy image view
-        self = name.map { Image($0, bundle: bundle) } ?? Image(identifier.description)
+        self = image.map { Image(uiImage: $0) } ?? Image(identifier.description)
     }
 }
 
@@ -168,5 +165,18 @@ private struct VariantSequence: Sequence, IteratorProtocol {
         }
 
         return result
+    }
+}
+
+// MARK: - UIImage
+
+public extension StylistIdentifier {
+    func uiImage(separator: String = StylableImage.defaultSeparator,
+                 bundle: Bundle? = nil,
+                 compatibleWith traits: UITraitCollection? = nil) -> UIImage? {
+        self.potentialImageNames(separator: separator)
+            .lazy
+            .compactMap { UIImage(named: $0, in: bundle, compatibleWith: traits) }
+            .first
     }
 }
