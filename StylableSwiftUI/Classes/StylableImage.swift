@@ -20,9 +20,9 @@ public struct StylableImage: View {
         self.factory = factory
     }
 
-    public init(_ identifier: StylistIdentifier, separator: String = defaultSeparator, bundle: Bundle? = nil) {
+    public init(_ identifier: StylistIdentifier, separator: String = defaultSeparator, bundle: Bundle? = nil, compatibleWith traitCollection: UITraitCollection? = nil) {
         self.identifier = identifier
-        self.factory = { identifier in Image(identifier: identifier, separator: separator, bundle: bundle) }
+        self.factory = { identifier in Image(identifier: identifier, separator: separator, bundle: bundle, compatibleWith: traitCollection) }
     }
 
     public var body: some View {
@@ -61,10 +61,11 @@ extension Image {
     ///
     init(identifier: StylistIdentifier,
          separator: String = StylableImage.defaultSeparator,
-         bundle: Bundle? = nil) {
+         bundle: Bundle? = nil,
+         compatibleWith traitCollection: UITraitCollection?) {
 
         // Get the image if it exists
-        let image = identifier.uiImage(separator: separator, bundle: bundle)
+        let image = identifier.uiImage(separator: separator, bundle: bundle, compatibleWith: traitCollection)
 
         if image == nil {
             Logger.default.log("No image found for \(identifier)", level: .error)
