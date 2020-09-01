@@ -7,36 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0AFAB040F2CD319F8425A466784E4A1D /* View+style.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C80FB9CE5F98D6202BA46EF1C248F2 /* View+style.swift */; };
-		13018954430A4CED899BA6EC8F097B80 /* StylableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6EA7FE211A052D8856CA3C81DE488 /* StylableImage.swift */; };
-		208390E0B5DFA2CFF0DBB7AFA056FE83 /* StylistIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D914646A79C31B47D08118842297A7B /* StylistIdentifier.swift */; };
-		32496D75C09642461D2415BA1FFFB8BB /* Pods-StylableSwiftUI_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F4406E2FFB9C406785A39372ACA45C9 /* Pods-StylableSwiftUI_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3AA03BB56E45D0B15CC0591E0EB118CE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
-		56D11FD0E8FAD0234814D6E2A4364876 /* Stylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39614A7D9D75B497A316A12C108CAB13 /* Stylist.swift */; };
-		5A911BA79DECFD07FD83BD58CF5A503A /* StylableGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93109C9EF66DCBD089407F1184E8D348 /* StylableGroup.swift */; };
-		6DC1F2CB63D74B7D2E74077319231D7B /* StylableSwiftUI-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A451727DE13A1A1C748A7BD7A555C8E9 /* StylableSwiftUI-dummy.m */; };
-		7DDBF639B37F010F8C10CFF785A49839 /* StylistIdentifierMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC44088104EFB5463704DE6C6EF65FBA /* StylistIdentifierMatcher.swift */; };
-		8A41BD5D13621C67DB57A811A2870B9A /* Pods-StylableSwiftUI_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DFACA3F314B71639262F45835CBBB15D /* Pods-StylableSwiftUI_Tests-dummy.m */; };
-		9022374383D0BDD37CC4C3822FE1FA2B /* DebugStylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB07C61C2D44CF244196BBC1A71E23B /* DebugStylist.swift */; };
-		9745DB18642CE7C840674AF994EE2712 /* Pods-StylableSwiftUI_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F723C8194BB296B289FFA791D3BCF72D /* Pods-StylableSwiftUI_Example-dummy.m */; };
-		A07C922924F8598100E6C9D5 /* WithStyleIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07C922724F857DD00E6C9D5 /* WithStyleIdentifier.swift */; };
-		A0DF068CBDD055A1D8E51549D3C7148C /* StylableSwiftUI-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5144DA9A8DAB007792717A1EE93310D2 /* StylableSwiftUI-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A3087BD29CF35221B91AA725D838C318 /* Pods-StylableSwiftUI_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D1DD3D846172B29A86C7B9A95EF86EE7 /* Pods-StylableSwiftUI_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B8D3DC1D186151BCB60AEF2FF3B125C5 /* StylableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D9F234EC7ECEE46AF30D06F459A312 /* StylableView.swift */; };
-		E6FC2B4770386F2500F55758ED2D719E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		23F819EBF3F704B65E6A64A29676C318 /* StylistIdentifierMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9CC8F622DAEA73736FB0B69B4A2D3D /* StylistIdentifierMatcher.swift */; };
+		33EF8C070B4AECE53013CA0EC304CC5D /* StylistIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865EF8694183BBDA713CDE5720CB9346 /* StylistIdentifier.swift */; };
+		34CBE13B149053D8638DD2DF0D7D55E0 /* DebugStylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60B40B153332C7536DEFDA5789F1302 /* DebugStylist.swift */; };
+		45DBDB29698F8C9B562252DD95682E68 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		4A23272B8BCAECD548E6036CF70ED211 /* Pods-StylableSwiftUI_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D1DD3D846172B29A86C7B9A95EF86EE7 /* Pods-StylableSwiftUI_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		547C3781104CD5D6C37D6F025DB42CF1 /* WithStyleIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9E3A3E35834F17B38CF623AC0F6087 /* WithStyleIdentifier.swift */; };
+		61E07491FB3C29852C98D296F81FA65D /* View+style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F703DA5B2AAF1660DEE9634E3965666 /* View+style.swift */; };
+		8415CCEFD2B90692FE5DCE146C4BFDBC /* StylableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE10F89F7FCFF115833C446FF27EB528 /* StylableImage.swift */; };
+		9D06287689E217334F51439DEDA941FE /* Pods-StylableSwiftUI_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F4406E2FFB9C406785A39372ACA45C9 /* Pods-StylableSwiftUI_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A0DF068CBDD055A1D8E51549D3C7148C /* StylableSwiftUI-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DED08597515037EF52270CA6A97E3519 /* StylableSwiftUI-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B296CE4D600E2FDFAD846608D647384C /* Pods-StylableSwiftUI_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F723C8194BB296B289FFA791D3BCF72D /* Pods-StylableSwiftUI_Example-dummy.m */; };
+		B7FAAC7C1640E791C12DE7288A41E743 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		BD0905037D4BB820B53C49D13474E260 /* StylableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB18FC0A81E8602961265F6339286846 /* StylableView.swift */; };
+		D7588960FC394511B1BF7F443234C63B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E64102ABC9F9A76C9DD67ED20529DC8 /* Logger.swift */; };
+		DB3DC7588A4FCAA0018371BB3B625B03 /* StylableSwiftUI-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 384947C7C24ACF371A2DC5CEBDB48279 /* StylableSwiftUI-dummy.m */; };
+		E2FC454F0D45DA4C18B5D0042AC85E31 /* StylableGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA4785F1B2202BA301286F04F2E0317 /* StylableGroup.swift */; };
+		EBDAB8A04FD1F29FD9791EFABD1E128A /* Stylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCA1D573FBA0901F5CF7BF18E64B108 /* Stylist.swift */; };
+		F5C631787F10AD8617378AAAF97AEEB9 /* Pods-StylableSwiftUI_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DFACA3F314B71639262F45835CBBB15D /* Pods-StylableSwiftUI_Tests-dummy.m */; };
 		F80849C682CA252EDDDF11310B07EBA8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
-		FCF8DB7A34B83B62DC3398DBD43EAEA8 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447A444E031191CB795FBB05B97FB148 /* Logger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B74779E3081D19F96BBB77C9ADF2C649 /* PBXContainerItemProxy */ = {
+		1F3F795D24C69AC10B355EEC6133902E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0E12E449EA31D5414AB180DDBF51184C;
 			remoteInfo = StylableSwiftUI;
 		};
-		E6B142318F2892499D6C6332F543A281 /* PBXContainerItemProxy */ = {
+		BCB626C39476024DCD1DF2DECC754D79 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -47,46 +47,47 @@
 
 /* Begin PBXFileReference section */
 		0B82A4892A64301368F000C6EE5A539E /* Pods-StylableSwiftUI_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-StylableSwiftUI_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		0B9CC8F622DAEA73736FB0B69B4A2D3D /* StylistIdentifierMatcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylistIdentifierMatcher.swift; path = StylableSwiftUI/Classes/StylistIdentifierMatcher.swift; sourceTree = "<group>"; };
 		1E192307550D7B254984A9E9A13251F0 /* Pods-StylableSwiftUI_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-StylableSwiftUI_Tests.modulemap"; sourceTree = "<group>"; };
+		1F31E924871C85B92A8ECD7A3CF0D311 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		2E3034F755162A44193D114320F95627 /* Pods-StylableSwiftUI_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-StylableSwiftUI_Example.release.xcconfig"; sourceTree = "<group>"; };
 		30AFE4E822B18CEC1E51FF698D5012BF /* Pods-StylableSwiftUI_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-StylableSwiftUI_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		36049315E91F2BAFA2164D885084F64F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		39614A7D9D75B497A316A12C108CAB13 /* Stylist.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stylist.swift; path = StylableSwiftUI/Classes/Stylist.swift; sourceTree = "<group>"; };
-		3FB6EA7FE211A052D8856CA3C81DE488 /* StylableImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylableImage.swift; path = StylableSwiftUI/Classes/StylableImage.swift; sourceTree = "<group>"; };
-		447A444E031191CB795FBB05B97FB148 /* Logger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = StylableSwiftUI/Classes/Logger.swift; sourceTree = "<group>"; };
+		384947C7C24ACF371A2DC5CEBDB48279 /* StylableSwiftUI-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "StylableSwiftUI-dummy.m"; sourceTree = "<group>"; };
+		3F9E3A3E35834F17B38CF623AC0F6087 /* WithStyleIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WithStyleIdentifier.swift; path = StylableSwiftUI/Classes/WithStyleIdentifier.swift; sourceTree = "<group>"; };
 		4BE4AFFD13D1E96322CBE259DFE4E8C3 /* Pods-StylableSwiftUI_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-StylableSwiftUI_Example-frameworks.sh"; sourceTree = "<group>"; };
-		4D264895CCBA0EBE166161B519945234 /* Pods_StylableSwiftUI_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StylableSwiftUI_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5144DA9A8DAB007792717A1EE93310D2 /* StylableSwiftUI-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "StylableSwiftUI-umbrella.h"; sourceTree = "<group>"; };
+		4D264895CCBA0EBE166161B519945234 /* Pods_StylableSwiftUI_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_StylableSwiftUI_Example.framework; path = "Pods-StylableSwiftUI_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DA4785F1B2202BA301286F04F2E0317 /* StylableGroup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylableGroup.swift; path = StylableSwiftUI/Classes/StylableGroup.swift; sourceTree = "<group>"; };
+		4F703DA5B2AAF1660DEE9634E3965666 /* View+style.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "View+style.swift"; path = "StylableSwiftUI/Classes/View+style.swift"; sourceTree = "<group>"; };
+		519C2C04A920A899D201360154DBA2A5 /* StylableSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = StylableSwiftUI.debug.xcconfig; sourceTree = "<group>"; };
+		59245587C54A2D86336B372C539FB458 /* StylableSwiftUI-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "StylableSwiftUI-Info.plist"; sourceTree = "<group>"; };
 		5B99811236455523692133D709217227 /* Pods-StylableSwiftUI_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-StylableSwiftUI_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5F4406E2FFB9C406785A39372ACA45C9 /* Pods-StylableSwiftUI_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-StylableSwiftUI_Tests-umbrella.h"; sourceTree = "<group>"; };
 		6353A0FAF5B070146EB93E6811374357 /* Pods-StylableSwiftUI_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-StylableSwiftUI_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		64FCD13EB30CC11EEA65FB86BBF11FA0 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		6E64102ABC9F9A76C9DD67ED20529DC8 /* Logger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = StylableSwiftUI/Classes/Logger.swift; sourceTree = "<group>"; };
 		76934AC8F2F3DB2A040A6B745D452C81 /* Pods-StylableSwiftUI_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-StylableSwiftUI_Example.modulemap"; sourceTree = "<group>"; };
 		78F2AA43F8A96E13884C58D413820334 /* Pods-StylableSwiftUI_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-StylableSwiftUI_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		7DD57C1BAB44D79F375EDA5730BC35AE /* StylableSwiftUI.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = StylableSwiftUI.xcconfig; sourceTree = "<group>"; };
-		837F85F3267E11EB38C5B1FC1F7F3E71 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		93109C9EF66DCBD089407F1184E8D348 /* StylableGroup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylableGroup.swift; path = StylableSwiftUI/Classes/StylableGroup.swift; sourceTree = "<group>"; };
-		93D9F234EC7ECEE46AF30D06F459A312 /* StylableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylableView.swift; path = StylableSwiftUI/Classes/StylableView.swift; sourceTree = "<group>"; };
-		94DA90434E0D0EAAB0CF3526CEB83492 /* StylableSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StylableSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D914646A79C31B47D08118842297A7B /* StylistIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylistIdentifier.swift; path = StylableSwiftUI/Classes/StylistIdentifier.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A07C922724F857DD00E6C9D5 /* WithStyleIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithStyleIdentifier.swift; sourceTree = "<group>"; };
-		A0D8A8F58959D6FD0BDB343BD432549A /* StylableSwiftUI.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = StylableSwiftUI.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		865EF8694183BBDA713CDE5720CB9346 /* StylistIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylistIdentifier.swift; path = StylableSwiftUI/Classes/StylistIdentifier.swift; sourceTree = "<group>"; };
+		94DA90434E0D0EAAB0CF3526CEB83492 /* StylableSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = StylableSwiftUI.framework; path = StylableSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AC697FB030C5CC501FBC14702D105B3 /* StylableSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = StylableSwiftUI.release.xcconfig; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A2AD1A2E6AACDD358DC0F2512A798033 /* Pods-StylableSwiftUI_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-StylableSwiftUI_Tests-Info.plist"; sourceTree = "<group>"; };
-		A451727DE13A1A1C748A7BD7A555C8E9 /* StylableSwiftUI-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "StylableSwiftUI-dummy.m"; sourceTree = "<group>"; };
 		AE4841F90C84ED9782C2BC3470D4DA2A /* Pods-StylableSwiftUI_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-StylableSwiftUI_Example-acknowledgements.plist"; sourceTree = "<group>"; };
-		B4CF4869C47902E135BF89124B608F20 /* StylableSwiftUI.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = StylableSwiftUI.modulemap; sourceTree = "<group>"; };
-		BC44088104EFB5463704DE6C6EF65FBA /* StylistIdentifierMatcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylistIdentifierMatcher.swift; path = StylableSwiftUI/Classes/StylistIdentifierMatcher.swift; sourceTree = "<group>"; };
 		BDBD503D10E60553838CE5E004841BD8 /* Pods-StylableSwiftUI_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-StylableSwiftUI_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		C10BF352437A00C2310905E90982F700 /* StylableSwiftUI-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "StylableSwiftUI-Info.plist"; sourceTree = "<group>"; };
-		C935C69DD539E3E26563528D513DBB3D /* Pods_StylableSwiftUI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StylableSwiftUI_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEB07C61C2D44CF244196BBC1A71E23B /* DebugStylist.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DebugStylist.swift; path = StylableSwiftUI/Classes/DebugStylist.swift; sourceTree = "<group>"; };
+		C935C69DD539E3E26563528D513DBB3D /* Pods_StylableSwiftUI_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_StylableSwiftUI_Tests.framework; path = "Pods-StylableSwiftUI_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1DD3D846172B29A86C7B9A95EF86EE7 /* Pods-StylableSwiftUI_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-StylableSwiftUI_Example-umbrella.h"; sourceTree = "<group>"; };
-		DC928A3C87FC8E8AA3C3276AB5B8B91A /* StylableSwiftUI-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "StylableSwiftUI-prefix.pch"; sourceTree = "<group>"; };
+		DB18FC0A81E8602961265F6339286846 /* StylableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylableView.swift; path = StylableSwiftUI/Classes/StylableView.swift; sourceTree = "<group>"; };
+		DED08597515037EF52270CA6A97E3519 /* StylableSwiftUI-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "StylableSwiftUI-umbrella.h"; sourceTree = "<group>"; };
 		DFACA3F314B71639262F45835CBBB15D /* Pods-StylableSwiftUI_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-StylableSwiftUI_Tests-dummy.m"; sourceTree = "<group>"; };
 		DFDACE549DEA24FD229DFF313B675623 /* Pods-StylableSwiftUI_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-StylableSwiftUI_Example-Info.plist"; sourceTree = "<group>"; };
+		E904D30D8DFB9BA814EF740820B6E27A /* StylableSwiftUI.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = StylableSwiftUI.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		F60B40B153332C7536DEFDA5789F1302 /* DebugStylist.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DebugStylist.swift; path = StylableSwiftUI/Classes/DebugStylist.swift; sourceTree = "<group>"; };
 		F723C8194BB296B289FFA791D3BCF72D /* Pods-StylableSwiftUI_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-StylableSwiftUI_Example-dummy.m"; sourceTree = "<group>"; };
-		F8C80FB9CE5F98D6202BA46EF1C248F2 /* View+style.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "View+style.swift"; path = "StylableSwiftUI/Classes/View+style.swift"; sourceTree = "<group>"; };
+		F911A56659672C79ACEC00860053E1DE /* StylableSwiftUI-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "StylableSwiftUI-prefix.pch"; sourceTree = "<group>"; };
+		FDCA1D573FBA0901F5CF7BF18E64B108 /* Stylist.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stylist.swift; path = StylableSwiftUI/Classes/Stylist.swift; sourceTree = "<group>"; };
+		FE10F89F7FCFF115833C446FF27EB528 /* StylableImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StylableImage.swift; path = StylableSwiftUI/Classes/StylableImage.swift; sourceTree = "<group>"; };
+		FFB994DF258F60685D563C53FF804581 /* StylableSwiftUI.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = StylableSwiftUI.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,19 +99,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		67BE48AA642568B3D2F48D183ACE7C19 /* Frameworks */ = {
+		8C1FC3F3B8A785E982456099AE03F7AD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AA03BB56E45D0B15CC0591E0EB118CE /* Foundation.framework in Frameworks */,
+				45DBDB29698F8C9B562252DD95682E68 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DDCDD178B239C7FAF9A00065870EE899 /* Frameworks */ = {
+		BC01D0790401DBEEDA15AE92A33A441D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6FC2B4770386F2500F55758ED2D719E /* Foundation.framework in Frameworks */,
+				B7FAAC7C1640E791C12DE7288A41E743 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +121,7 @@
 		03C577FF988C54594E079CAAE806A5B9 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6BD68DC3A00A0643D6CCF2EECCE77D67 /* StylableSwiftUI */,
+				4EB8EDA98DE205533088CA5800C49015 /* StylableSwiftUI */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
@@ -132,20 +133,6 @@
 				D1CCE040640CE5389AEC045A24EBEE15 /* Pods-StylableSwiftUI_Tests */,
 			);
 			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		367578FBC35B829A8906DD5761B94D16 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				B4CF4869C47902E135BF89124B608F20 /* StylableSwiftUI.modulemap */,
-				7DD57C1BAB44D79F375EDA5730BC35AE /* StylableSwiftUI.xcconfig */,
-				A451727DE13A1A1C748A7BD7A555C8E9 /* StylableSwiftUI-dummy.m */,
-				C10BF352437A00C2310905E90982F700 /* StylableSwiftUI-Info.plist */,
-				DC928A3C87FC8E8AA3C3276AB5B8B91A /* StylableSwiftUI-prefix.pch */,
-				5144DA9A8DAB007792717A1EE93310D2 /* StylableSwiftUI-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/StylableSwiftUI";
 			sourceTree = "<group>";
 		};
 		4D0F6045208622CF0517DB438ABF8838 /* Pods-StylableSwiftUI_Example */ = {
@@ -165,24 +152,34 @@
 			path = "Target Support Files/Pods-StylableSwiftUI_Example";
 			sourceTree = "<group>";
 		};
-		6BD68DC3A00A0643D6CCF2EECCE77D67 /* StylableSwiftUI */ = {
+		4EB8EDA98DE205533088CA5800C49015 /* StylableSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				CEB07C61C2D44CF244196BBC1A71E23B /* DebugStylist.swift */,
-				447A444E031191CB795FBB05B97FB148 /* Logger.swift */,
-				93109C9EF66DCBD089407F1184E8D348 /* StylableGroup.swift */,
-				3FB6EA7FE211A052D8856CA3C81DE488 /* StylableImage.swift */,
-				93D9F234EC7ECEE46AF30D06F459A312 /* StylableView.swift */,
-				39614A7D9D75B497A316A12C108CAB13 /* Stylist.swift */,
-				9D914646A79C31B47D08118842297A7B /* StylistIdentifier.swift */,
-				BC44088104EFB5463704DE6C6EF65FBA /* StylistIdentifierMatcher.swift */,
-				F8C80FB9CE5F98D6202BA46EF1C248F2 /* View+style.swift */,
-				A07C922724F857DD00E6C9D5 /* WithStyleIdentifier.swift */,
-				FA8D42DC234E8DEBE34EE7BBB8EFAB26 /* Pod */,
-				367578FBC35B829A8906DD5761B94D16 /* Support Files */,
+				F60B40B153332C7536DEFDA5789F1302 /* DebugStylist.swift */,
+				6E64102ABC9F9A76C9DD67ED20529DC8 /* Logger.swift */,
+				4DA4785F1B2202BA301286F04F2E0317 /* StylableGroup.swift */,
+				FE10F89F7FCFF115833C446FF27EB528 /* StylableImage.swift */,
+				DB18FC0A81E8602961265F6339286846 /* StylableView.swift */,
+				FDCA1D573FBA0901F5CF7BF18E64B108 /* Stylist.swift */,
+				865EF8694183BBDA713CDE5720CB9346 /* StylistIdentifier.swift */,
+				0B9CC8F622DAEA73736FB0B69B4A2D3D /* StylistIdentifierMatcher.swift */,
+				4F703DA5B2AAF1660DEE9634E3965666 /* View+style.swift */,
+				3F9E3A3E35834F17B38CF623AC0F6087 /* WithStyleIdentifier.swift */,
+				A0AECFBD471125CF40CBDB0AC3833B0E /* Pod */,
+				CEEE4972E11F0F1DCD5890323DDFCD0A /* Support Files */,
 			);
 			name = StylableSwiftUI;
 			path = ../..;
+			sourceTree = "<group>";
+		};
+		A0AECFBD471125CF40CBDB0AC3833B0E /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				64FCD13EB30CC11EEA65FB86BBF11FA0 /* LICENSE */,
+				1F31E924871C85B92A8ECD7A3CF0D311 /* README.md */,
+				E904D30D8DFB9BA814EF740820B6E27A /* StylableSwiftUI.podspec */,
+			);
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		B299AC764F3938B80FF847D370CB6DCE /* Products */ = {
@@ -201,6 +198,21 @@
 				3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		CEEE4972E11F0F1DCD5890323DDFCD0A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				FFB994DF258F60685D563C53FF804581 /* StylableSwiftUI.modulemap */,
+				384947C7C24ACF371A2DC5CEBDB48279 /* StylableSwiftUI-dummy.m */,
+				59245587C54A2D86336B372C539FB458 /* StylableSwiftUI-Info.plist */,
+				F911A56659672C79ACEC00860053E1DE /* StylableSwiftUI-prefix.pch */,
+				DED08597515037EF52270CA6A97E3519 /* StylableSwiftUI-umbrella.h */,
+				519C2C04A920A899D201360154DBA2A5 /* StylableSwiftUI.debug.xcconfig */,
+				9AC697FB030C5CC501FBC14702D105B3 /* StylableSwiftUI.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/StylableSwiftUI";
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -238,32 +250,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FA8D42DC234E8DEBE34EE7BBB8EFAB26 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				837F85F3267E11EB38C5B1FC1F7F3E71 /* LICENSE */,
-				36049315E91F2BAFA2164D885084F64F /* README.md */,
-				A0D8A8F58959D6FD0BDB343BD432549A /* StylableSwiftUI.podspec */,
-			);
-			name = Pod;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		5420362BA4D691D2FFD7C88B135CDBF8 /* Headers */ = {
+		7546BED517C0783DD146412344E0C654 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32496D75C09642461D2415BA1FFFB8BB /* Pods-StylableSwiftUI_Tests-umbrella.h in Headers */,
+				9D06287689E217334F51439DEDA941FE /* Pods-StylableSwiftUI_Tests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		548DFB4C97BDB43E3FE6D6387751BCCA /* Headers */ = {
+		CE0D556FF6D168B3C01DB40B6EDFF08C /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3087BD29CF35221B91AA725D838C318 /* Pods-StylableSwiftUI_Example-umbrella.h in Headers */,
+				4A23272B8BCAECD548E6036CF70ED211 /* Pods-StylableSwiftUI_Example-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +285,7 @@
 			buildConfigurationList = A947AB7AD7E5729FBA45A7875130D028 /* Build configuration list for PBXNativeTarget "StylableSwiftUI" */;
 			buildPhases = (
 				FA2B3C4D6D3C5CDB65F53ED48B763627 /* Headers */,
-				3568B5441E6E1A34F708D42A669745F9 /* Sources */,
+				2468ED6E53604BA8B3669A103DC32AF5 /* Sources */,
 				4E1BC012C2F147890FC9076ADC9DC0EF /* Frameworks */,
 				4878570F6247427AAA1AF4C785596F2E /* Resources */,
 			);
@@ -298,17 +300,17 @@
 		};
 		4E0384231A8EAAB431B4C45C84245A95 /* Pods-StylableSwiftUI_Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 205E801103DE30555184E5E62BA463AC /* Build configuration list for PBXNativeTarget "Pods-StylableSwiftUI_Example" */;
+			buildConfigurationList = 36096254D2846D216C8DB604DF495773 /* Build configuration list for PBXNativeTarget "Pods-StylableSwiftUI_Example" */;
 			buildPhases = (
-				548DFB4C97BDB43E3FE6D6387751BCCA /* Headers */,
-				DC6FE8257AD876097195A587F3FCE7EB /* Sources */,
-				67BE48AA642568B3D2F48D183ACE7C19 /* Frameworks */,
-				FB70CD72881C6026E5E78776D7CF68D6 /* Resources */,
+				CE0D556FF6D168B3C01DB40B6EDFF08C /* Headers */,
+				1CDB8E871128F193881F56657CECBB8E /* Sources */,
+				BC01D0790401DBEEDA15AE92A33A441D /* Frameworks */,
+				D8C64D400CAF9E8F90E0C84011243893 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4E51AE985C12C7F886CEA0EC39C3AEDA /* PBXTargetDependency */,
+				3AE5C754D1D014906BA908081A9BFEA4 /* PBXTargetDependency */,
 			);
 			name = "Pods-StylableSwiftUI_Example";
 			productName = "Pods-StylableSwiftUI_Example";
@@ -317,17 +319,17 @@
 		};
 		8884E6871B0E76FB7A9F5718E9E2180A /* Pods-StylableSwiftUI_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BBC2564C0CFD37578818053E65828063 /* Build configuration list for PBXNativeTarget "Pods-StylableSwiftUI_Tests" */;
+			buildConfigurationList = 768AFDDE1939503CA207DBF28D92A78E /* Build configuration list for PBXNativeTarget "Pods-StylableSwiftUI_Tests" */;
 			buildPhases = (
-				5420362BA4D691D2FFD7C88B135CDBF8 /* Headers */,
-				A56F734ED08FA66E8E7AADFD6A9B30F8 /* Sources */,
-				DDCDD178B239C7FAF9A00065870EE899 /* Frameworks */,
-				F10268BAFCD43AF9A66E2E5E81431914 /* Resources */,
+				7546BED517C0783DD146412344E0C654 /* Headers */,
+				605DB2330A6E9923058A51CBBFFC574B /* Sources */,
+				8C1FC3F3B8A785E982456099AE03F7AD /* Frameworks */,
+				FB6DE2ECC2652B21C2636C43D5A60746 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				93F6A5CDFF89D1D705472AFC9D493159 /* PBXTargetDependency */,
+				94551E93FD6AB23D5C3598B3DB5865AB /* PBXTargetDependency */,
 			);
 			name = "Pods-StylableSwiftUI_Tests";
 			productName = "Pods-StylableSwiftUI_Tests";
@@ -342,11 +344,6 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1100;
-				TargetAttributes = {
-					4E0384231A8EAAB431B4C45C84245A95 = {
-						LastSwiftMigration = 1160;
-					};
-				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -376,14 +373,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F10268BAFCD43AF9A66E2E5E81431914 /* Resources */ = {
+		D8C64D400CAF9E8F90E0C84011243893 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FB70CD72881C6026E5E78776D7CF68D6 /* Resources */ = {
+		FB6DE2ECC2652B21C2636C43D5A60746 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -393,92 +390,58 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3568B5441E6E1A34F708D42A669745F9 /* Sources */ = {
+		1CDB8E871128F193881F56657CECBB8E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9022374383D0BDD37CC4C3822FE1FA2B /* DebugStylist.swift in Sources */,
-				FCF8DB7A34B83B62DC3398DBD43EAEA8 /* Logger.swift in Sources */,
-				5A911BA79DECFD07FD83BD58CF5A503A /* StylableGroup.swift in Sources */,
-				13018954430A4CED899BA6EC8F097B80 /* StylableImage.swift in Sources */,
-				6DC1F2CB63D74B7D2E74077319231D7B /* StylableSwiftUI-dummy.m in Sources */,
-				A07C922924F8598100E6C9D5 /* WithStyleIdentifier.swift in Sources */,
-				B8D3DC1D186151BCB60AEF2FF3B125C5 /* StylableView.swift in Sources */,
-				56D11FD0E8FAD0234814D6E2A4364876 /* Stylist.swift in Sources */,
-				208390E0B5DFA2CFF0DBB7AFA056FE83 /* StylistIdentifier.swift in Sources */,
-				7DDBF639B37F010F8C10CFF785A49839 /* StylistIdentifierMatcher.swift in Sources */,
-				0AFAB040F2CD319F8425A466784E4A1D /* View+style.swift in Sources */,
+				B296CE4D600E2FDFAD846608D647384C /* Pods-StylableSwiftUI_Example-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A56F734ED08FA66E8E7AADFD6A9B30F8 /* Sources */ = {
+		2468ED6E53604BA8B3669A103DC32AF5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A41BD5D13621C67DB57A811A2870B9A /* Pods-StylableSwiftUI_Tests-dummy.m in Sources */,
+				34CBE13B149053D8638DD2DF0D7D55E0 /* DebugStylist.swift in Sources */,
+				D7588960FC394511B1BF7F443234C63B /* Logger.swift in Sources */,
+				E2FC454F0D45DA4C18B5D0042AC85E31 /* StylableGroup.swift in Sources */,
+				8415CCEFD2B90692FE5DCE146C4BFDBC /* StylableImage.swift in Sources */,
+				DB3DC7588A4FCAA0018371BB3B625B03 /* StylableSwiftUI-dummy.m in Sources */,
+				BD0905037D4BB820B53C49D13474E260 /* StylableView.swift in Sources */,
+				EBDAB8A04FD1F29FD9791EFABD1E128A /* Stylist.swift in Sources */,
+				33EF8C070B4AECE53013CA0EC304CC5D /* StylistIdentifier.swift in Sources */,
+				23F819EBF3F704B65E6A64A29676C318 /* StylistIdentifierMatcher.swift in Sources */,
+				61E07491FB3C29852C98D296F81FA65D /* View+style.swift in Sources */,
+				547C3781104CD5D6C37D6F025DB42CF1 /* WithStyleIdentifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DC6FE8257AD876097195A587F3FCE7EB /* Sources */ = {
+		605DB2330A6E9923058A51CBBFFC574B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9745DB18642CE7C840674AF994EE2712 /* Pods-StylableSwiftUI_Example-dummy.m in Sources */,
+				F5C631787F10AD8617378AAAF97AEEB9 /* Pods-StylableSwiftUI_Tests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4E51AE985C12C7F886CEA0EC39C3AEDA /* PBXTargetDependency */ = {
+		3AE5C754D1D014906BA908081A9BFEA4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = StylableSwiftUI;
 			target = 0E12E449EA31D5414AB180DDBF51184C /* StylableSwiftUI */;
-			targetProxy = B74779E3081D19F96BBB77C9ADF2C649 /* PBXContainerItemProxy */;
+			targetProxy = 1F3F795D24C69AC10B355EEC6133902E /* PBXContainerItemProxy */;
 		};
-		93F6A5CDFF89D1D705472AFC9D493159 /* PBXTargetDependency */ = {
+		94551E93FD6AB23D5C3598B3DB5865AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-StylableSwiftUI_Example";
 			target = 4E0384231A8EAAB431B4C45C84245A95 /* Pods-StylableSwiftUI_Example */;
-			targetProxy = E6B142318F2892499D6C6332F543A281 /* PBXContainerItemProxy */;
+			targetProxy = BCB626C39476024DCD1DF2DECC754D79 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		13DBCC340D5344EB11C745FDBF1FA2C1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DD57C1BAB44D79F375EDA5730BC35AE /* StylableSwiftUI.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/StylableSwiftUI/StylableSwiftUI-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/StylableSwiftUI/StylableSwiftUI-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/StylableSwiftUI/StylableSwiftUI.modulemap";
-				PRODUCT_MODULE_NAME = StylableSwiftUI;
-				PRODUCT_NAME = StylableSwiftUI;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		1422B121EAEAEA11307496903FA623C6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -532,90 +495,19 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
 		};
-		3A76CD2ABF9983FA0236A1DC4E9238E1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E3034F755162A44193D114320F95627 /* Pods-StylableSwiftUI_Example.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-StylableSwiftUI_Example/Pods-StylableSwiftUI_Example-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-StylableSwiftUI_Example/Pods-StylableSwiftUI_Example.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		3BCD751D8FA9458AEAB3846EC80C74A2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DD57C1BAB44D79F375EDA5730BC35AE /* StylableSwiftUI.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/StylableSwiftUI/StylableSwiftUI-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/StylableSwiftUI/StylableSwiftUI-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/StylableSwiftUI/StylableSwiftUI.modulemap";
-				PRODUCT_MODULE_NAME = StylableSwiftUI;
-				PRODUCT_NAME = StylableSwiftUI;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		734957A8BCCF033CA6F4A0AAF51DE64A /* Debug */ = {
+		3FD13989B036CB82319A0CCE18584CFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 30AFE4E822B18CEC1E51FF698D5012BF /* Pods-StylableSwiftUI_Example.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -639,15 +531,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		D8B2FE14DB01F37A658B16E2C2BE2799 /* Release */ = {
+		69D76C515128FE1CE0B92257E7658E5C /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 78F2AA43F8A96E13884C58D413820334 /* Pods-StylableSwiftUI_Tests.release.xcconfig */;
 			buildSettings = {
@@ -683,7 +573,7 @@
 			};
 			name = Release;
 		};
-		E1350C0C83F4A61D1C14F53925EDE0DB /* Debug */ = {
+		733DEBECA39E3607501DCE4AB2A5D32F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B99811236455523692133D709217227 /* Pods-StylableSwiftUI_Tests.debug.xcconfig */;
 			buildSettings = {
@@ -717,6 +607,109 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		A8ECEFC11516EF7C5A3A2BEC85C9A038 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9AC697FB030C5CC501FBC14702D105B3 /* StylableSwiftUI.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/StylableSwiftUI/StylableSwiftUI-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/StylableSwiftUI/StylableSwiftUI-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/StylableSwiftUI/StylableSwiftUI.modulemap";
+				PRODUCT_MODULE_NAME = StylableSwiftUI;
+				PRODUCT_NAME = StylableSwiftUI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D2FA7A7F8B8F2FB4317616B139B57ACB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 519C2C04A920A899D201360154DBA2A5 /* StylableSwiftUI.debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/StylableSwiftUI/StylableSwiftUI-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/StylableSwiftUI/StylableSwiftUI-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/StylableSwiftUI/StylableSwiftUI.modulemap";
+				PRODUCT_MODULE_NAME = StylableSwiftUI;
+				PRODUCT_NAME = StylableSwiftUI;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E39BF536C231E2E7BA0B8A4EE248C830 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E3034F755162A44193D114320F95627 /* Pods-StylableSwiftUI_Example.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-StylableSwiftUI_Example/Pods-StylableSwiftUI_Example-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-StylableSwiftUI_Example/Pods-StylableSwiftUI_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		ED7888FA6713EABBF66D26A8003AD1CA /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -785,11 +778,11 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		205E801103DE30555184E5E62BA463AC /* Build configuration list for PBXNativeTarget "Pods-StylableSwiftUI_Example" */ = {
+		36096254D2846D216C8DB604DF495773 /* Build configuration list for PBXNativeTarget "Pods-StylableSwiftUI_Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				734957A8BCCF033CA6F4A0AAF51DE64A /* Debug */,
-				3A76CD2ABF9983FA0236A1DC4E9238E1 /* Release */,
+				3FD13989B036CB82319A0CCE18584CFE /* Debug */,
+				E39BF536C231E2E7BA0B8A4EE248C830 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -803,20 +796,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A947AB7AD7E5729FBA45A7875130D028 /* Build configuration list for PBXNativeTarget "StylableSwiftUI" */ = {
+		768AFDDE1939503CA207DBF28D92A78E /* Build configuration list for PBXNativeTarget "Pods-StylableSwiftUI_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3BCD751D8FA9458AEAB3846EC80C74A2 /* Debug */,
-				13DBCC340D5344EB11C745FDBF1FA2C1 /* Release */,
+				733DEBECA39E3607501DCE4AB2A5D32F /* Debug */,
+				69D76C515128FE1CE0B92257E7658E5C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BBC2564C0CFD37578818053E65828063 /* Build configuration list for PBXNativeTarget "Pods-StylableSwiftUI_Tests" */ = {
+		A947AB7AD7E5729FBA45A7875130D028 /* Build configuration list for PBXNativeTarget "StylableSwiftUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E1350C0C83F4A61D1C14F53925EDE0DB /* Debug */,
-				D8B2FE14DB01F37A658B16E2C2BE2799 /* Release */,
+				D2FA7A7F8B8F2FB4317616B139B57ACB /* Debug */,
+				A8ECEFC11516EF7C5A3A2BEC85C9A038 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
