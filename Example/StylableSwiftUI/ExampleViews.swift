@@ -22,6 +22,12 @@ struct ExampleViews: View {
                         Text(identifier2.description)
                     }
                 }
+                WithStylistIdentifier(identifiers: StylistIdentifier("hello/world"), StylistIdentifier("foo")) { identifier1, identifier2 in
+                    VStack {
+                        Text(identifier1.description)
+                        Text(identifier2.description)
+                    }
+                }
             }
             StylableGroup("example") {
                 Spacer()
