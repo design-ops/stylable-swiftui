@@ -16,7 +16,14 @@ struct ExampleViews: View {
     var body: some View {
         VStack {
             StylableGroup("section") {
-                WithStylistIdentifier(tokens: "a", "b") { identifier1, identifier2 in
+                WithStylistIdentifier(strings: "a", "b", "a/b") { identifier1, identifier2, identifier3 in
+                    VStack {
+                        Text(identifier1.description)
+                        Text(identifier2.description)
+                        Text(identifier3.description)
+                    }
+                }
+                WithStylistIdentifier(identifiers: StylistIdentifier("hello/world"), StylistIdentifier("foo")) { identifier1, identifier2 in
                     VStack {
                         Text(identifier1.description)
                         Text(identifier2.description)
