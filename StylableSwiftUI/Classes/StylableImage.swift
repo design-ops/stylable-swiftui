@@ -58,6 +58,7 @@ extension Image {
     /// - parameter identifier: The StylistIdentifier to use when attempting to find/load an image
     /// - parameter separator: _(optional)_ The character to use when joining the components together to create the resource name (defaults to `_`)
     /// - parameter bundle: _(optional)_ The bundle to search for the image (defaults to the main bundle)
+    /// - parameter compatibleWith: _(optional)_ The trait collection to use for the image (defaults to `nil`).
     ///
     init(identifier: StylistIdentifier,
          separator: String = StylableImage.defaultSeparator,
