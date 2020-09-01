@@ -28,6 +28,7 @@ public class Stylist: ObservableObject {
 
     // All the styles this stylist knows about, in order of specificity (more specific -> more general)
     @Published private var styles: [Style]
+    @Published private(set) var properties: [Property]
 
     private let matcher = StylistIdentifierMatcher()
 
@@ -35,6 +36,7 @@ public class Stylist: ObservableObject {
 
     public init() {
         self.styles = []
+        self.properties = []
     }
 
     public func setDefaultStyle<V: View>(style: @escaping (Stylable) -> V) {
@@ -104,6 +106,12 @@ public class Stylist: ObservableObject {
     }
 }
 
+extension Stylist {
+    func addProperty(identifier: StylistIdentifier, properties: () -> [StylistProperty]) {
+        self.properties.append(Property(identifier, properties: properties()))
+    }
+}
+
 @available(iOS 13.0.0, *)
 extension Stylist {
 
@@ -156,3 +164,37 @@ public struct StyleBuilder {
         styles.flatMap { $0.styles }
     }
 }
+
+// MARK: - Properties
+public extension Stylist {
+    func getBackgroundColor(for identifier: StylistIdentifier) -> UIColor? {
+        // Grab the best matching property
+        let scored = self.properties
+            .compactMap { (candidate: Property) -> (score: Int, property: Property)? in
+                let score = self.matcher.match(specific: identifier, general: candidate.identifier)
+                guard score > 0 else { return nil }
+                return (score, candidate)
+            }
+
+        // The best match is the highest scoring match
+        let bestMatch = scored
+            .max { $0.score < $1.score }?
+            .property
+
+        if let property = bestMatch {
+            return property.properties.getFirstBackgroundColor()
+        }
+
+        return nil
+    }
+
+    // This function would be part of the generator
+    func registerProperties() {
+        self.addProperty(identifier: "") {
+            return [
+                .backgroundColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1))
+            ]
+        }
+    }
+}
+
