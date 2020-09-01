@@ -177,15 +177,11 @@ public extension Stylist {
             }
 
         // The best match is the highest scoring match
-        let bestMatch = scored
+        return scored
             .max { $0.score < $1.score }?
             .property
-
-        if let property = bestMatch {
-            return property.properties.getFirstBackgroundColor()
-        }
-
-        return nil
+            .properties
+            .getFirstBackgroundColor()
     }
 
     // This function would be part of the generator
