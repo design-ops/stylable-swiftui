@@ -63,7 +63,7 @@ extension Image {
     init(identifier: StylistIdentifier,
          separator: String = StylableImage.defaultSeparator,
          bundle: Bundle? = nil,
-         compatibleWith traitCollection: UITraitCollection?) {
+         compatibleWith traitCollection: UITraitCollection? = nil) {
 
         // Get the image if it exists
         let image = identifier.uiImage(separator: separator, bundle: bundle, compatibleWith: traitCollection)
