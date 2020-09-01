@@ -130,3 +130,6 @@ cobertura.xml
 # Python files for UITests
 *.pyc
 /.idea
+
+# The folder bundle puts its installation locally
+vendor/bundle
