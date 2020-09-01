@@ -1,0 +1,13 @@
+current directory: /Users/kerrmarin/dev/01-LVMH/stylable-swiftui/vendor/bundle/ruby/2.6.0/gems/json-2.3.1/ext/json
+/Users/kerrmarin/.rbenv/versions/2.6.5/bin/ruby -I /Users/kerrmarin/.rbenv/versions/2.6.5/lib/ruby/2.6.0 -r ./siteconf20200901-86440-12k2xu8.rb extconf.rb
+creating Makefile
+
+current directory: /Users/kerrmarin/dev/01-LVMH/stylable-swiftui/vendor/bundle/ruby/2.6.0/gems/json-2.3.1/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/kerrmarin/dev/01-LVMH/stylable-swiftui/vendor/bundle/ruby/2.6.0/gems/json-2.3.1/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/kerrmarin/dev/01-LVMH/stylable-swiftui/vendor/bundle/ruby/2.6.0/gems/json-2.3.1/ext/json
+make "DESTDIR=" install
