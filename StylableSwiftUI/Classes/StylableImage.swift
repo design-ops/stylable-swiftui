@@ -20,9 +20,9 @@ public struct StylableImage: View {
         self.factory = factory
     }
 
-    public init(_ identifier: StylistIdentifier, separator: String = defaultSeparator, bundle: Bundle? = nil) {
+    public init(_ identifier: StylistIdentifier, separator: String = defaultSeparator, bundle: Bundle? = nil, compatibleWith traitCollection: UITraitCollection? = nil) {
         self.identifier = identifier
-        self.factory = { identifier in Image(identifier: identifier, separator: separator, bundle: bundle) }
+        self.factory = { identifier in Image(identifier: identifier, separator: separator, bundle: bundle, compatibleWith: traitCollection) }
     }
 
     public var body: some View {
@@ -58,13 +58,15 @@ extension Image {
     /// - parameter identifier: The StylistIdentifier to use when attempting to find/load an image
     /// - parameter separator: _(optional)_ The character to use when joining the components together to create the resource name (defaults to `_`)
     /// - parameter bundle: _(optional)_ The bundle to search for the image (defaults to the main bundle)
+    /// - parameter compatibleWith: _(optional)_ The trait collection to use for the image (defaults to `nil`).
     ///
     init(identifier: StylistIdentifier,
          separator: String = StylableImage.defaultSeparator,
-         bundle: Bundle? = nil) {
+         bundle: Bundle? = nil,
+         compatibleWith traitCollection: UITraitCollection? = nil) {
 
         // Get the image if it exists
-        let image = identifier.uiImage(separator: separator, bundle: bundle)
+        let image = identifier.uiImage(separator: separator, bundle: bundle, compatibleWith: traitCollection)
 
         if image == nil {
             Logger.default.log("No image found for \(identifier)", level: .error)
