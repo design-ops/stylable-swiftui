@@ -63,31 +63,31 @@ public struct WithStylistIdentifier<Content: View>: View {
 
 public extension WithStylistIdentifier {
 
-    init(token: String,
+    init(string: String,
                 @ViewBuilder contents: @escaping (StylistIdentifier) -> Content) {
-        self.identifiers = [ StylistIdentifier(token) ]
+        self.identifiers = [ StylistIdentifier(string) ]
         self.contents = { contents($0[0]) }
     }
 
-    init(tokens token1: String, _ token2: String,
+    init(strings token1: String, _ token2: String,
                 @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ StylistIdentifier(token1), StylistIdentifier(token2) ]
         self.contents = { contents($0[0], $0[1]) }
     }
 
-    init(tokens token1: String, _ token2: String, _ token3: String,
+    init(strings token1: String, _ token2: String, _ token3: String,
                 @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ StylistIdentifier(token1), StylistIdentifier(token2), StylistIdentifier(token3) ]
         self.contents = { contents($0[0], $0[1], $0[2]) }
     }
 
-    init(tokens token1: String, _ token2: String, _ token3: String, _ token4: String,
+    init(strings token1: String, _ token2: String, _ token3: String, _ token4: String,
                 @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ StylistIdentifier(token1), StylistIdentifier(token2), StylistIdentifier(token3), StylistIdentifier(token4) ]
         self.contents = { contents($0[0], $0[1], $0[2], $0[3]) }
     }
 
-    init(tokens token1: String, _ token2: String, _ token3: String, _ token4: String, _ token5: String,
+    init(strings token1: String, _ token2: String, _ token3: String, _ token4: String, _ token5: String,
                 @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ StylistIdentifier(token1), StylistIdentifier(token2), StylistIdentifier(token3), StylistIdentifier(token4), StylistIdentifier(token5) ]
         self.contents = { contents($0[0], $0[1], $0[2], $0[3], $0[4]) }
