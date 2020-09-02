@@ -194,12 +194,12 @@ public extension Stylist {
             .getFirstTextColor()
     }
 
-    func getFirstFont(for identifier: StylistIdentifier) -> UIFont? {
+    func getFont(for identifier: StylistIdentifier) -> UIFont? {
         self.getProperties(for: identifier)
             .getFirstFont()
     }
 
-    func getFirstKerning(for identifier: StylistIdentifier) -> Double? {
+    func getKerning(for identifier: StylistIdentifier) -> Double? {
         self.getProperties(for: identifier)
             .getFirstKerning()
     }
