@@ -28,8 +28,6 @@ extension Array where Iterator.Element == StylistProperty {
             switch prop {
             case .backgroundColor(let color):
                 return color
-            default:
-                return nil
             }
         }.first
     }
