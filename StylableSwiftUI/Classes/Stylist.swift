@@ -167,7 +167,8 @@ public struct StyleBuilder {
 
 // MARK: - Properties
 public extension Stylist {
-    func getBackgroundColor(for identifier: StylistIdentifier) -> UIColor? {
+
+    private func getProperties(for identifier: StylistIdentifier) -> [StylistProperty] {
         // Grab the best matching property
         let scored = self.properties
             .compactMap { (candidate: Property) -> (score: Int, property: Property)? in
@@ -180,8 +181,27 @@ public extension Stylist {
         return scored
             .max { $0.score < $1.score }?
             .property
-            .properties
+            .properties ?? []
+    }
+
+    func getBackgroundColor(for identifier: StylistIdentifier) -> UIColor? {
+        self.getProperties(for: identifier)
             .getFirstBackgroundColor()
+    }
+
+    func getTextColor(for identifier: StylistIdentifier) -> UIColor? {
+        self.getProperties(for: identifier)
+            .getFirstTextColor()
+    }
+
+    func getFirstFont(for identifier: StylistIdentifier) -> UIFont? {
+        self.getProperties(for: identifier)
+            .getFirstFont()
+    }
+
+    func getFirstKerning(for identifier: StylistIdentifier) -> Double? {
+        self.getProperties(for: identifier)
+            .getFirstKerning()
     }
 }
 

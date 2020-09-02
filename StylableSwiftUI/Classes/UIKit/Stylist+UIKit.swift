@@ -20,6 +20,9 @@ public struct Property {
 
 public enum StylistProperty {
     case backgroundColor(UIColor)
+    case textColor(UIColor)
+    case kerning(Double)
+    case font(UIFont)
 }
 
 extension Array where Iterator.Element == StylistProperty {
@@ -28,7 +31,43 @@ extension Array where Iterator.Element == StylistProperty {
             switch prop {
             case .backgroundColor(let color):
                 return color
+            default:
+                return nil
             }
         }.first
     }
+
+    func getFirstTextColor() -> UIColor? {
+        return self.compactMap { prop in
+            switch prop {
+            case .textColor(let color):
+                return color
+            default:
+                return nil
+            }
+        }.first
+    }
+
+    func getFirstKerning() -> Double? {
+        return self.compactMap { prop in
+            switch prop {
+            case .kerning(let kerning):
+                return kerning
+            default:
+                return nil
+            }
+        }.first
+    }
+
+    func getFirstFont() -> UIFont? {
+        return self.compactMap { prop in
+            switch prop {
+            case .font(let font):
+                return font
+            default:
+                return nil
+            }
+        }.first
+    }
+
 }
