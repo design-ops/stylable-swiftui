@@ -106,7 +106,7 @@ public class Stylist: ObservableObject {
     }
 }
 
-extension Stylist {
+public extension Stylist {
     func addProperty(identifier: StylistIdentifier, properties: () -> [StylistProperty]) {
         self.properties.append(Property(identifier, properties: properties()))
     }
