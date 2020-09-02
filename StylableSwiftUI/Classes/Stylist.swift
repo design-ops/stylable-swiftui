@@ -183,14 +183,5 @@ public extension Stylist {
             .properties
             .getFirstBackgroundColor()
     }
-
-    // This function would be part of the generator
-    func registerProperties() {
-        self.addProperty(identifier: "") {
-            return [
-                .backgroundColor(UIColor(red: 1, green: 1, blue: 1, alpha: 1))
-            ]
-        }
-    }
 }
 
