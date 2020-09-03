@@ -28,15 +28,13 @@ public class Stylist: ObservableObject {
 
     // All the styles this stylist knows about, in order of specificity (more specific -> more general)
     @Published private var styles: [Style]
-    @Published private var properties: [Property]
 
-    private let matcher = StylistIdentifierMatcher()
+    let matcher = StylistIdentifierMatcher()
 
     private var defaultStyle: Style?
 
     public init() {
         self.styles = []
-        self.properties = []
     }
 
     public func setDefaultStyle<V: View>(style: @escaping (Stylable) -> V) {
@@ -106,12 +104,6 @@ public class Stylist: ObservableObject {
     }
 }
 
-public extension Stylist {
-    func addProperty(identifier: StylistIdentifier, properties: () -> [StylistProperty]) {
-        self.properties.append(Property(identifier, properties: properties()))
-    }
-}
-
 @available(iOS 13.0.0, *)
 extension Stylist {
 
@@ -164,44 +156,3 @@ public struct StyleBuilder {
         styles.flatMap { $0.styles }
     }
 }
-
-// MARK: - Properties
-public extension Stylist {
-
-    private func getProperties(for identifier: StylistIdentifier) -> [StylistProperty] {
-        // Grab the best matching property
-        let scored = self.properties
-            .compactMap { (candidate: Property) -> (score: Int, property: Property)? in
-                let score = self.matcher.match(specific: identifier, general: candidate.identifier)
-                guard score > 0 else { return nil }
-                return (score, candidate)
-            }
-
-        // The best match is the highest scoring match
-        return scored
-            .max { $0.score < $1.score }?
-            .property
-            .properties ?? []
-    }
-
-    func getBackgroundColor(for identifier: StylistIdentifier) -> UIColor? {
-        self.getProperties(for: identifier)
-            .getFirstBackgroundColor()
-    }
-
-    func getTextColor(for identifier: StylistIdentifier) -> UIColor? {
-        self.getProperties(for: identifier)
-            .getFirstTextColor()
-    }
-
-    func getFont(for identifier: StylistIdentifier) -> UIFont? {
-        self.getProperties(for: identifier)
-            .getFirstFont()
-    }
-
-    func getKerning(for identifier: StylistIdentifier) -> Double? {
-        self.getProperties(for: identifier)
-            .getFirstKerning()
-    }
-}
-

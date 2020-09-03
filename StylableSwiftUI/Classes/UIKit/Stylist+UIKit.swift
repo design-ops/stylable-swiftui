@@ -7,17 +7,6 @@
 
 import Foundation
 
-public struct Property {
-
-    let identifier: StylistIdentifier
-    let properties: [StylistProperty]
-
-    public init(_ identifier: StylistIdentifier, properties: [StylistProperty]) {
-        self.identifier = identifier
-        self.properties = properties
-    }
-}
-
 public enum StylistProperty {
     case backgroundColor(UIColor)
     case textColor(UIColor)
@@ -26,7 +15,7 @@ public enum StylistProperty {
 }
 
 extension Array where Iterator.Element == StylistProperty {
-    func getFirstBackgroundColor() -> UIColor? {
+    func firstBackgroundColor() -> UIColor? {
         return self.compactMap { prop in
             switch prop {
             case .backgroundColor(let color):
@@ -37,7 +26,7 @@ extension Array where Iterator.Element == StylistProperty {
         }.first
     }
 
-    func getFirstTextColor() -> UIColor? {
+    func firstTextColor() -> UIColor? {
         return self.compactMap { prop in
             switch prop {
             case .textColor(let color):
@@ -48,7 +37,7 @@ extension Array where Iterator.Element == StylistProperty {
         }.first
     }
 
-    func getFirstKerning() -> Double? {
+    func firstKerning() -> Double? {
         return self.compactMap { prop in
             switch prop {
             case .kerning(let kerning):
@@ -59,7 +48,7 @@ extension Array where Iterator.Element == StylistProperty {
         }.first
     }
 
-    func getFirstFont() -> UIFont? {
+    func firstFont() -> UIFont? {
         return self.compactMap { prop in
             switch prop {
             case .font(let font):
