@@ -29,7 +29,7 @@ public class Stylist: ObservableObject {
     // All the styles this stylist knows about, in order of specificity (more specific -> more general)
     @Published private var styles: [Style]
 
-    private let matcher = StylistIdentifierMatcher()
+    let matcher = StylistIdentifierMatcher()
 
     private var defaultStyle: Style?
 
