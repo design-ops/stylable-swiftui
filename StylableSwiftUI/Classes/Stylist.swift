@@ -81,7 +81,7 @@ public class Stylist: ObservableObject {
 
     func style(view: Stylable, identifier: StylistIdentifier) -> some View {
 
-        let bestMatch = self.getBestMatch(for: view, withIdentifier: identifier)
+        let bestMatch = self.getBestMatch(identifier: identifier)
 
         if let style = bestMatch {
             // Apply the style
@@ -98,7 +98,7 @@ public class Stylist: ObservableObject {
         }
     }
 
-    private func getBestMatch(for view: Stylable, withIdentifier identifier: StylistIdentifier) -> Style? {
+    private func getBestMatch(identifier: StylistIdentifier) -> Style? {
 
         if let bestMatch = self.scoredStyleMatchCache[identifier] {
             return bestMatch
