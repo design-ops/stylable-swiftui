@@ -14,6 +14,6 @@ jobs:
       shell: bash
       run: |
         cd Example
-        set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace StylableSwiftUI.xcworkspace -scheme StylableSwiftUI-Example ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.0' | xcpretty --color
+        set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace StylableSwiftUI.xcworkspace -scheme StylableSwiftUI-Example ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.3' | xcpretty --color
         cd ..
         pod lib lint --allow-warnings
