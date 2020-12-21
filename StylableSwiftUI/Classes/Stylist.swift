@@ -27,7 +27,13 @@ public struct Style {
 public class Stylist: ObservableObject {
 
     // All the styles this stylist knows about, in order of specificity (more specific -> more general)
-    @Published private var styles: [Style]
+    @Published private var styles: [Style] {
+        didSet {
+            self.scoredStyleMatchCache = [:]
+        }
+    }
+
+    private var scoredStyleMatchCache: [StylistIdentifier: Style] = [:]
 
     let matcher = StylistIdentifierMatcher()
 
@@ -75,18 +81,7 @@ public class Stylist: ObservableObject {
 
     func style(view: Stylable, identifier: StylistIdentifier) -> some View {
 
-        // Apply the best matching style
-        let scored = self.styles
-            .compactMap { (candidate: Style) -> (score: Int, style: Style)? in
-                let score = self.matcher.match(specific: identifier, general: candidate.identifier)
-                guard score > 0 else { return nil }
-                return (score, candidate)
-            }
-
-        // The best match is the highest scoring match
-        let bestMatch = scored
-            .max { $0.score < $1.score }?
-            .style
+        let bestMatch = self.getBestMatch(for: view, withIdentifier: identifier)
 
         if let style = bestMatch {
             // Apply the style
@@ -101,6 +96,30 @@ public class Stylist: ObservableObject {
             Logger.default.log("No matching style found for", identifier, level: .error)
             return AnyView(view)
         }
+    }
+
+    private func getBestMatch(for view: Stylable, withIdentifier identifier: StylistIdentifier) -> Style? {
+
+        if let bestMatch = self.scoredStyleMatchCache[identifier] {
+            return bestMatch
+        }
+
+        // Apply the best matching style
+        let scored = self.styles
+            .compactMap { (candidate: Style) -> (score: Int, style: Style)? in
+                let score = self.matcher.match(specific: identifier, general: candidate.identifier)
+                guard score > 0 else { return nil }
+                return (score, candidate)
+            }
+
+        // The best match is the highest scoring match
+        let bestMatch = scored
+            .max { $0.score < $1.score }?
+            .style
+
+        self.scoredStyleMatchCache[identifier] = bestMatch
+
+        return bestMatch
     }
 }
 
