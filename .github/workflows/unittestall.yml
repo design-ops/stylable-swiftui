@@ -15,9 +15,9 @@ jobs:
     - name: Prepare iOS 13 simulator
       run: |
         sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
+        ls /Applications/Xcode_11.7.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/
         sudo ln -s /Applications/Xcode_11.7.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 13.7.simruntime
-        xcrun simctl list runtimes
-        xcrun simctl list devicetypes
+        ls /Library/Developer/CoreSimulator/Profiles/Runtimes/
         xcrun simctl create ios13-iphone11-simulator "iPhone 11" "iOS 13.7"
     - uses: actions/checkout@master
 
