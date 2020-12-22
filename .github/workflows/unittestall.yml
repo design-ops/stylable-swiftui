@@ -7,7 +7,7 @@ jobs:
     runs-on: macOS-latest
     strategy:
       matrix:
-        destination: ['platform=iOS Simulator,name=iPhone 12,OS=14.3', 'platform=iOS Simulator,OS=13.7,name=iPhone 11']
+        destination: ['platform=iOS Simulator,name=iPhone 12,OS=14.3']
     steps:
     - uses: actions/checkout@master
     - uses: maxim-lobanov/setup-xcode@v1.2.1
@@ -16,9 +16,15 @@ jobs:
     - name: Test StylableSwiftUI
       shell: bash
       run: |
-        cd Example
-        set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace StylableSwiftUI.xcworkspace -scheme StylableSwiftUI-Example ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -destination "${destination}" | xcpretty --color
-        cd ..
+        pushd Example
+        set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace ${workspace} -scheme ${scheme} -destination "${destination}" | xcpretty --color
+        popd
         pod lib lint --allow-warnings
       env:
         destination: ${{ matrix.destination }}
+        scheme: "StylableSwiftUI-Example"
+        workspace: "StylableSwiftUI.xcworkspace"
+        ONLY_ACTIVE_ARCH: "NO"
+        CODE_SIGN_IDENTITY: ""
+        CODE_SIGNING_REQUIRED: "NO" 
+
