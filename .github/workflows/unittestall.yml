@@ -21,4 +21,4 @@ jobs:
         cd ..
         pod lib lint --allow-warnings
       env:
-        destination: $
+        destination: ${{ matrix.destination }}
