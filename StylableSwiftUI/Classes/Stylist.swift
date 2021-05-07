@@ -167,6 +167,16 @@ extension Style: StyleContainer {
 }
 
 /// Function builder used to allow function-builder-style syntax to the addStyles(_:) method on Stylist
+#if swift(>=5.4)
+@available(iOS 13.0.0, *)
+@resultBuilder
+public struct StyleBuilder {
+
+    public static func buildBlock(_ styles: StyleContainer...) -> [Style] {
+        styles.flatMap { $0.styles }
+    }
+}
+#else
 @available(iOS 13.0.0, *)
 @_functionBuilder
 public struct StyleBuilder {
@@ -175,3 +185,4 @@ public struct StyleBuilder {
         styles.flatMap { $0.styles }
     }
 }
+#endif
