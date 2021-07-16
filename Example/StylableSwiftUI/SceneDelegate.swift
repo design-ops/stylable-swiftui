@@ -39,6 +39,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         let stylist = Stylist.create()
+        let container = UIKitStyleContainer.create(with: stylist)
 
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -55,6 +56,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             StyledListScreen()
                 .environmentObject(Stylist.createAlternate())
                 .tabItem { Text("Alternate List") }
+
+            StyledControllerContainer(container: container)
+                .tabItem { Text("UIKit text styles") }
         }
             .environmentObject(stylist)
             .environmentObject(StyledListViewModel())

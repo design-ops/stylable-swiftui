@@ -51,6 +51,31 @@ final class StylistTests: XCTestCase {
             }
         }
     }
+
+    func testThemeing() {
+        let stylist = Stylist()
+
+        var didApplyGeneric = false
+        var didApplyThemed = false
+
+        stylist.addStyle(identifier: "element/atom") { view -> AnyView in
+            didApplyGeneric = true
+            return AnyView(view.foregroundColor(.red))
+        }
+
+        stylist.addStyle(identifier: "@dark/element/atom") { view -> AnyView in
+            didApplyThemed = true
+            return AnyView(view.foregroundColor(.blue))
+        }
+
+        stylist.currentTheme = Stylist.Theme(name: "@dark")
+
+        let stylable = Stylable(AnyView(Text("Test")), identifier: "element/atom")
+        _ = stylist.style(view: stylable, identifier: "element/atom")
+
+        XCTAssertFalse(didApplyGeneric)
+        XCTAssertTrue(didApplyThemed)
+    }
 }
 
 private var largeNumberOfStyles: () -> [Style] = {

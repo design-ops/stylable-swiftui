@@ -161,3 +161,25 @@ private struct SearchbarButtonStyle: PrimitiveButtonStyle {
             .background(background)
     }
 }
+
+extension UIKitStyleContainer {
+    static func create(with stylist: Stylist) -> UIKitStyleContainer {
+        let container = UIKitStyleContainer(stylist: stylist)
+        container.addProperty(identifier: "uppercase") {
+            return [
+                .textColor(.red),
+                .font(.systemFont(ofSize: 14)),
+                .textCase(.uppercase)
+            ]
+        }
+
+        container.addProperty(identifier: "lowercase") {
+            return [
+                .textColor(.blue),
+                .font(.systemFont(ofSize: 14)),
+                .textCase(.lowercase)
+            ]
+        }
+        return container
+    }
+}

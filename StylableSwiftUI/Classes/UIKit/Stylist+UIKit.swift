@@ -5,13 +5,20 @@
 //  Created by Kerr Marin Miller on 01/09/2020.
 //
 
-import Foundation
+import UIKit
+
+public enum TextCase {
+    case uppercase
+    case lowercase
+    case none
+}
 
 public enum StylistProperty {
     case backgroundColor(UIColor)
     case textColor(UIColor)
     case kerning(Double)
     case font(UIFont)
+    case textCase(TextCase)
 }
 
 extension Array where Iterator.Element == StylistProperty {
@@ -59,4 +66,14 @@ extension Array where Iterator.Element == StylistProperty {
         }.first
     }
 
+    func firstTextCase() -> TextCase? {
+        return self.compactMap { prop in
+            switch prop {
+            case .textCase(let textCase):
+                return textCase
+            default:
+                return nil
+            }
+        }.first
+    }
 }
