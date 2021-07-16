@@ -41,73 +41,22 @@ public extension UIKitStyleContainer {
             .properties ?? []
     }
 
-    func textAttributes(for identifier: StylistIdentifier) -> [NSAttributedString.Key: Any] {
-        var attributes = [NSAttributedString.Key: Any]()
-        if let textColor = self.textColor(for: identifier) {
-            attributes[.foregroundColor] = textColor
-        }
-        if let font = self.font(for: identifier) {
-            let descriptor = self.getFontDescriptor(for: font, identifier: identifier)
-            attributes[.font] = UIFont(descriptor: descriptor, size: font.pointSize)
-        }
-        if let kerning = self.kerning(for: identifier) {
-            attributes[.kern] = kerning
-        }
-        return attributes
-    }
-
-    private func getFontDescriptor(for font: UIFont, identifier: StylistIdentifier) -> UIFontDescriptor {
-        let descriptor = font.fontDescriptor
-        guard let textCase = self.properties(for: identifier).firstTextCase() else {
-            return descriptor
-        }
-
-        switch textCase {
-        case .lowercase:
-            let features = [
-                [
-                    UIFontDescriptor.FeatureKey.featureIdentifier: kUpperCaseType,
-                    UIFontDescriptor.FeatureKey.typeIdentifier: kDefaultUpperCaseSelector
-                ],
-                [
-                    UIFontDescriptor.FeatureKey.featureIdentifier: kLowerCaseType,
-                    UIFontDescriptor.FeatureKey.typeIdentifier: kDefaultLowerCaseSelector
-                ]
-            ]
-            return descriptor.addingAttributes([.featureSettings: features])
-        case .uppercase:
-            let features = [
-                [
-                    UIFontDescriptor.FeatureKey.featureIdentifier: kLowerCaseType,
-                    UIFontDescriptor.FeatureKey.typeIdentifier: kAllCapsSelector
-                ],
-                [
-                    UIFontDescriptor.FeatureKey.featureIdentifier: kUpperCaseType,
-                    UIFontDescriptor.FeatureKey.typeIdentifier: kAllCapsSelector
-                ]
-            ]
-            return descriptor.addingAttributes([.featureSettings: features])
-        case .none:
-            return descriptor
-        }
-    }
-
-    private func backgroundColor(for identifier: StylistIdentifier) -> UIColor? {
+    func backgroundColor(for identifier: StylistIdentifier) -> UIColor? {
         self.properties(for: identifier)
             .firstBackgroundColor()
     }
 
-    private func textColor(for identifier: StylistIdentifier) -> UIColor? {
+    func textColor(for identifier: StylistIdentifier) -> UIColor? {
         self.properties(for: identifier)
             .firstTextColor()
     }
 
-    private func font(for identifier: StylistIdentifier) -> UIFont? {
+    func font(for identifier: StylistIdentifier) -> UIFont? {
         self.properties(for: identifier)
             .firstFont()
     }
 
-    private func kerning(for identifier: StylistIdentifier) -> Double? {
+    func kerning(for identifier: StylistIdentifier) -> Double? {
         self.properties(for: identifier)
             .firstKerning()
     }
