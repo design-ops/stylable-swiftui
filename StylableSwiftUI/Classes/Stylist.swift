@@ -32,6 +32,11 @@ public class Stylist: ObservableObject {
             self.scoredStyleMatchCache = [:]
         }
     }
+    @Published public var currentTheme: Theme? {
+        didSet {
+            self.scoredStyleMatchCache = [:]
+        }
+    }
 
     private var scoredStyleMatchCache: [StylistIdentifier: Style] = [:]
 
@@ -81,19 +86,26 @@ public class Stylist: ObservableObject {
 
     func style(view: Stylable, identifier: StylistIdentifier) -> some View {
 
-        let bestMatch = self.getBestMatch(identifier: identifier)
+        let themedIdentifier: StylistIdentifier = {
+            guard let theme = self.currentTheme else { return identifier }
+
+            let path = identifier.path.within(StylistIdentifier.Path(theme.name))
+            return StylistIdentifier(token: identifier.token, path: path)
+        }()
+
+        let bestMatch = self.getBestMatch(identifier: themedIdentifier)
 
         if let style = bestMatch {
             // Apply the style
-            Logger.default.log("Applying", style.identifier.description, "to", identifier, level: .debug)
+            Logger.default.log("Applying", style.identifier.description, "to", themedIdentifier, level: .debug)
             return AnyView(style.apply(view))
         } else if let style = self.defaultStyle {
             // Apply the default style
-            Logger.default.log("Applying default style", "to", identifier, level: .debug)
+            Logger.default.log("Applying default style", "to", themedIdentifier, level: .debug)
             return AnyView(style.apply(view))
         } else {
             // There is no style to apply
-            Logger.default.log("No matching style found for", identifier, level: .error)
+            Logger.default.log("No matching style found for", themedIdentifier, level: .error)
             return AnyView(view)
         }
     }

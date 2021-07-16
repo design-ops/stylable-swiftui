@@ -5,7 +5,7 @@
 //  Created by Kerr Marin Miller on 01/09/2020.
 //
 
-import Foundation
+import UIKit
 
 public enum StylistProperty {
     case backgroundColor(UIColor)
@@ -58,5 +58,4 @@ extension Array where Iterator.Element == StylistProperty {
             }
         }.first
     }
-
 }
