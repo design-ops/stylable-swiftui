@@ -27,19 +27,36 @@ struct StylistIdentifierMatcher {
     /// matches("home/header/searchBar/label", "home/searchBar") == 5
     /// matches("home/header/searchBar/label", "home/potato") == 0
     ///
-    func match(specific lhs: StylistIdentifier, general rhs: StylistIdentifier) -> Int {
+    /// With themes, things change a little. A style that matches like:
+    ///
+    /// matches("home/header/searchBar/label", "header/searchBar/label")
+    ///
+    /// is now *less* specific than a match that matches traditionally less specific but has the theme specifier:
+    ///
+    /// matches("home/header/searchBar/label", "@dark/searchBar/label")
+    ///
+    /// e.g. theme specifiers supply a higher score than any amount of matching on a path. Extreme example:
+    ///
+    /// matches("home/header/searchBar/label", "home/header/searchBar/label")
+    /// matches("home/header/searchBar/label", "@dark/label") <- would be the matched style if the `@dark` theme is set.
+    ///
+    func match(specific lhs: StylistIdentifier, general rhs: StylistIdentifier, theme: Theme? = nil) -> Int {
         self.logger.debug("Attempting to match \(lhs) with \(rhs)")
 
         guard lhs.token == rhs.token else { return 0 }
 
+        // If general has a theme and we are trying to match with a theme and they are not the same, this is not a match
+        if rhs.theme != nil && theme != nil && rhs.theme != rhs.theme { return 0 }
+
         // If the rhs was just a token (and it's matched to get this far) then it's the weakest possible match
-        guard !rhs.path.components.isEmpty else { return 1 }
+        // as long as there isn't a theme involved
+        if rhs.path.components.isEmpty && theme == nil { return 1 }
 
         // If the lhs is just a token, but the rhs was more than that then the rhs doesn't match
         guard !lhs.path.components.isEmpty else { return 0 }
 
-        // Sanity skip of some maths. If they are identical, it's the best possible match.
-        guard lhs != rhs else {
+        // Sanity skip of some maths. If they are identical, and there is no theme set, it's the best possible match.
+        if lhs == rhs && theme == nil {
             self.logger.debug("  Exact match")
             return Int.max
         }
@@ -51,6 +68,13 @@ struct StylistIdentifierMatcher {
         var score = 0 // The score we will return if it turns out to be a match
         var nextScore = 1<<(lhs.path.components.count * 2)// The score value of the current component - this goes up each time
         self.logger.debug("  Starting score delta \(nextScore)")
+
+        // The theme score value is 1 more level than the maximum score you could potentially have if the identifiers
+        // were identical. That way we guarantee that a match with a theme in any match will be higher than one without a theme
+        if rhs.theme != nil && theme != nil && rhs.theme == theme {
+            let themeScoreValue = theme == nil ? 0 : 1<<((lhs.path.components.count + 1) * 2)
+            score += themeScoreValue
+        }
 
         // Go through each component of each identifier in turn.
         //
@@ -109,6 +133,6 @@ struct StylistIdentifierMatcher {
         // If we have got to the end of the lhs then we haven't matched everything in the rhs - no match
         self.logger.debug("  End of lhs, but rhs still has matches - no match")
 
-        return 0
+        return score
     }
 }

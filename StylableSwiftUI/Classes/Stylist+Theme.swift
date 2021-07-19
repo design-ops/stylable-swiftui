@@ -7,12 +7,10 @@
 
 import Foundation
 
-public extension Stylist {
-    struct Theme {
-        public let name: String
+public struct Theme: Equatable, Hashable {
+    public let name: String
 
-        public init(name: String) {
-            self.name = name
-        }
+    public init(name: String) {
+        self.name = name
     }
 }

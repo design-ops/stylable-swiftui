@@ -71,7 +71,7 @@ final class StylistIdentifierTests: XCTestCase {
 
     func testStylistIdentifier_shouldDescribeWithOrWithoutState() {
         let path = StylistIdentifier.Path(components: [ "element[disabled]", "section" ])
-        let identifier = StylistIdentifier(token: "atom", path: path)
+        let identifier = StylistIdentifier(token: "atom", path: path, theme: nil)
         XCTAssertEqual(identifier.description, "section/element[disabled]/atom")
     }
 }

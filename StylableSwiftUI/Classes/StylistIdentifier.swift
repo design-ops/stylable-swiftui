@@ -36,6 +36,11 @@ public struct StylistIdentifier: Equatable, Hashable {
 
     /// Given the identifier `header/searchBar/title` then the components are `[ "header", "searchBar" ]`
     let path: Path
+
+    /// The theme for this identifier, if any.
+    /// Given the identifier `@dark/header/searchBar/title` then the theme is `@dark`
+    /// Given the identifier `header/searchBar/title` then the theme is `nil`
+    let theme: Theme?
 }
 
 extension StylistIdentifier: LosslessStringConvertible {
@@ -46,12 +51,21 @@ extension StylistIdentifier: LosslessStringConvertible {
     ///
     /// - parameter description: The string to parse into an identifier
     public init(_ description: String) {
-        let split = description.split(separator: "/").map(String.init)
+        var split = description.split(separator: "/").map(String.init)
 
         let token = split.last ?? ""
+
+        let theme: Theme?
+        if let first = split.first, first.starts(with: "@") {
+            theme = Theme(name: first)
+            split = Array(split.dropFirst())
+        } else {
+            theme = nil
+        }
+
         let path = Path(split.dropLast().joined(separator: "/"))
 
-        self.init(token: token, path: path)
+        self.init(token: token, path: path, theme: theme)
     }
 
     public var description: String {
@@ -61,7 +75,13 @@ extension StylistIdentifier: LosslessStringConvertible {
             return self.token
         }
 
-        return pathDescription + "/" + self.token
+        let pathAndToken = pathDescription + "/" + self.token
+
+        guard let theme = self.theme else {
+            return pathAndToken
+        }
+
+        return theme.name + "/" + pathAndToken
     }
 }
 
@@ -178,7 +198,7 @@ extension StylistIdentifier {
     /// i.e. `"close".within("button") == 'button/close'`
     ///
     public func within(_ path: Path?) -> StylistIdentifier {
-        StylistIdentifier(token: self.token, path: self.path.within(path))
+        StylistIdentifier(token: self.token, path: self.path.within(path), theme: self.theme)
     }
 }
 
