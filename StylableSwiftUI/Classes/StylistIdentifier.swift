@@ -211,3 +211,16 @@ private extension RandomAccessCollection  {
         self.count > 1 ? self[self.index(self.startIndex, offsetBy: 1)] : nil
     }
 }
+
+public extension StylistIdentifier {
+
+    /// Creates a new `StylistIdentifier` without a theme
+    /// - Parameters:
+    ///   - token: the token for the identifier
+    ///   - path: the path for the identifier
+    init(token: String, path: Path) {
+        self.token = token
+        self.path = path
+        self.theme = nil
+    }
+}
