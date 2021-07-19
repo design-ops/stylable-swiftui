@@ -83,4 +83,17 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         // If the variants don't match between the general and the specific, then it's not a match
         XCTAssertEqual(matcher.match(specific: specific, general: "header[normal]/label"), 0)
     }
+
+    func testStylistIdentifier_themedIdentifier() {
+        let matcher = StylistIdentifierMatcher()
+
+        let specific: StylistIdentifier = "home/header[selected]/searchBar[deselected]/label"
+
+        let theme = Theme(name: "@dark")
+
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/header[selected]/searchBar[deselected]/label", theme: theme), 378)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/searchBar[deselected]/label", theme: theme), 354)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/label", theme: theme), 256)
+        XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label", theme: theme), 122)
+    }
 }

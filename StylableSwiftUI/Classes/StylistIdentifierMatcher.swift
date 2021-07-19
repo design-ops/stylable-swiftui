@@ -51,9 +51,11 @@ struct StylistIdentifierMatcher {
         // If the rhs was just a token (and it's matched to get this far) then it's the weakest possible match
         // as long as there isn't a theme involved
         if rhs.path.components.isEmpty && theme == nil { return 1 }
+        // if there was a theme and no components in rhs, then it's value is the value of the theme:
+        if rhs.path.components.isEmpty && theme != nil { return 1<<((lhs.path.components.count + 1) * 2) }
 
         // If the lhs is just a token, but the rhs was more than that then the rhs doesn't match
-        guard !lhs.path.components.isEmpty else { return 0 }
+        if lhs.path.components.isEmpty && theme == nil { return 0 }
 
         // Sanity skip of some maths. If they are identical, and there is no theme set, it's the best possible match.
         if lhs == rhs && theme == nil {
@@ -133,6 +135,6 @@ struct StylistIdentifierMatcher {
         // If we have got to the end of the lhs then we haven't matched everything in the rhs - no match
         self.logger.debug("  End of lhs, but rhs still has matches - no match")
 
-        return score
+        return 0
     }
 }
