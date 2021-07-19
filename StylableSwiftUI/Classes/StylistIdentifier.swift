@@ -56,8 +56,8 @@ extension StylistIdentifier: LosslessStringConvertible {
         let token = split.last ?? ""
 
         let theme: Theme?
-        if let first = split.first, first.starts(with: "@") {
-            theme = Theme(name: first)
+        if let first = split.first, first.starts(with: Theme.identifierPrefix) {
+            theme = Theme(name: String(first.dropFirst()))
             split = Array(split.dropFirst())
         } else {
             theme = nil

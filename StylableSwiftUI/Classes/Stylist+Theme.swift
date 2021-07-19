@@ -10,6 +10,12 @@ import Foundation
 public struct Theme: Equatable, Hashable {
     public let name: String
 
+    static let identifierPrefix = "@"
+
+    var value: String {
+        return "\(Self.identifierPrefix)\(name)"
+    }
+
     public init(name: String) {
         self.name = name
     }

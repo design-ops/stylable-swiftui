@@ -68,7 +68,7 @@ final class StylistTests: XCTestCase {
             return AnyView(view.foregroundColor(.blue))
         }
 
-        stylist.currentTheme = Theme(name: "@dark")
+        stylist.currentTheme = Theme(name: "dark")
 
         let stylable = Stylable(AnyView(Text("Test")), identifier: "element/atom")
         _ = stylist.style(view: stylable, identifier: "element/atom")
@@ -137,7 +137,7 @@ final class StylistTests: XCTestCase {
             return AnyView(view.foregroundColor(.blue))
         }
 
-        stylist.currentTheme = Theme(name: "@dark")
+        stylist.currentTheme = Theme(name: "dark")
 
         let stylable = Stylable(AnyView(Text("Test")), identifier: "element/searchBar/header/atom")
         _ = stylist.style(view: stylable, identifier: "element/searchBar/header/atom")

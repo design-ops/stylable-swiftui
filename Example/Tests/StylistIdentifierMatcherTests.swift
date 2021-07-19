@@ -89,7 +89,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
 
         let specific: StylistIdentifier = "home/header[selected]/searchBar[deselected]/label"
 
-        let theme = Theme(name: "@dark")
+        let theme = Theme(name: "dark")
 
         XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/header[selected]/searchBar[deselected]/label", theme: theme), 378)
         XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/searchBar[deselected]/label", theme: theme), 354)
