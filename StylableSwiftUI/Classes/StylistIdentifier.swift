@@ -81,7 +81,7 @@ extension StylistIdentifier: LosslessStringConvertible {
             return pathAndToken
         }
 
-        return theme.name + "/" + pathAndToken
+        return theme.value + "/" + pathAndToken
     }
 }
 

@@ -17,6 +17,10 @@ public struct Theme: Equatable, Hashable {
     }
 
     public init(name: String) {
-        self.name = name
+        if name.starts(with: "@") {
+            self.name = String(name.dropFirst())
+        } else {
+            self.name = name
+        }
     }
 }
