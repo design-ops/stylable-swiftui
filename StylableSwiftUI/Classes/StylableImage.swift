@@ -13,6 +13,7 @@ public struct StylableImage: View {
     private let identifier: StylistIdentifier
     private let factory: (StylistIdentifier) -> Image
 
+    @EnvironmentObject private var stylist: Stylist
     @Environment(\.currentStylableGroup) var currentStylableGroup
 
     private init(_ identifier: StylistIdentifier, factory: @escaping (StylistIdentifier) -> Image) {
@@ -25,8 +26,11 @@ public struct StylableImage: View {
         self.factory = { identifier in Image(identifier: identifier, separator: separator, bundle: bundle, compatibleWith: traitCollection) }
     }
 
+    @ViewBuilder
     public var body: some View {
-        self.factory(self.identifier.within(self.currentStylableGroup))
+        self.factory(StylistIdentifier(token: self.identifier.token,
+                                       path: self.identifier.path.within(self.currentStylableGroup),
+                                       theme: self.stylist.currentTheme))
     }
 
     // MARK: - Wrapped Image methods
