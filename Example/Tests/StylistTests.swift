@@ -52,7 +52,7 @@ final class StylistTests: XCTestCase {
         }
     }
 
-    func testThemeing() {
+    func testTheming() {
         let stylist = Stylist()
 
         var didApplyGeneric = false

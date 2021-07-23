@@ -17,10 +17,16 @@ public struct Theme: Equatable, Hashable {
     }
 
     public init(name: String) {
-        if name.starts(with: "@") {
+        if name.starts(with: Self.identifierPrefix) {
             self.name = String(name.dropFirst())
         } else {
             self.name = name
         }
+    }
+}
+
+extension Theme: CustomStringConvertible {
+    public var description: String {
+        return self.value
     }
 }
