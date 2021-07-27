@@ -145,6 +145,29 @@ final class StylistTests: XCTestCase {
         XCTAssertTrue(didApplyGeneric)
         XCTAssertFalse(didApplyThemed)
     }
+
+    func testPathComponentIdentifiersWithSpecialCharacters() {
+        let stylist = Stylist()
+
+        var didApplySpecialCharacter = false
+        var didApplyNoSpecialCharacter = false
+
+        stylist.addStyle(identifier: "element/@searchBar/heÆder/atõm") { view -> AnyView in
+            didApplySpecialCharacter = true
+            return AnyView(view.foregroundColor(.red))
+        }
+
+        stylist.addStyle(identifier: "element/searchBar/header/atom") { view -> AnyView in
+            didApplyNoSpecialCharacter = true
+            return AnyView(view.foregroundColor(.blue))
+        }
+
+        let stylable = Stylable(AnyView(Text("Test")), identifier: "element/@searchBar/heÆder/atõm")
+        _ = stylist.style(view: stylable, identifier: "element/@searchBar/heÆder/atõm")
+
+        XCTAssertTrue(didApplySpecialCharacter)
+        XCTAssertFalse(didApplyNoSpecialCharacter)
+    }
 }
 
 private var largeNumberOfStyles: () -> [Style] = {
