@@ -26,7 +26,6 @@ public struct StylableImage: View {
         self.factory = { identifier in Image(identifier: identifier, separator: separator, bundle: bundle, compatibleWith: traitCollection) }
     }
 
-    @ViewBuilder
     public var body: some View {
         self.factory(StylistIdentifier(token: self.identifier.token,
                                        path: self.identifier.path.within(self.currentStylableGroup),

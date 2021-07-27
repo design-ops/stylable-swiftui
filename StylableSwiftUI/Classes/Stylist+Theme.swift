@@ -30,3 +30,9 @@ extension Theme: CustomStringConvertible {
         return self.value
     }
 }
+
+extension Theme: ExpressibleByStringLiteral {
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(name: value)
+    }
+}
