@@ -260,3 +260,14 @@ i.e.
 In this case, the image would look for assets named `"client_searchbar_image"`, `"*_searchbar_image"`, `"client_*_image"` and finally `"*_*_image"`. This allows us to put a generic image called `"*_searchbar_image"` in an asset bundle, but also include an asset called `"client_searchbar_image"` to change the image only when the searchbar was in the client section of the app.
 
 The call to `style(_:)` is so that we can add other styles to the image view via the stylist, and has no effect on the loaded image resource.
+
+## Themes
+
+Themes are modifiers that are applied to a stylist identifier to increase the specificity value when that theme is selected. To set a theme in your stylist, set it's `currentTheme` property:
+
+```swift
+let stylist = Stylist()
+stylist.currentTheme = Theme(name: "dark")
+```
+
+Once a theme is set, any identifier registered with that stylist that is included in that theme will have a higher precedence than a non-themed identifier. For example, a stylist with the identifiers `a/b/c/d/token` and `@dark/token` registered, will give a higher precedence to the latter when compared with the identifier `a/b/c/d/token`.

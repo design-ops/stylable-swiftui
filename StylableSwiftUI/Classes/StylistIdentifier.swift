@@ -72,10 +72,10 @@ extension StylistIdentifier: LosslessStringConvertible {
         let pathDescription = self.path.description
 
         guard !pathDescription.isEmpty else {
-            if let theme = self.theme {
-                return theme.description + "/" + self.token
+            guard let theme = self.theme else {
+                return self.token
             }
-            return self.token
+            return theme.description + "/" + self.token
         }
 
         let pathAndToken = pathDescription + "/" + self.token
