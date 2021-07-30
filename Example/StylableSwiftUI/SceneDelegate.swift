@@ -55,9 +55,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             StyledListScreen()
                 .environmentObject(Stylist.createAlternate())
                 .tabItem { Text("Alternate List") }
+
+            ThemedView()
+                .tabItem { Text("Themed view") }
         }
-            .environmentObject(stylist)
-            .environmentObject(StyledListViewModel())
+        .environmentObject(stylist)
+        .environmentObject(StyledListViewModel())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

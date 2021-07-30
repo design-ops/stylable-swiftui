@@ -26,13 +26,32 @@ extension Stylist {
 
             // Matches * / * / title
             Style("title") {
-                $0.font(.title).foregroundColor(Color("Color"))
+                $0.font(.title).foregroundColor(.black)
             },
 
             // Matches * / * / body
             Style("body") {
                 $0.styleText { $0.kerning(5) }
                     .foregroundColor(.red)
+            },
+
+            Style("background") {
+                $0.background(Color.white)
+            },
+
+            Style("@dark/background") {
+                $0.background(Color.black)
+            },
+
+            // Matches * / * / title in @dark theme
+            Style("@dark/title") {
+                $0.font(.title).foregroundColor(Color.white)
+            },
+
+            // Matches * / * / body in @dark theme
+            Style("@dark/body") {
+                $0.styleText { $0.kerning(5) }
+                    .foregroundColor(.blue)
             },
 
             Style("example/body") {

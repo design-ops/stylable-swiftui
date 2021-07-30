@@ -45,14 +45,17 @@ struct StylistIdentifierMatcher {
 
         guard lhs.token == rhs.token else { return 0 }
 
-        // If general has a theme and we are trying to match with a theme and they are not the same, this is not a match
-        if rhs.theme != nil && theme != nil && rhs.theme != rhs.theme { return 0 }
+        // RHS has a theme, but there is no theme in the stylist, no match
+        if rhs.theme != nil && theme == nil { return 0 }
 
-        // If the rhs was just a token (and it's matched to get this far) then it's the weakest possible match
+        // If general has a theme and we are trying to match with a theme and they are not the same, this is not a match
+        if rhs.theme != nil && theme != nil && rhs.theme != theme { return 0 }
+
+        // If the rhs was just a token (and it's managed to get this far) then it's the weakest possible match
         // as long as there isn't a theme involved
         if rhs.path.components.isEmpty && theme == nil { return 1 }
         // if there was a theme and no components in rhs, then it's value is the value of the theme:
-        if rhs.path.components.isEmpty && theme != nil { return 1<<((lhs.path.components.count + 1) * 2) }
+        if rhs.path.components.isEmpty && rhs.theme != nil && theme != nil { return 1<<((lhs.path.components.count + 1) * 2) }
 
         // If the lhs is just a token, but the rhs was more than that then the rhs doesn't match
         if lhs.path.components.isEmpty && theme == nil { return 0 }
