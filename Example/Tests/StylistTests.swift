@@ -171,9 +171,36 @@ final class StylistTests: XCTestCase {
 }
 
 private var largeNumberOfStyles: () -> [Style] = {
-    return (0..<100).map { _ -> Style in
-        Style(.unique, apply: {
+    let combinations = [
+        "element1",
+        "element2",
+        "element3",
+        "element4",
+        "element5"
+    ]
+    return combinations.permutations.map { permutation -> Style in
+        Style(ThemedStylistIdentifier(identifier: StylistIdentifier(permutation.joined(separator: "/")),
+                                      theme: Int.random(in: 0...1) == 0 ? "dark" : nil), apply: {
             $0.background(Color.red)
         })
     }
 }
+
+private extension Array {
+
+    func chopped() -> (Element, [Element])? {
+        guard let x = self.first else { return nil }
+        return (x, Array(self.suffix(from: 1)))
+    }
+
+    func interleaved(_ element: Element) -> [[Element]] {
+        guard let (head, rest) = self.chopped() else { return [[element]] }
+        return [[element] + self] + rest.interleaved(element).map { [head] + $0 }
+    }
+
+    var permutations: [[Element]] {
+        guard let (head, rest) = self.chopped() else { return [[]] }
+        return rest.permutations.flatMap { $0.interleaved(head) }
+    }
+}
+
