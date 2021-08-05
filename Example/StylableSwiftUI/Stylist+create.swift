@@ -36,11 +36,15 @@ extension Stylist {
             },
 
             Style("background") {
-                $0.background(Color.white)
+                $0.background(Color.green)
             },
 
             Style("@dark/background") {
                 $0.background(Color.black)
+            },
+
+            Style("@dark/searchbar/background") {
+                $0.background(Color.yellow)
             },
 
             // Matches * / * / title in @dark theme

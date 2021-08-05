@@ -43,6 +43,23 @@ struct StylistIdentifierMatcher {
     func match(specific lhs: StylistIdentifier, general rhs: StylistIdentifier, theme: Theme? = nil) -> Int {
         self.logger.debug("Attempting to match \(lhs) with \(rhs)")
 
+        // Rules are:
+        // - If the tokens are different, there is no match, return 0
+        // - If RHS has a theme but there is no `theme`, there is no match, return 0
+        // - If the theme in RHS is different than `theme`, there is no match, return 0
+        // - If the LHS and RHS are both just tokens:
+        //    - If there is no theme, it's a match (of just tokens), return 1
+        //    - If there is a `theme`, and RHS.theme == `theme`, return 1 + the theme score
+        //    - If there is a `theme` and RHS.theme != `theme`, there is no match, return 0
+        // - If RHS is just a token:
+        //    - If there is no theme, it's a match (of just tokens), return 1
+        //    - If there is a `theme`, and RHS.theme == `theme`, return 1 + the theme score
+        //    - If there is a `theme` and RHS.theme != `theme`, there is no match, return 0
+        // - If LHS is just a token:
+        //    - If RHS is more than just a token, no match, return 0
+        //    - If there is a `theme`, and RHS.theme == `theme`, return 1 + the theme score
+        //    - If there is a `theme` and RHS.theme != `theme`, there is no match, return 0
+
         guard lhs.token == rhs.token else { return 0 }
 
         // RHS has a theme, but there is no theme in the stylist, no match
@@ -51,20 +68,37 @@ struct StylistIdentifierMatcher {
         // If general has a theme and we are trying to match with a theme and they are not the same, this is not a match
         if rhs.theme != nil && theme != nil && rhs.theme != theme { return 0 }
 
-        // If the rhs was just a token (and it's managed to get this far) then it's the weakest possible match
-        // as long as there isn't a theme involved
-        if rhs.path.components.isEmpty && theme == nil { return 1 }
-        // if there was a theme and no components in rhs, then it's value is the value of the theme:
-        if rhs.path.components.isEmpty && rhs.theme != nil && theme != nil { return 1<<((lhs.path.components.count + 1) * 2) }
+        // Get the score of the theme
+        let themeScore = 1<<((lhs.path.components.count + 1) * 2)
 
-        // If the lhs is just a token, but the rhs was more than that then the rhs doesn't match
-        if lhs.path.components.isEmpty && theme == nil { return 0 }
-
-        // Sanity skip of some maths. If they are identical, and there is no theme set, it's the best possible match.
-        if lhs == rhs && theme == nil {
-            self.logger.debug("  Exact match")
-            return Int.max
+        // - If RHS is just a token:
+        //    - If there is no theme, it's a match (of just tokens), return 1
+        //    - If there is a `theme`, and RHS.theme == `theme`, return 1 + the theme score
+        //    - If there is a `theme` and RHS.theme != `theme`, there is no match, return 0
+        if rhs.path.components.isEmpty {
+            if theme == nil {
+                return 1
+            } else if theme == rhs.theme {
+                return 1 + themeScore
+            } else { // rhs.theme and theme don't match, so there is no match
+                return 0
+            }
         }
+
+        // - If LHS is just a token:
+        //    - If RHS is more than just a token, no match, return 0
+        //    - If there is a `theme`, and RHS.theme == `theme`, return 1 + the theme score
+        //    - If there is a `theme` and RHS.theme != `theme`, there is no match, return 0
+        if lhs.path.components.isEmpty {
+            if !rhs.path.components.isEmpty {
+                return 0
+            } else if theme == rhs.theme {
+                return 1 + themeScore
+            } else {
+                return 0
+            }
+        }
+
 
         // We are going to manually step over the rhs, so we will need an iterator
         var rhsIterator = rhs.path.components.makeIterator()
@@ -77,8 +111,7 @@ struct StylistIdentifierMatcher {
         // The theme score value is 1 more level than the maximum score you could potentially have if the identifiers
         // were identical. That way we guarantee that a match with a theme in any match will be higher than one without a theme
         if rhs.theme != nil && theme != nil && rhs.theme == theme {
-            let themeScoreValue = theme == nil ? 0 : 1<<((lhs.path.components.count + 1) * 2)
-            score += themeScoreValue
+            score += themeScore
         }
 
         // Go through each component of each identifier in turn.
