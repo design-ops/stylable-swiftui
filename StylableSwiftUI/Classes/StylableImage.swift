@@ -93,11 +93,10 @@ extension ThemedStylistIdentifier {
         // If we have a theme, first we make a sequence of the themed potential names, then the rest
         var themedSequence: AnySequence<String>
         if let theme = self.theme {
-            let optionsWithThemeAndToken = options.lazy
-                .map {
-                    [theme.name] + $0.map { $0.description } + [self.token]
-                }.map { $0.joined(separator: separator) }
-            themedSequence = AnySequence(optionsWithThemeAndToken)
+            let optionsWithThemeAndToken = options.lazy.map {
+                [theme.name] + $0.map { $0.description } + [self.token]
+            }
+            themedSequence = AnySequence(optionsWithThemeAndToken.map { $0.joined(separator: separator) })
         } else {
             themedSequence = AnySequence([])
         }
@@ -105,7 +104,7 @@ extension ThemedStylistIdentifier {
         // Append the token to the end - it's always there.
         let optionsWithToken = options
             .lazy
-            .map { $0.map { $0.description } + [self.token]}
+            .map { $0.map { $0.description } + [self.token] }
 
         // Return the sequence, joining the components with the requested separator
         return AnySequence(themedSequence + optionsWithToken.map { $0.joined(separator: separator) })
