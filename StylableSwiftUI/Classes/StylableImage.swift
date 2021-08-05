@@ -11,42 +11,46 @@ public struct StylableImage: View {
     public static let defaultSeparator = "_"
 
     private let identifier: StylistIdentifier
-    private let factory: (StylistIdentifier) -> Image
+    private let factory: (StylistIdentifier, Theme?) -> Image
 
     @EnvironmentObject private var stylist: Stylist
     @Environment(\.currentStylableGroup) var currentStylableGroup
 
-    private init(_ identifier: StylistIdentifier, factory: @escaping (StylistIdentifier) -> Image) {
+    private init(_ identifier: StylistIdentifier, factory: @escaping (StylistIdentifier, Theme?) -> Image) {
         self.identifier = identifier
         self.factory = factory
     }
 
     public init(_ identifier: StylistIdentifier, separator: String = defaultSeparator, bundle: Bundle? = nil, compatibleWith traitCollection: UITraitCollection? = nil) {
         self.identifier = identifier
-        self.factory = { identifier in Image(identifier: identifier, separator: separator, bundle: bundle, compatibleWith: traitCollection) }
+        self.factory = { identifier, theme in Image(identifier: ThemedStylistIdentifier(identifier: identifier, theme: theme),
+                                                    separator: separator,
+                                                    bundle: bundle,
+                                                    compatibleWith: traitCollection)
+        }
     }
 
     public var body: some View {
         self.factory(StylistIdentifier(token: self.identifier.token,
-                                       path: self.identifier.path.within(self.currentStylableGroup)))
+                                       path: self.identifier.path.within(self.currentStylableGroup)), self.stylist.currentTheme)
     }
 
     // MARK: - Wrapped Image methods
 
     public func renderingMode(_ renderingMode: Image.TemplateRenderingMode?) -> StylableImage {
-        StylableImage(self.identifier) { self.factory($0).renderingMode(renderingMode) }
+        StylableImage(self.identifier) { self.factory($0, $1).renderingMode(renderingMode) }
     }
 
     public func resizable(capInsets: EdgeInsets = EdgeInsets(), resizingMode: Image.ResizingMode = .stretch) -> StylableImage {
-        StylableImage(self.identifier) { self.factory($0).resizable(capInsets: capInsets, resizingMode: resizingMode) }
+        StylableImage(self.identifier) { self.factory($0, $1).resizable(capInsets: capInsets, resizingMode: resizingMode) }
     }
 
     public func interpolation(_ interpolation: Image.Interpolation) -> StylableImage {
-        StylableImage(self.identifier) { self.factory($0).interpolation(interpolation) }
+        StylableImage(self.identifier) { self.factory($0, $1).interpolation(interpolation) }
     }
 
     public func antialiased(_ isAntialiased: Bool) -> StylableImage {
-        StylableImage(self.identifier) { self.factory($0).antialiased(isAntialiased) }
+        StylableImage(self.identifier) { self.factory($0, $1).antialiased(isAntialiased) }
     }
 }
 
@@ -57,12 +61,12 @@ extension Image {
     /// This method attempts the most specific image name first. i.e. `section/element/atom` would try
     /// `section_element_atom` then `*_element_atom` then `section_*_atom`, finally `*_*_atom`.
     ///
-    /// - parameter identifier: The StylistIdentifier to use when attempting to find/load an image
+    /// - parameter identifier: The `ThemedStylistIdentifier` to use when attempting to find/load an image
     /// - parameter separator: _(optional)_ The character to use when joining the components together to create the resource name (defaults to `_`)
     /// - parameter bundle: _(optional)_ The bundle to search for the image (defaults to the main bundle)
     /// - parameter compatibleWith: _(optional)_ The trait collection to use for the image (defaults to `nil`).
     ///
-    init(identifier: StylistIdentifier,
+    init(identifier: ThemedStylistIdentifier,
          separator: String = StylableImage.defaultSeparator,
          bundle: Bundle? = nil,
          compatibleWith traitCollection: UITraitCollection? = nil) {
@@ -79,20 +83,32 @@ extension Image {
     }
 }
 
-extension StylistIdentifier {
+extension ThemedStylistIdentifier {
 
     /// All the possible names for a image based on this identifier
     func potentialImageNames(separator: String = StylableImage.defaultSeparator) -> AnySequence<String> {
         let components = Array(self.path.components.reversed())
         let options = VariantSequence(from: components)
 
+        // If we have a theme, first we make a sequence of the themed potential names, then the rest
+        var themedSequence: AnySequence<String>
+        if let theme = self.theme {
+            let optionsWithThemeAndToken = options.lazy
+                .map {
+                    [theme.name] + $0.map { $0.description } + [self.token]
+                }.map { $0.joined(separator: separator) }
+            themedSequence = AnySequence(optionsWithThemeAndToken)
+        } else {
+            themedSequence = AnySequence([])
+        }
+
         // Append the token to the end - it's always there.
         let optionsWithToken = options
             .lazy
-            .map { $0.map { $0.description } + [self.token] }
+            .map { $0.map { $0.description } + [self.token]}
 
         // Return the sequence, joining the components with the requested separator
-        return AnySequence(optionsWithToken.map { $0.joined(separator: separator) })
+        return AnySequence(themedSequence + optionsWithToken.map { $0.joined(separator: separator) })
     }
 }
 
@@ -174,7 +190,7 @@ private struct VariantSequence: Sequence, IteratorProtocol {
 
 // MARK: - UIImage
 
-public extension StylistIdentifier {
+public extension ThemedStylistIdentifier {
     func uiImage(separator: String = StylableImage.defaultSeparator,
                  bundle: Bundle? = nil,
                  compatibleWith traits: UITraitCollection? = nil) -> UIImage? {
