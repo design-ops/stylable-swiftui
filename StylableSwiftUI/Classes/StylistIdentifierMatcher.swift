@@ -32,13 +32,6 @@ struct StylistIdentifierMatcher {
 
         guard lhs.token == rhs.token else { return 0 }
 
-        // If the lhs is just a token, but the rhs was more than that then the rhs doesn't match
-        guard !lhs.path.components.isEmpty else { return 0 }
-
-        // We are going to manually step over the rhs, so we will need an iterator
-        var rhsIterator = rhs.path.components.makeIterator()
-        var rhsComponent = rhsIterator.next()
-
         var score = 0 // The score we will return if it turns out to be a match
         if rhs.theme != nil {
             score += 1<<((lhs.path.components.count + 1) * 2)
@@ -47,6 +40,13 @@ struct StylistIdentifierMatcher {
         // If the rhs was just a token (and it's matched to get this far) then it's the weakest possible match.
         // So here we return the current score + 1, which will either be 1 or 1 + the maximum possible value if there was a theme.
         guard !rhs.path.components.isEmpty else { return score + 1 }
+
+        // If the lhs is just a token, but the rhs was more than that then the rhs doesn't match
+        guard !lhs.path.components.isEmpty else { return 0 }
+
+        // We are going to manually step over the rhs, so we will need an iterator
+        var rhsIterator = rhs.path.components.makeIterator()
+        var rhsComponent = rhsIterator.next()
 
         var nextScore = 1<<(lhs.path.components.count * 2)// The score value of the current component - this goes up each time
         self.logger.debug("  Starting score delta \(nextScore)")
