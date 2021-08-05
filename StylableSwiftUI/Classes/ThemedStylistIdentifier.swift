@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public struct ThemedStylistIdentifier: Equatable, Hashable {
     let identifier: StylistIdentifier
 
@@ -17,17 +16,26 @@ public struct ThemedStylistIdentifier: Equatable, Hashable {
     let theme: Theme?
 
     var path: StylistIdentifier.Path {
-        return self.identifier.path
+        self.identifier.path
     }
 
     var token: String {
-        return self.identifier.token
+        self.identifier.token
     }
 }
 
 extension ThemedStylistIdentifier: CustomStringConvertible {
     public var description: String {
-        return (self.theme.map { $0.description + "/" } ?? "") + self.identifier.description
+        guard let theme = self.theme else {
+            return self.identifier.description
+        }
+        return theme.description + "/" + self.identifier.description
+    }
+}
+
+extension ThemedStylistIdentifier: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return "<ThemedStylistIdentifier: \(self.description)>"
     }
 }
 

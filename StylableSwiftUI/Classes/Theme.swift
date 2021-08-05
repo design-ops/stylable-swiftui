@@ -27,7 +27,13 @@ public struct Theme: Equatable, Hashable {
 
 extension Theme: CustomStringConvertible {
     public var description: String {
-        return self.value
+        self.value
+    }
+}
+
+extension Theme: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        "<Theme: \(self.name)>"
     }
 }
 
