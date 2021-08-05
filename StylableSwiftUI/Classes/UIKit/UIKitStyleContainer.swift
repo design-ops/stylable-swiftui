@@ -8,7 +8,7 @@
 import Foundation
 
 public final class UIKitStyleContainer {
-    private var registeredProperties: [StylistIdentifier: [StylistProperty]]
+    private var registeredProperties: [ThemedStylistIdentifier: [StylistProperty]]
     private let stylist: Stylist
 
     public init(stylist: Stylist) {
@@ -18,7 +18,7 @@ public final class UIKitStyleContainer {
 }
 
 public extension UIKitStyleContainer {
-    func addProperty(identifier: StylistIdentifier, properties: () -> [StylistProperty]) {
+    func addProperty(identifier: ThemedStylistIdentifier, properties: () -> [StylistProperty]) {
         self.registeredProperties[identifier] = properties()
     }
 }
@@ -29,8 +29,9 @@ public extension UIKitStyleContainer {
     private func properties(for identifier: StylistIdentifier) -> [StylistProperty] {
         // Grab the best matching property
         let scored = self.registeredProperties
-            .compactMap { (key: StylistIdentifier, value: [StylistProperty]) -> (score: Int, properties: [StylistProperty])? in
-                let score = self.stylist.matcher.match(specific: identifier, general: key, theme: self.stylist.currentTheme)
+            .filter { $0.key.theme == nil || $0.key.theme == self.stylist.currentTheme }
+            .compactMap { (key: ThemedStylistIdentifier, value: [StylistProperty]) -> (score: Int, properties: [StylistProperty])? in
+                let score = self.stylist.matcher.match(specific: identifier, general: key)
                 guard score > 0 else { return nil }
                 return (score, value)
             }

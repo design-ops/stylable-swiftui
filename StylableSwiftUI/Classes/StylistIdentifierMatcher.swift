@@ -27,99 +27,29 @@ struct StylistIdentifierMatcher {
     /// matches("home/header/searchBar/label", "home/searchBar") == 5
     /// matches("home/header/searchBar/label", "home/potato") == 0
     ///
-    /// With themes, things change a little. A style that matches like:
-    ///
-    /// matches("home/header/searchBar/label", "header/searchBar/label")
-    ///
-    /// is now *less* specific than a match that matches traditionally less specific but has the theme specifier:
-    ///
-    /// matches("home/header/searchBar/label", "@dark/searchBar/label")
-    ///
-    /// e.g. theme specifiers supply a higher score than any amount of matching on a path. Extreme example:
-    ///
-    /// matches("home/header/searchBar/label", "home/header/searchBar/label")
-    /// matches("home/header/searchBar/label", "@dark/label") <- would be the matched style if the `@dark` theme is set.
-    ///
-    func match(specific lhs: StylistIdentifier, general rhs: StylistIdentifier, theme: Theme? = nil) -> Int {
+    func match(specific lhs: StylistIdentifier, general rhs: ThemedStylistIdentifier) -> Int {
         self.logger.debug("Attempting to match \(lhs) with \(rhs)")
-
-        // Rules are:
-        // - If the tokens are different, there is no match, return 0
-        // - If RHS has a theme but there is no `theme`, there is no match, return 0
-        // - If the theme in RHS is different than `theme`, there is no match, return 0
-        // - If the LHS and RHS are both just tokens:
-        //    - If there is no theme, it's a match (of just tokens), return 1
-        //    - If there is a `theme`, and RHS.theme == `theme`, return 1 + the theme score
-        //    - If there is a `theme` and RHS.theme != `theme`, there is no match, return 0
-        // - If RHS is just a token:
-        //    - If there is no theme, it's a match (of just tokens), return 1
-        //    - If there is a `theme`, and RHS.theme == `theme`, return 1 + the theme score
-        //    - If there is a `theme` and RHS.theme != `theme`, there is no match, return 0
-        // - If LHS is just a token:
-        //    - If RHS is more than just a token, no match, return 0
-        //    - If there is a `theme`, and RHS.theme == `theme`, return 1 + the theme score
-        //    - If there is a `theme` and RHS.theme != `theme`, there is no match, return 0
 
         guard lhs.token == rhs.token else { return 0 }
 
-        // RHS has a theme, but there is no theme in the stylist, no match
-        if rhs.theme != nil && theme == nil { return 0 }
-
-        // If general has a theme and we are trying to match with a theme and they are not the same, this is not a match
-        if rhs.theme != nil && theme != nil && rhs.theme != theme { return 0 }
-
-        // Get the score of the theme
-        let themeScore = 1<<((lhs.path.components.count + 1) * 2)
-
-        // - If RHS is just a token:
-        //    - If there is no theme, it's a match (of just tokens), return 1
-        //    - If there is a `theme`, and RHS.theme == `theme`, return 1 + the theme score
-        //    - If there is a `theme` and RHS.theme != `theme`, there is no match, return 0
-        if rhs.path.components.isEmpty {
-            if theme == nil {
-                return 1
-            } else if theme == rhs.theme {
-                return 1 + themeScore
-            } else { // rhs.theme and theme don't match, so there is no match
-                return 0
-            }
-        }
-
-        // - If LHS is just a token:
-        //    - If RHS is more than just a token, no match, return 0
-        //    - If there is a `theme`, and RHS.theme == `theme`, return 1 + the theme score
-        //    - If there is a `theme` and RHS.theme != `theme`, there is no match, return 0
-        if lhs.path.components.isEmpty {
-            if !rhs.path.components.isEmpty {
-                return 0
-            }
-            if theme != nil && theme == rhs.theme {
-                return 1 + themeScore
-            }
-            if theme != nil && theme != rhs.theme {
-               return 0
-            }
-        }
-
-        // Sanity skip of some maths. If they are identical, and there is no theme, it's the best possible match.
-        if lhs == rhs && theme == nil {
-            self.logger.debug("  Exact match")
-            return Int.max
-        }
+        // If the lhs is just a token, but the rhs was more than that then the rhs doesn't match
+        guard !lhs.path.components.isEmpty else { return 0 }
 
         // We are going to manually step over the rhs, so we will need an iterator
         var rhsIterator = rhs.path.components.makeIterator()
         var rhsComponent = rhsIterator.next()
 
         var score = 0 // The score we will return if it turns out to be a match
+        if rhs.theme != nil {
+            score += 1<<((lhs.path.components.count + 1) * 2)
+        }
+
+        // If the rhs was just a token (and it's matched to get this far) then it's the weakest possible match.
+        // So here we return the current score + 1, which will either be 1 or 1 + the maximum possible value if there was a theme.
+        guard !rhs.path.components.isEmpty else { return score + 1 }
+
         var nextScore = 1<<(lhs.path.components.count * 2)// The score value of the current component - this goes up each time
         self.logger.debug("  Starting score delta \(nextScore)")
-
-        // The theme score value is 1 more level than the maximum score you could potentially have if the identifiers
-        // were identical. That way we guarantee that a match with a theme in any match will be higher than one without a theme
-        if rhs.theme != nil && theme != nil && rhs.theme == theme {
-            score += themeScore
-        }
 
         // Go through each component of each identifier in turn.
         //

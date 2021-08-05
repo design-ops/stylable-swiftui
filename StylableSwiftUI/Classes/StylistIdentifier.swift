@@ -36,11 +36,6 @@ public struct StylistIdentifier: Equatable, Hashable {
 
     /// Given the identifier `header/searchBar/title` then the components are `[ "header", "searchBar" ]`
     let path: Path
-
-    /// The theme for this identifier, if any.
-    /// Given the identifier `@dark/header/searchBar/title` then the theme is `@dark`
-    /// Given the identifier `header/searchBar/title` then the theme is `nil`
-    let theme: Theme?
 }
 
 extension StylistIdentifier: LosslessStringConvertible {
@@ -51,40 +46,23 @@ extension StylistIdentifier: LosslessStringConvertible {
     ///
     /// - parameter description: The string to parse into an identifier
     public init(_ description: String) {
-        var split = description.split(separator: "/").map(String.init)
+        let split = description.split(separator: "/").map(String.init)
 
         let token = split.last ?? ""
 
-        let theme: Theme?
-        if let first = split.first, first.starts(with: Theme.identifierPrefix) {
-            theme = Theme(name: String(first.dropFirst()))
-            split = Array(split.dropFirst())
-        } else {
-            theme = nil
-        }
-
         let path = Path(split.dropLast().joined(separator: "/"))
 
-        self.init(token: token, path: path, theme: theme)
+        self.init(token: token, path: path)
     }
 
     public var description: String {
         let pathDescription = self.path.description
 
         guard !pathDescription.isEmpty else {
-            guard let theme = self.theme else {
-                return self.token
-            }
-            return theme.description + "/" + self.token
+            return self.token
         }
 
-        let pathAndToken = pathDescription + "/" + self.token
-
-        guard let theme = self.theme else {
-            return pathAndToken
-        }
-
-        return theme.value + "/" + pathAndToken
+        return pathDescription + "/" + self.token
     }
 }
 
@@ -95,12 +73,6 @@ extension StylistIdentifier: ExpressibleByStringLiteral {
         self.init(value)
     }
 }
-
-extension StylistIdentifier {
-
-    public static var unique: StylistIdentifier { StylistIdentifier(UUID().uuidString) }
-}
-
 
 // MARK: - Component
 
@@ -201,7 +173,7 @@ extension StylistIdentifier {
     /// i.e. `"close".within("button") == 'button/close'`
     ///
     public func within(_ path: Path?) -> StylistIdentifier {
-        StylistIdentifier(token: self.token, path: self.path.within(path), theme: self.theme)
+        StylistIdentifier(token: self.token, path: self.path.within(path))
     }
 }
 
@@ -212,18 +184,5 @@ private extension RandomAccessCollection  {
     /// Helper property - exactly the same as `first` but returns the second element, if it exists.
     var second: Element? {
         self.count > 1 ? self[self.index(self.startIndex, offsetBy: 1)] : nil
-    }
-}
-
-public extension StylistIdentifier {
-
-    /// Creates a new `StylistIdentifier` without a theme
-    /// - Parameters:
-    ///   - token: the token for the identifier
-    ///   - path: the path for the identifier
-    init(token: String, path: Path) {
-        self.token = token
-        self.path = path
-        self.theme = nil
     }
 }

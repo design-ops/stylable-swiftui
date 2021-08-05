@@ -46,8 +46,8 @@ final class StylistTests: XCTestCase {
             let id2 = styles.randomElement()!.identifier
             for _ in  0..<10_000 {
                 _ = stylist.style(view: Stylable(Text("Test"),
-                                                 identifier: id1),
-                                  identifier: id2)
+                                                 identifier: id1?.identifier),
+                                  identifier: id2.identifier)
             }
         }
     }
@@ -172,7 +172,7 @@ final class StylistTests: XCTestCase {
 
 private var largeNumberOfStyles: () -> [Style] = {
     return (0..<100).map { _ -> Style in
-        Style(StylistIdentifier(UUID().uuidString), apply: {
+        Style(.unique, apply: {
             $0.background(Color.red)
         })
     }

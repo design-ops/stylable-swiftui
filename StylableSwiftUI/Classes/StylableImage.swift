@@ -28,8 +28,7 @@ public struct StylableImage: View {
 
     public var body: some View {
         self.factory(StylistIdentifier(token: self.identifier.token,
-                                       path: self.identifier.path.within(self.currentStylableGroup),
-                                       theme: self.stylist.currentTheme))
+                                       path: self.identifier.path.within(self.currentStylableGroup)))
     }
 
     // MARK: - Wrapped Image methods
