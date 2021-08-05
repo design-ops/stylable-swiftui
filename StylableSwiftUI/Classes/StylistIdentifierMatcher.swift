@@ -101,6 +101,12 @@ struct StylistIdentifierMatcher {
             }
         }
 
+        // Sanity skip of some maths. If they are identical, and there is no theme, it's the best possible match.
+        if lhs == rhs && theme == nil {
+            self.logger.debug("  Exact match")
+            return Int.max
+        }
+
         // We are going to manually step over the rhs, so we will need an iterator
         var rhsIterator = rhs.path.components.makeIterator()
         var rhsComponent = rhsIterator.next()
