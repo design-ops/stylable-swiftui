@@ -92,13 +92,14 @@ struct StylistIdentifierMatcher {
         if lhs.path.components.isEmpty {
             if !rhs.path.components.isEmpty {
                 return 0
-            } else if theme == rhs.theme {
+            }
+            if theme != nil && theme == rhs.theme {
                 return 1 + themeScore
-            } else {
-                return 0
+            }
+            if theme != nil && theme != rhs.theme {
+               return 0
             }
         }
-
 
         // We are going to manually step over the rhs, so we will need an iterator
         var rhsIterator = rhs.path.components.makeIterator()
