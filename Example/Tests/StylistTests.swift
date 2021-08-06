@@ -41,6 +41,9 @@ final class StylistTests: XCTestCase {
         let styles = largeNumberOfStyles()
         stylist.addStyles(styles: { return styles })
 
+        let previousLevel = Logger.default.level
+        Logger.default.level = .fault
+
         measure {
             let id1 = styles.randomElement()?.identifier
             let id2 = styles.randomElement()!.identifier
@@ -50,6 +53,8 @@ final class StylistTests: XCTestCase {
                                   identifier: id2.identifier)
             }
         }
+
+        Logger.default.level = previousLevel
     }
 
     func testTheming() {
