@@ -91,7 +91,7 @@ extension ThemedStylistIdentifier {
         let options = VariantSequence(from: components)
 
         // If we have a theme, first we make a sequence of the themed potential names, then the rest
-        var themedSequence: AnySequence<String>
+        let themedSequence: AnySequence<String>
         if let theme = self.theme {
             let optionsWithThemeAndToken = options.lazy.map {
                 [theme.name] + $0.map { $0.description } + [self.token]
