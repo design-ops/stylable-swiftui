@@ -62,3 +62,14 @@ public extension UIKitStyleContainer {
             .firstKerning()
     }
 }
+
+// MARK: UIImage
+
+public extension UIKitStyleContainer {
+    func uiImage(for identifier: StylistIdentifier,
+                 separator: String = StylableImage.defaultSeparator,
+                 bundle: Bundle? = nil,
+                 compatibleWith traits: UITraitCollection? = nil) -> UIImage? {
+        self.stylist.uiImage(for: identifier, separator: separator, bundle: bundle, compatibleWith: traits)
+    }
+}

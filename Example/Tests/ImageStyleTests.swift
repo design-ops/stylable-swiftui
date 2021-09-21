@@ -14,21 +14,21 @@ import XCTest
 final class StylistIdentifierImageNameTests: XCTestCase {
 
     func testStylistIdentifier_produceImageNames_forSingleComponentIdentifier() {
-        let identifier: ThemedStylistIdentifier = "hello"
+        let identifier: StylistIdentifier = "hello"
 
         XCTAssertEqual(Array(identifier.potentialImageNames(separator: "_")),
                        [ "hello" ])
     }
 
     func testStylistIdentifier_produceImageNames_forDoubleComponentIdentifier() {
-        let identifier: ThemedStylistIdentifier = "hello/world"
+        let identifier: StylistIdentifier = "hello/world"
 
         XCTAssertEqual(Array(identifier.potentialImageNames(separator: "_")),
                        [ "hello_world", "world" ])
     }
 
     func testStylistIdentifier_produceImageNames_forTripleComponentIdentifier() {
-        let identifier: ThemedStylistIdentifier = "searchbar/primary/image"
+        let identifier: StylistIdentifier = "searchbar/primary/image"
 
         XCTAssertEqual(Array(identifier.potentialImageNames(separator: "_")),
                        [ "searchbar_primary_image",
@@ -38,7 +38,7 @@ final class StylistIdentifierImageNameTests: XCTestCase {
     }
 
     func testStylistIdentifier_produceImageNames_customSeparator() {
-        let identifier: ThemedStylistIdentifier = "searchbar/primary/image"
+        let identifier: StylistIdentifier = "searchbar/primary/image"
 
         XCTAssertEqual(Array(identifier.potentialImageNames(separator: "-")),
                        [ "searchbar-primary-image",
@@ -49,7 +49,7 @@ final class StylistIdentifierImageNameTests: XCTestCase {
     }
 
     func testStylistIdentifier_produceImageNames_withState() {
-        let identifier: ThemedStylistIdentifier = "element[disabled]/atom"
+        let identifier: StylistIdentifier = "element[disabled]/atom"
 
         XCTAssertEqual(Array(identifier.potentialImageNames()),
                        [ "element[disabled]_atom",
@@ -58,27 +58,27 @@ final class StylistIdentifierImageNameTests: XCTestCase {
     }
 
     func testStylistIdentifier_potentialImageNames_withTheme() {
-        let identifier: ThemedStylistIdentifier = "@dark/element/atom"
+        let identifier: StylistIdentifier = "element/atom"
 
-        XCTAssertEqual(Array(identifier.potentialImageNames()),
+        XCTAssertEqual(Array(identifier.potentialImageNames(theme: "dark")),
                        [ "dark_element_atom",
-                         "dark_atom",
                          "element_atom",
+                         "dark_atom",
                          "atom"
                        ])
     }
 
     func testStylistIdentifier_potentialImageNames_withThemesAndMultipleLevels() {
-        let identifier: ThemedStylistIdentifier = "@dark/element/organism/atom"
+        let identifier: StylistIdentifier = "element/organism/atom"
 
-        XCTAssertEqual(Array(identifier.potentialImageNames()),
+        XCTAssertEqual(Array(identifier.potentialImageNames(theme: "dark")),
                        [ "dark_element_organism_atom",
-                         "dark_organism_atom",
-                         "dark_element_atom",
-                         "dark_atom",
                          "element_organism_atom",
+                         "dark_organism_atom",
                          "organism_atom",
+                         "dark_element_atom",
                          "element_atom",
+                         "dark_atom",
                          "atom"
                        ])
     }
@@ -86,7 +86,7 @@ final class StylistIdentifierImageNameTests: XCTestCase {
 
 final class StylistIdentifierPerformanceTests: XCTestCase {
 
-    private let identifier: ThemedStylistIdentifier = "a/b/c/d/e/f/g/h/i/j"
+    private let identifier: StylistIdentifier = "a/b/c/d/e/f/g/h/i/j"
 
     func testStylistIdentifier_potentialImageNames_bestCasePerformanceTest() {
         // Best case - we only want the first element
@@ -103,7 +103,7 @@ final class StylistIdentifierPerformanceTests: XCTestCase {
     }
 
     func testStylistIdentifier_potentialImageNames_realCasePerformanceTest() {
-        let identifier: ThemedStylistIdentifier = "section/organism/element/molecule/atom"
+        let identifier: StylistIdentifier = "section/organism/element/molecule/atom"
         measure {
             _ = identifier.potentialImageNames().map { $0 }.last
         }

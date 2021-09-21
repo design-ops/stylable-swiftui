@@ -23,7 +23,8 @@ public struct StylableImage: View {
 
     public init(_ identifier: StylistIdentifier, separator: String = defaultSeparator, bundle: Bundle? = nil, compatibleWith traitCollection: UITraitCollection? = nil) {
         self.identifier = identifier
-        self.factory = { identifier, theme in Image(identifier: ThemedStylistIdentifier(identifier: identifier, theme: theme),
+        self.factory = { identifier, theme in Image(identifier: identifier,
+                                                    theme: theme,
                                                     separator: separator,
                                                     bundle: bundle,
                                                     compatibleWith: traitCollection)
@@ -61,18 +62,20 @@ extension Image {
     /// This method attempts the most specific image name first. i.e. `section/element/atom` would try
     /// `section_element_atom` then `*_element_atom` then `section_*_atom`, finally `*_*_atom`.
     ///
-    /// - parameter identifier: The `ThemedStylistIdentifier` to use when attempting to find/load an image
+    /// - parameter identifier: The `StylistIdentifier` to use when attempting to find/load an image
+    /// - parameter theme: _(optional)_ The theme to apply when searching for the image (defaults to `nil`)
     /// - parameter separator: _(optional)_ The character to use when joining the components together to create the resource name (defaults to `_`)
     /// - parameter bundle: _(optional)_ The bundle to search for the image (defaults to the main bundle)
     /// - parameter compatibleWith: _(optional)_ The trait collection to use for the image (defaults to `nil`).
     ///
-    init(identifier: ThemedStylistIdentifier,
+    init(identifier: StylistIdentifier,
+         theme: Theme? = nil,
          separator: String = StylableImage.defaultSeparator,
          bundle: Bundle? = nil,
          compatibleWith traitCollection: UITraitCollection? = nil) {
 
         // Get the image if it exists
-        let image = identifier.uiImage(separator: separator, bundle: bundle, compatibleWith: traitCollection)
+        let image = identifier.uiImage(separator: separator, bundle: bundle, compatibleWith: traitCollection, theme: theme)
 
         if image == nil {
             Logger.default.log("No image found for \(identifier)", level: .error)
@@ -83,31 +86,29 @@ extension Image {
     }
 }
 
-extension ThemedStylistIdentifier {
+extension StylistIdentifier {
 
     /// All the possible names for a image based on this identifier
-    func potentialImageNames(separator: String = StylableImage.defaultSeparator) -> AnySequence<String> {
+    func potentialImageNames(separator: String = StylableImage.defaultSeparator, theme: Theme? = nil) -> AnySequence<String> {
         let components = Array(self.path.components.reversed())
-        let options = VariantSequence(from: components)
 
-        // If we have a theme, first we make a sequence of the themed potential names, then the rest
-        let themedSequence: AnySequence<String>
-        if let theme = self.theme {
-            let optionsWithThemeAndToken = options.lazy.map {
-                [theme.name] + $0.map { $0.description } + [self.token]
-            }
-            themedSequence = AnySequence(optionsWithThemeAndToken.map { $0.joined(separator: separator) })
-        } else {
-            themedSequence = AnySequence([])
-        }
+        let options = VariantSequence(from: components)
 
         // Append the token to the end - it's always there.
         let optionsWithToken = options
             .lazy
-            .map { $0.map { $0.description } + [self.token] }
+            .flatMap { option -> [[String]] in
+                if let theme = theme {
+                    return [
+                        [theme.name] + option.map { $0.description } + [self.token],
+                        option.map { $0.description } + [self.token]
+                    ]
+                }
+                return [ option.map { $0.description } + [self.token] ]
+            }
 
         // Return the sequence, joining the components with the requested separator
-        return AnySequence(themedSequence + optionsWithToken.map { $0.joined(separator: separator) })
+        return AnySequence(optionsWithToken.map { $0.joined(separator: separator) })
     }
 }
 
@@ -189,11 +190,21 @@ private struct VariantSequence: Sequence, IteratorProtocol {
 
 // MARK: - UIImage
 
-public extension ThemedStylistIdentifier {
-    func uiImage(separator: String = StylableImage.defaultSeparator,
+public extension Stylist {
+    func uiImage(for identifier: StylistIdentifier,
+                 separator: String = StylableImage.defaultSeparator,
                  bundle: Bundle? = nil,
                  compatibleWith traits: UITraitCollection? = nil) -> UIImage? {
-        self.potentialImageNames(separator: separator)
+        return identifier.uiImage(separator: separator, bundle: bundle, compatibleWith: traits, theme: self.currentTheme)
+    }
+}
+
+extension StylistIdentifier {
+    func uiImage(separator: String = StylableImage.defaultSeparator,
+                 bundle: Bundle? = nil,
+                 compatibleWith traits: UITraitCollection? = nil,
+                 theme: Theme? = nil) -> UIImage? {
+        self.potentialImageNames(separator: separator, theme: theme)
             .lazy
             .compactMap { UIImage(named: $0, in: bundle, compatibleWith: traits) }
             .first
