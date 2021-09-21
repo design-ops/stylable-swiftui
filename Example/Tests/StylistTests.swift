@@ -113,8 +113,8 @@ final class StylistTests: XCTestCase {
         var stylable = Stylable(AnyView(Text("Test")), identifier: "element/searchBar/header/atom")
         _ = stylist.style(view: stylable, identifier: "element/searchBar/header/atom")
 
-        XCTAssertFalse(didApplyGeneric)
-        XCTAssertTrue(didApplyThemed)
+        XCTAssertTrue(didApplyGeneric)
+        XCTAssertFalse(didApplyThemed)
 
         didApplyGeneric = false
         didApplyThemed = false

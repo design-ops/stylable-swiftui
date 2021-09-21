@@ -90,9 +90,9 @@ final class StylistIdentifierMatcherTests: XCTestCase {
 
         let specific: StylistIdentifier = "home/header[selected]/searchBar[deselected]/label"
 
-        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/header[selected]/searchBar[deselected]/label"), 378)
-        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/searchBar[deselected]/label"), 354)
-        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/label"), 257)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/header[selected]/searchBar[deselected]/label"), 123)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/searchBar[deselected]/label"), 99)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/label"), 2)
         XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label"), 122)
     }
 }

@@ -34,7 +34,8 @@ struct StylistIdentifierMatcher {
 
         var score = 0 // The score we will return if it turns out to be a match
         if rhs.theme != nil {
-            score += 1<<((lhs.path.components.count + 1) * 2)
+            // we have a theme, so we want to override any non-themed, equally-specific identifier.
+            score += 1
         }
 
         // If the rhs was just a token (and it's matched to get this far) then it's the weakest possible match.
