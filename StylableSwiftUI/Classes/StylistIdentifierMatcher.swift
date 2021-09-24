@@ -7,6 +7,13 @@
 
 import Foundation
 
+typealias MatcherScore = Int
+
+extension MatcherScore {
+    static let unthemedMax = Int.max - 1
+    static let themedMax = Int.max
+}
+
 /// Use this to check whether two `StylistIdentifier`s match.
 ///
 /// Specifically, this will tell if a stylist identifier is a more general version of another.
@@ -27,7 +34,7 @@ struct StylistIdentifierMatcher {
     /// matches("home/header/searchBar/label", "home/searchBar") == 5
     /// matches("home/header/searchBar/label", "home/potato") == 0
     ///
-    func match(specific lhs: StylistIdentifier, general rhs: ThemedStylistIdentifier) -> Int {
+    func match(specific lhs: StylistIdentifier, general rhs: ThemedStylistIdentifier) -> MatcherScore {
         self.logger.debug("Attempting to match \(lhs) with \(rhs)")
 
         guard lhs.token == rhs.token else { return 0 }
@@ -36,6 +43,14 @@ struct StylistIdentifierMatcher {
         if rhs.theme != nil {
             // we have a theme, so we want to override any non-themed, equally-specific identifier.
             score += 1
+        }
+
+        // We might be able to save some time here:
+        // if it is an exact match, we can return the maximum it could be
+        // this will return Int.max if there is a theme and Int.max - 1 if there wasn't a theme. So
+        // a themed exact match will override a non-themed exact match
+        if lhs.path == rhs.path {
+            return .unthemedMax + score
         }
 
         // If the rhs was just a token (and it's matched to get this far) then it's the weakest possible match.

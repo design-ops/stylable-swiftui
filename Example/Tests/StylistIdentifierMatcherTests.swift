@@ -34,7 +34,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         // NOTE - scores per component:   2(4)  8(16)  32(64)
         // NOTE - there is no score attached to 'label' as it always matches.
 
-        XCTAssertEqual(matcher.match(specific: specific, general: "home/header/searchBar/label"), 42)
+        XCTAssertEqual(matcher.match(specific: specific, general: "home/header/searchBar/label"), MatcherScore.unthemedMax)
         XCTAssertEqual(matcher.match(specific: specific, general: "header/searchBar/label"), 40)
         XCTAssertEqual(matcher.match(specific: specific, general: "home/searchBar/label"), 34)
         XCTAssertEqual(matcher.match(specific: specific, general: "home/header/label"), 10)
@@ -62,7 +62,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         // Sanity - this should match with a score of 1
         XCTAssertEqual(matcher.match(specific: specific, general: "label"), 1)
 
-        XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label"), 122)
+        XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label"), MatcherScore.unthemedMax)
         XCTAssertEqual(matcher.match(specific: specific, general: "header[selected]/searchBar[deselected]/label"), 120)
         XCTAssertEqual(matcher.match(specific: specific, general: "header[selected]/searchBar/label"), 56)
         XCTAssertEqual(matcher.match(specific: specific, general: "header/searchBar[deselected]/label"), 104)
@@ -90,9 +90,19 @@ final class StylistIdentifierMatcherTests: XCTestCase {
 
         let specific: StylistIdentifier = "home/header[selected]/searchBar[deselected]/label"
 
-        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/header[selected]/searchBar[deselected]/label"), 123)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/header[selected]/searchBar[deselected]/label"), MatcherScore.themedMax)
         XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/searchBar[deselected]/label"), 99)
         XCTAssertEqual(matcher.match(specific: specific, general: "@dark/label"), 2)
-        XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label"), 122)
+        XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label"), MatcherScore.unthemedMax)
+    }
+
+    func testStylistIdentifier_testExactMatchWithThemes() {
+        let matcher = StylistIdentifierMatcher()
+
+        let specific: StylistIdentifier = "button-primary/title"
+
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/title"), 2)
+        XCTAssertEqual(matcher.match(specific: specific, general: "button-primary/title"), MatcherScore.unthemedMax)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/button-primary/title"), MatcherScore.themedMax)
     }
 }
