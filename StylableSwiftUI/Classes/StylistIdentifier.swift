@@ -49,6 +49,7 @@ extension StylistIdentifier: LosslessStringConvertible {
         let split = description.split(separator: "/").map(String.init)
 
         let token = split.last ?? ""
+
         let path = Path(split.dropLast().joined(separator: "/"))
 
         self.init(token: token, path: path)
@@ -72,12 +73,6 @@ extension StylistIdentifier: ExpressibleByStringLiteral {
         self.init(value)
     }
 }
-
-extension StylistIdentifier {
-
-    public static var unique: StylistIdentifier { StylistIdentifier(UUID().uuidString) }
-}
-
 
 // MARK: - Component
 
