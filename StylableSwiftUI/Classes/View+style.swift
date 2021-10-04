@@ -5,7 +5,6 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 13.0, *)
 extension View {
 
     /// Pass in an identifier to style this view using the stylist found in the environment

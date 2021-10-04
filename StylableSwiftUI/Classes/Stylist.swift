@@ -7,7 +7,6 @@ import Foundation
 import SwiftUI
 import UIKit
 
-@available(iOS 13.0.0, *)
 public struct Style {
     public typealias StyleApplyFunction = (Stylable) -> AnyView
 
@@ -23,7 +22,6 @@ public struct Style {
     }
 }
 
-@available(iOS 13.0.0, *)
 public class Stylist: ObservableObject {
 
     // All the styles this stylist knows about, in order of specificity (more specific -> more general)
@@ -129,14 +127,12 @@ public class Stylist: ObservableObject {
     }
 }
 
-@available(iOS 13.0.0, *)
 extension Stylist {
 
     /// A `Stylist` which will not apply any styles.
     public static let unstyled = Stylist()
 }
 
-@available(iOS 13.0.0, *)
 extension Stylist: CustomStringConvertible {
 
     public var description: String {
@@ -145,7 +141,6 @@ extension Stylist: CustomStringConvertible {
     }
 }
 
-@available(iOS 13.0.0, *)
 extension AnyView {
 
     /// Turns a view into AnyView, unless view is already an AnyView in which case it just returns view
@@ -158,7 +153,6 @@ extension AnyView {
 }
 
 /// Defines a type which can provide multiple styles at once.
-@available(iOS 13.0.0, *)
 public protocol StyleContainer {
 
     /// All the styles contained within this container.
@@ -166,15 +160,12 @@ public protocol StyleContainer {
 }
 
 /// A `Style` can be considered a container, containing only one style (itself).
-@available(iOS 13.0.0, *)
 extension Style: StyleContainer {
 
     public var styles: [Style] { [self] }
 }
 
 /// Function builder used to allow function-builder-style syntax to the addStyles(_:) method on Stylist
-#if swift(>=5.4)
-@available(iOS 13.0.0, *)
 @resultBuilder
 public struct StyleBuilder {
 
@@ -182,13 +173,3 @@ public struct StyleBuilder {
         styles.flatMap { $0.styles }
     }
 }
-#else
-@available(iOS 13.0.0, *)
-@_functionBuilder
-public struct StyleBuilder {
-
-    public static func buildBlock(_ styles: StyleContainer...) -> [Style] {
-        styles.flatMap { $0.styles }
-    }
-}
-#endif

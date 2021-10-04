@@ -7,7 +7,6 @@ import Foundation
 import SwiftUI
 import Combine
 
-@available(iOS 13.0, *)
 public struct Stylable: View {
 
     @EnvironmentObject private var stylist: Stylist
