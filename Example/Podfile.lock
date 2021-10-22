@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  StylableSwiftUI: 4e75faf1a2418978e05e18375767dbaf641e24e1
+  StylableSwiftUI: f8ff37ff3e1b0220a87feff87562db7daabf9ab7
 
 PODFILE CHECKSUM: 8a65c017ed74d3ec8cb19d92a6573c5cdb098aa5
 
