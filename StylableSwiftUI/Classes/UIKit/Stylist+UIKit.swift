@@ -7,11 +7,18 @@
 
 import UIKit
 
+public enum TextCase {
+    case none
+    case uppercase
+    case lowercase
+}
+
 public enum StylistProperty {
     case backgroundColor(UIColor)
     case textColor(UIColor)
     case kerning(Double)
     case font(UIFont)
+    case textCase(TextCase)
 }
 
 extension Array where Iterator.Element == StylistProperty {
@@ -53,6 +60,17 @@ extension Array where Iterator.Element == StylistProperty {
             switch prop {
             case .font(let font):
                 return font
+            default:
+                return nil
+            }
+        }.first
+    }
+
+    func firstTextCase() -> TextCase? {
+        return self.compactMap { prop in
+            switch prop {
+            case .textCase(let textCase):
+                return textCase
             default:
                 return nil
             }
