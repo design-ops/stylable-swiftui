@@ -1,6 +1,6 @@
 {
   "name": "StylableSwiftUI",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "summary": "StylableSwiftUI - Style SwifTUI apps and libraries",
   "description": "Easily tag a SwiftUI library so it can be styled by multiple apps.",
   "homepage": "https://github.com/lvmh-clienteling/stylable-swiftUI",
@@ -10,7 +10,7 @@
   "authors": "deanWombourne",
   "source": {
     "git": "https://github.com/lvmh-clienteling/stylable-swiftUI.git",
-    "tag": "v4.0.0"
+    "tag": "v4.1.0"
   },
   "swift_versions": "5.4",
   "platforms": {
