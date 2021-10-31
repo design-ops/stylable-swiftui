@@ -7,6 +7,13 @@
 
 import Foundation
 
+typealias MatcherScore = Int
+
+extension MatcherScore {
+    static let unthemedMax = Int.max - 1
+    static let themedMax = Int.max
+}
+
 /// Use this to check whether two `StylistIdentifier`s match.
 ///
 /// Specifically, this will tell if a stylist identifier is a more general version of another.
@@ -27,28 +34,36 @@ struct StylistIdentifierMatcher {
     /// matches("home/header/searchBar/label", "home/searchBar") == 5
     /// matches("home/header/searchBar/label", "home/potato") == 0
     ///
-    func match(specific lhs: StylistIdentifier, general rhs: StylistIdentifier) -> Int {
+    func match(specific lhs: StylistIdentifier, general rhs: ThemedStylistIdentifier) -> MatcherScore {
         self.logger.debug("Attempting to match \(lhs) with \(rhs)")
 
         guard lhs.token == rhs.token else { return 0 }
 
-        // If the rhs was just a token (and it's matched to get this far) then it's the weakest possible match
-        guard !rhs.path.components.isEmpty else { return 1 }
+        var score = 0 // The score we will return if it turns out to be a match
+        if rhs.theme != nil {
+            // we have a theme, so we want to override any non-themed, equally-specific identifier.
+            score += 1
+        }
+
+        // We might be able to save some time here:
+        // if it is an exact match, we can return the maximum it could be
+        // this will return Int.max if there is a theme and Int.max - 1 if there wasn't a theme. So
+        // a themed exact match will override a non-themed exact match
+        if lhs.path == rhs.path {
+            return .unthemedMax + score
+        }
+
+        // If the rhs was just a token (and it's matched to get this far) then it's the weakest possible match.
+        // So here we return the current score + 1, which will either be 1 or 1 + the maximum possible value if there was a theme.
+        guard !rhs.path.components.isEmpty else { return score + 1 }
 
         // If the lhs is just a token, but the rhs was more than that then the rhs doesn't match
         guard !lhs.path.components.isEmpty else { return 0 }
-
-        // Sanity skip of some maths. If they are identical, it's the best possible match.
-        guard lhs != rhs else {
-            self.logger.debug("  Exact match")
-            return Int.max
-        }
 
         // We are going to manually step over the rhs, so we will need an iterator
         var rhsIterator = rhs.path.components.makeIterator()
         var rhsComponent = rhsIterator.next()
 
-        var score = 0 // The score we will return if it turns out to be a match
         var nextScore = 1<<(lhs.path.components.count * 2)// The score value of the current component - this goes up each time
         self.logger.debug("  Starting score delta \(nextScore)")
 

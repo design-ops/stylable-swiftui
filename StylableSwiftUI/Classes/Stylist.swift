@@ -11,13 +11,13 @@ import UIKit
 public struct Style {
     public typealias StyleApplyFunction = (Stylable) -> AnyView
 
-    let identifier: StylistIdentifier
+    let identifier: ThemedStylistIdentifier
     let apply: StyleApplyFunction
 
     /// A value to pass into the apply: parameter when creating a `Style`, making it clear that no style is being applied to an identifier.
     public static let unstyled: StyleApplyFunction = { AnyView.lift($0) }
 
-    public init<T: View>(_ identifier: StylistIdentifier, apply: @escaping (Stylable) -> T) {
+    public init<T: View>(_ identifier: ThemedStylistIdentifier, apply: @escaping (Stylable) -> T) {
         self.identifier = identifier
         self.apply = { AnyView.lift(apply($0)) }
     }
@@ -28,6 +28,11 @@ public class Stylist: ObservableObject {
 
     // All the styles this stylist knows about, in order of specificity (more specific -> more general)
     @Published private var styles: [Style] {
+        didSet {
+            self.scoredStyleMatchCache = [:]
+        }
+    }
+    @Published public var currentTheme: Theme? {
         didSet {
             self.scoredStyleMatchCache = [:]
         }
@@ -48,7 +53,7 @@ public class Stylist: ObservableObject {
     }
 
     /// Convenience method to easily create and add a single style.
-    public func addStyle<V: View>(identifier: StylistIdentifier, style: @escaping (Stylable) -> V) {
+    public func addStyle<V: View>(identifier: ThemedStylistIdentifier, style: @escaping (Stylable) -> V) {
         self.addStyles([Style(identifier, apply: style)])
     }
 
@@ -106,6 +111,7 @@ public class Stylist: ObservableObject {
 
         // Apply the best matching style
         let scored = self.styles
+            .filter { $0.identifier.theme == nil || $0.identifier.theme == self.currentTheme }
             .compactMap { (candidate: Style) -> (score: Int, style: Style)? in
                 let score = self.matcher.match(specific: identifier, general: candidate.identifier)
                 guard score > 0 else { return nil }

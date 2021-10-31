@@ -56,6 +56,32 @@ final class StylistIdentifierImageNameTests: XCTestCase {
                          "element_atom",
                          "atom" ])
     }
+
+    func testStylistIdentifier_potentialImageNames_withTheme() {
+        let identifier: StylistIdentifier = "element/atom"
+
+        XCTAssertEqual(Array(identifier.potentialImageNames(theme: "dark")),
+                       [ "dark_element_atom",
+                         "element_atom",
+                         "dark_atom",
+                         "atom"
+                       ])
+    }
+
+    func testStylistIdentifier_potentialImageNames_withThemesAndMultipleLevels() {
+        let identifier: StylistIdentifier = "element/organism/atom"
+
+        XCTAssertEqual(Array(identifier.potentialImageNames(theme: "dark")),
+                       [ "dark_element_organism_atom",
+                         "element_organism_atom",
+                         "dark_organism_atom",
+                         "organism_atom",
+                         "dark_element_atom",
+                         "element_atom",
+                         "dark_atom",
+                         "atom"
+                       ])
+    }
 }
 
 final class StylistIdentifierPerformanceTests: XCTestCase {
