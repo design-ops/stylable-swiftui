@@ -16,6 +16,17 @@
   "platforms": {
     "ios": "13.0"
   },
-  "source_files": "StylableSwiftUI/Classes/**/*{.swift}",
+  "source_files": "StylableSwiftUI/Classes/Core/**/*{.swift}",
+  "subspecs": [
+    {
+      "name": "Animated",
+      "source_files": "StylableSwiftUI/Classes/Animated/**/*{.swift}",
+      "dependencies": {
+        "lottie-ios": [
+
+        ]
+      }
+    }
+  ],
   "swift_version": "5.2"
 }

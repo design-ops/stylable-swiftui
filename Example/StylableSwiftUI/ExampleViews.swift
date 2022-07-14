@@ -13,6 +13,12 @@ import StylableSwiftUI
 
 struct ExampleViews: View {
 
+    private let darkThemeStylist: Stylist = {
+        let stylist = Stylist()
+        stylist.currentTheme = Theme(name: "dark")
+        return stylist
+    }()
+
     var body: some View {
         VStack {
             StylableGroup("section") {
@@ -39,6 +45,17 @@ struct ExampleViews: View {
             Text("Some more body text").style("body") // body
             Spacer()
             Text("This should be red").style("organism/element/atom")
+            HStack {
+                Group {
+                    StylableAnimatedView("like", repeats: true)
+                    StylableGroup("organism/element") {
+                        StylableAnimatedView("like", repeats: true)
+                    }
+                    StylableAnimatedView("like", repeats: true)
+                        .environmentObject(self.darkThemeStylist)
+                }.frame(width: 50)
+
+            }.frame(height: 50)
         }
         .padding()
     }
