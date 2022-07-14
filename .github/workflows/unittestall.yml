@@ -22,7 +22,7 @@ jobs:
       shell: bash
       run: |
         pushd Example
-        set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace ${workspace} -scheme ${scheme} -destination "${destination}" | xcpretty --color
+        set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace ${workspace} -scheme ${scheme} -destination "${destination}"
         popd
         pod lib lint --allow-warnings
       env:
