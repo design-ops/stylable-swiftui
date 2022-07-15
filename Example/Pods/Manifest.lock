@@ -2,6 +2,8 @@ PODS:
   - lottie-ios (3.4.0)
   - StylableSwiftUI/Animated (3.0.0):
     - lottie-ios
+    - StylableSwiftUI/Core
+  - StylableSwiftUI/Core (3.0.0)
 
 DEPENDENCIES:
   - StylableSwiftUI/Animated (from `../`)
@@ -16,7 +18,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   lottie-ios: 69495122151a378fdc7d1bb4c5930347e37baf1f
-  StylableSwiftUI: 1aedd24201497e5e46f098f501b0ee092241f1b1
+  StylableSwiftUI: 7d76e1b195d34c47128265c5af624f7a4174457d
 
 PODFILE CHECKSUM: 0134a35fb3f5acbe910725527b33d09671013897
 

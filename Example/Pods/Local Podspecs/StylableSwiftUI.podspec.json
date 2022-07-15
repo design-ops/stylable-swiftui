@@ -24,12 +24,15 @@
     },
     {
       "name": "Animated",
-      "source_files": "StylableSwiftUI/Classes/Animated/**/*{.swift}",
       "dependencies": {
+        "StylableSwiftUI/Core": [
+
+        ],
         "lottie-ios": [
 
         ]
-      }
+      },
+      "source_files": "StylableSwiftUI/Classes/Animated/**/*{.swift}"
     }
   ],
   "swift_version": "5.4"
