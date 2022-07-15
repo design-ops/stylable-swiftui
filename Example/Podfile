@@ -2,7 +2,7 @@ use_frameworks!
 platform :ios, '13.0'
 
 target 'StylableSwiftUI_Example' do
-  pod 'StylableSwiftUI', :path => '../'
+  pod 'StylableSwiftUI/Animated', :path => '../'
 
   target 'StylableSwiftUI_Tests' do
     inherit! :search_paths
