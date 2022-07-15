@@ -15,6 +15,9 @@
 		8CD3576D32D6169BA9088C6A /* Pods_StylableSwiftUI_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4FC7D92EC8ED86713D5E08 /* Pods_StylableSwiftUI_Example.framework */; };
 		8F06FCAA243F957D00D52B29 /* StylistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F06FCA9243F957D00D52B29 /* StylistTests.swift */; };
 		8F8F18A026B3FB4E00E83CE4 /* ThemedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F189F26B3FB4E00E83CE4 /* ThemedView.swift */; };
+		8FB7656D28815A9A00857520 /* organism_element_like.json in Resources */ = {isa = PBXBuildFile; fileRef = 8FB7656A28815A9900857520 /* organism_element_like.json */; };
+		8FB7656E28815A9A00857520 /* like.json in Resources */ = {isa = PBXBuildFile; fileRef = 8FB7656B28815A9A00857520 /* like.json */; };
+		8FB7656F28815A9A00857520 /* dark_like.json in Resources */ = {isa = PBXBuildFile; fileRef = 8FB7656C28815A9A00857520 /* dark_like.json */; };
 		A00F0FF623CCCE6200DDF587 /* ExampleViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F0FF523CCCE6200DDF587 /* ExampleViews.swift */; };
 		A00F0FF823CCD10400DDF587 /* Stylist+create.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00F0FF723CCD10400DDF587 /* Stylist+create.swift */; };
 		A021A58323D0C2E5003D57D8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A021A58223D0C2E5003D57D8 /* SceneDelegate.swift */; };
@@ -58,6 +61,9 @@
 		8418D4F9E00D256AAE0306FF /* Pods-SwiftUIStylist_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIStylist_Example.release.xcconfig"; path = "Target Support Files/Pods-SwiftUIStylist_Example/Pods-SwiftUIStylist_Example.release.xcconfig"; sourceTree = "<group>"; };
 		8F06FCA9243F957D00D52B29 /* StylistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylistTests.swift; sourceTree = "<group>"; };
 		8F8F189F26B3FB4E00E83CE4 /* ThemedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemedView.swift; sourceTree = "<group>"; };
+		8FB7656A28815A9900857520 /* organism_element_like.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = organism_element_like.json; sourceTree = "<group>"; };
+		8FB7656B28815A9A00857520 /* like.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = like.json; sourceTree = "<group>"; };
+		8FB7656C28815A9A00857520 /* dark_like.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dark_like.json; sourceTree = "<group>"; };
 		A00F0FF523CCCE6200DDF587 /* ExampleViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViews.swift; sourceTree = "<group>"; };
 		A00F0FF723CCD10400DDF587 /* Stylist+create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stylist+create.swift"; sourceTree = "<group>"; };
 		A021A58223D0C2E5003D57D8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -124,6 +130,7 @@
 		607FACD21AFB9204008FA782 /* Example for SwiftUIStylist */ = {
 			isa = PBXGroup;
 			children = (
+				8FB7656928815A8D00857520 /* Animations */,
 				A021A58C23D1E82B003D57D8 /* Styling */,
 				A021A58B23D1E7D0003D57D8 /* Views */,
 				A08822CD23D097FC000E8834 /* Preview Content */,
@@ -174,6 +181,16 @@
 				7596EC2279A0F53ADC9CDFE2 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		8FB7656928815A8D00857520 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				8FB7656B28815A9A00857520 /* like.json */,
+				8FB7656A28815A9900857520 /* organism_element_like.json */,
+				8FB7656C28815A9A00857520 /* dark_like.json */,
+			);
+			name = Animations;
 			sourceTree = "<group>";
 		};
 		A021A58B23D1E7D0003D57D8 /* Views */ = {
@@ -304,7 +321,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FB7656D28815A9A00857520 /* organism_element_like.json in Resources */,
 				A021A58523D1D36F003D57D8 /* PreviewAssets.xcassets in Resources */,
+				8FB7656F28815A9A00857520 /* dark_like.json in Resources */,
+				8FB7656E28815A9A00857520 /* like.json in Resources */,
 				A021A58823D1E1D7003D57D8 /* Localizable.strings in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
