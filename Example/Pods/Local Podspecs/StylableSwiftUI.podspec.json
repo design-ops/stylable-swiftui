@@ -12,10 +12,25 @@
     "git": "https://github.com/design-ops/stylable-swiftUI.git",
     "tag": "v3.0.0"
   },
-  "swift_versions": "5.2",
+  "swift_versions": "5.4",
   "platforms": {
     "ios": "13.0"
   },
-  "source_files": "StylableSwiftUI/Classes/**/*{.swift}",
-  "swift_version": "5.2"
+  "default_subspecs": "Core",
+  "subspecs": [
+    {
+      "name": "Core",
+      "source_files": "StylableSwiftUI/Classes/Core/**/*{.swift}"
+    },
+    {
+      "name": "Animated",
+      "source_files": "StylableSwiftUI/Classes/Animated/**/*{.swift}",
+      "dependencies": {
+        "lottie-ios": [
+
+        ]
+      }
+    }
+  ],
+  "swift_version": "5.4"
 }
