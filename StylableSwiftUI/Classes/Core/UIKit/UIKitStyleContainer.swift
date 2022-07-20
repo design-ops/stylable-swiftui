@@ -61,6 +61,11 @@ public extension UIKitStyleContainer {
         self.properties(for: identifier)
             .firstKerning()
     }
+
+    func textCase(for identifier: StylistIdentifier) -> TextCase? {
+        self.properties(for: identifier)
+            .firstTextCase()
+    }
 }
 
 // MARK: UIImage
