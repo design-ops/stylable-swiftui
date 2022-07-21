@@ -4,13 +4,13 @@ import Lottie
 
 public struct StylableAnimatedView: View {
     public static let defaultSeparator = "_"
-    
+
     private let identifier: StylistIdentifier
     private let factory: (StylistIdentifier, Theme?) -> AnimatedView?
-    
+
     @EnvironmentObject private var stylist: Stylist
     @Environment(\.currentStylableGroup) var currentStylableGroup
-    
+
     public init(_ identifier: StylistIdentifier,
                 separator: String = defaultSeparator,
                 bundle: Bundle = .main,
@@ -23,7 +23,7 @@ public struct StylableAnimatedView: View {
                                                            repeats: repeats)
         }
     }
-    
+
     public var body: some View {
         self.factory(StylistIdentifier(token: self.identifier.token,
                                        path: self.identifier.path.within(self.currentStylableGroup)),
@@ -40,12 +40,12 @@ extension AnimatedView {
         let animation = identifier.animatedFile(separator: separator,
                                                 theme: theme,
                                                 bundle: bundle)
-        
+
         guard let animation = animation else {
             Logger.default.log("No animation found for \(identifier)", level: .error)
             return nil
         }
-        
+
         self = AnimatedView(animation: animation, repeats: repeats)
     }
 }

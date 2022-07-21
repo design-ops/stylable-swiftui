@@ -84,7 +84,6 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         XCTAssertEqual(matcher.match(specific: specific, general: "header[normal]/label"), 0)
     }
 
-
     func testStylistIdentifier_themedIdentifier() {
         let matcher = StylistIdentifierMatcher()
 

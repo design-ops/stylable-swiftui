@@ -1,0 +1,24 @@
+# Exclude the "Pods" directory and the Example/Pods directory.
+excluded:
+    - "Example/Pods"
+
+included:
+    - "StylableSwiftUI"
+    - "Example"
+
+identifier_name:
+    excluded: # excluded via string array
+        - id
+        - of
+
+type_name:
+    excluded:
+        - IN
+        - ID
+
+disabled_rules:
+    - todo
+
+line_length:
+    warning: 180
+    error: 240

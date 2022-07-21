@@ -3,6 +3,7 @@ platform :ios, '13.0'
 
 target 'StylableSwiftUI_Example' do
   pod 'StylableSwiftUI/Animated', :path => '../'
+  pod 'SwiftLint'
 
   target 'StylableSwiftUI_Tests' do
     inherit! :search_paths

@@ -179,7 +179,7 @@ extension StylistIdentifier {
 
 // MARK: - Some helpers
 
-private extension RandomAccessCollection  {
+private extension RandomAccessCollection {
 
     /// Helper property - exactly the same as `first` but returns the second element, if it exists.
     var second: Element? {

@@ -64,6 +64,7 @@
 		8FB7656A28815A9900857520 /* organism_element_like.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = organism_element_like.json; sourceTree = "<group>"; };
 		8FB7656B28815A9A00857520 /* like.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = like.json; sourceTree = "<group>"; };
 		8FB7656C28815A9A00857520 /* dark_like.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dark_like.json; sourceTree = "<group>"; };
+		8FF78A4A288951910083A01D /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = ../.swiftlint.yml; sourceTree = "<group>"; };
 		A00F0FF523CCCE6200DDF587 /* ExampleViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViews.swift; sourceTree = "<group>"; };
 		A00F0FF723CCD10400DDF587 /* Stylist+create.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stylist+create.swift"; sourceTree = "<group>"; };
 		A021A58223D0C2E5003D57D8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -179,6 +180,7 @@
 				7382401CAE1383A5CF87691F /* StylableSwiftUI.podspec */,
 				31259389E366C487830DA17F /* README.md */,
 				7596EC2279A0F53ADC9CDFE2 /* LICENSE */,
+				8FF78A4A288951910083A01D /* .swiftlint.yml */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
@@ -247,6 +249,7 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				CFA536D8737DD6D3514A9602 /* [CP] Embed Pods Frameworks */,
+				8FF78A49288951230083A01D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -384,6 +387,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		8FF78A49288951230083A01D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which \"${PODS_ROOT}/SwiftLint/swiftlint\" > /dev/null; then\n  # Push the current directory up one level so we run this from the \"root\" of the project\n  pushd ..\n    \"${PODS_ROOT}/SwiftLint/swiftlint\" lint --config .swiftlint.yml\n  popd\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		CFA536D8737DD6D3514A9602 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

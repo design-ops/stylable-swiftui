@@ -64,31 +64,31 @@ public struct WithStylistIdentifier<Content: View>: View {
 public extension WithStylistIdentifier {
 
     init(string: String,
-                @ViewBuilder contents: @escaping (StylistIdentifier) -> Content) {
+         @ViewBuilder contents: @escaping (StylistIdentifier) -> Content) {
         self.identifiers = [ StylistIdentifier(string) ]
         self.contents = { contents($0[0]) }
     }
 
     init(strings token1: String, _ token2: String,
-                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier) -> Content) {
+         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ StylistIdentifier(token1), StylistIdentifier(token2) ]
         self.contents = { contents($0[0], $0[1]) }
     }
 
     init(strings token1: String, _ token2: String, _ token3: String,
-                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
+         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ StylistIdentifier(token1), StylistIdentifier(token2), StylistIdentifier(token3) ]
         self.contents = { contents($0[0], $0[1], $0[2]) }
     }
 
     init(strings token1: String, _ token2: String, _ token3: String, _ token4: String,
-                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
+         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ StylistIdentifier(token1), StylistIdentifier(token2), StylistIdentifier(token3), StylistIdentifier(token4) ]
         self.contents = { contents($0[0], $0[1], $0[2], $0[3]) }
     }
 
     init(strings token1: String, _ token2: String, _ token3: String, _ token4: String, _ token5: String,
-                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
+         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ StylistIdentifier(token1), StylistIdentifier(token2), StylistIdentifier(token3), StylistIdentifier(token4), StylistIdentifier(token5) ]
         self.contents = { contents($0[0], $0[1], $0[2], $0[3], $0[4]) }
     }
@@ -97,33 +97,36 @@ public extension WithStylistIdentifier {
 public extension WithStylistIdentifier {
 
     init(identifier: StylistIdentifier,
-                @ViewBuilder contents: @escaping (StylistIdentifier) -> Content) {
+         @ViewBuilder contents: @escaping (StylistIdentifier) -> Content) {
         self.identifiers = [ identifier ]
         self.contents = { contents($0[0]) }
     }
 
     init(identifiers identifier1: StylistIdentifier, _ identifier2: StylistIdentifier,
-                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier) -> Content) {
+         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ identifier1, identifier2 ]
         self.contents = { contents($0[0], $0[1]) }
     }
 
     init(identifiers identifier1: StylistIdentifier, _ identifier2: StylistIdentifier, _ identifier3: StylistIdentifier,
-                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
+         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ identifier1, identifier2, identifier3 ]
         self.contents = { contents($0[0], $0[1], $0[2]) }
     }
 
     init(identifiers identifier1: StylistIdentifier, _ identifier2: StylistIdentifier, _ identifier3: StylistIdentifier, _ identifier4: StylistIdentifier,
-                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
+         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ identifier1, identifier2, identifier3, identifier4 ]
         self.contents = { contents($0[0], $0[1], $0[2], $0[3]) }
     }
 
-    init(identifiers identifier1: StylistIdentifier, _ identifier2: StylistIdentifier, _ identifier3: StylistIdentifier, _ identifier4: StylistIdentifier, _ identifier5: StylistIdentifier,
-                @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
+    init(identifiers identifier1: StylistIdentifier,
+         _ identifier2: StylistIdentifier,
+         _ identifier3: StylistIdentifier,
+         _ identifier4: StylistIdentifier,
+         _ identifier5: StylistIdentifier,
+         @ViewBuilder contents: @escaping (StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier, StylistIdentifier) -> Content) {
         self.identifiers = [ identifier1, identifier2, identifier3, identifier4, identifier5 ]
         self.contents = { contents($0[0], $0[1], $0[2], $0[3], $0[4]) }
     }
 }
-
