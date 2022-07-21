@@ -13,6 +13,7 @@ import SwiftUI
 
 extension Stylist {
 
+    // swiftlint:disable:next function_body_length
     static func create(debugUnstyledViews: Bool = false) -> Stylist {
         let stylist = Stylist()
 

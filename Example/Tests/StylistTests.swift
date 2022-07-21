@@ -194,8 +194,8 @@ private var largeNumberOfStyles: () -> [Style] = {
 private extension Array {
 
     func chopped() -> (Element, [Element])? {
-        guard let x = self.first else { return nil }
-        return (x, Array(self.suffix(from: 1)))
+        guard let first = self.first else { return nil }
+        return (first, Array(self.suffix(from: 1)))
     }
 
     func interleaved(_ element: Element) -> [[Element]] {
@@ -208,4 +208,3 @@ private extension Array {
         return rest.permutations.flatMap { $0.interleaved(head) }
     }
 }
-

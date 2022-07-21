@@ -61,7 +61,7 @@ struct ExampleViews: View {
     }
 }
 
-struct ExampleViews_Preview: PreviewProvider {
+struct ExampleViewsPreview: PreviewProvider {
 
     static var previews: some View {
         Group {

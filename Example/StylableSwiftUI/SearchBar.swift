@@ -54,12 +54,12 @@ struct SearchBar: View {
 
                     if !self.text.isEmpty {
                         StylableGroup("tertiarybutton") {
-                            Button(action: { self.text = "" }) {
+                            Button(action: { self.text = "" }, label: {
                                 StylableImage("close")
                                     .resizable()
                                     .frame(width: 12, height: 12)
                                     .style("image")
-                            }
+                            })
                             .frame(width: 22, height: 22)
                             .style("background")
                         }
@@ -78,13 +78,13 @@ struct SearchBar: View {
     /// Creates a button with an image inside. Use this to make sure the scan and search buttons are the same layout.
     private func generateButton(groupIdentifier: StylistIdentifier.Path, action: @escaping () -> Void) -> some View {
         StylableGroup(groupIdentifier) {
-            Button(action: { action() }) {
+            Button(action: { action() }, label: {
                 HStack {
                     StylableImage("image")
                         .resizable()
                         .style("image")
                 }.padding(3)
-            }
+            })
             .frame(width: 22, height: 22)
             .style("background")
         }
@@ -93,7 +93,7 @@ struct SearchBar: View {
 
 // MARK: - Preview
 
-struct SearchBar_Preview: PreviewProvider {
+struct SearchBarPreview: PreviewProvider {
 
     static let stylist = Stylist.create()
 
