@@ -93,7 +93,7 @@ struct SearchBar: View {
 
 // MARK: - Preview
 
-struct SearchBarPreview: PreviewProvider {
+struct SearchBar_Previews: PreviewProvider {
 
     static let stylist = Stylist.create()
 
