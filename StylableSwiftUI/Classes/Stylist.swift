@@ -39,7 +39,7 @@ public class Stylist: ObservableObject {
     }
 
     private var scoredStyleMatchCache: [StylistIdentifier: Style] = [:]
-    static var scoredImageStyleMatchCache: [StylistIdentifier: UIImage] = [:]
+    static var scoredImageStyleMatchCache: [StylistIdentifier: String] = [:]
 
     let matcher = StylistIdentifierMatcher()
 
