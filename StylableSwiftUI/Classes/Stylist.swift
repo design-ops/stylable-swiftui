@@ -28,15 +28,18 @@ public class Stylist: ObservableObject {
     @Published private var styles: [Style] {
         didSet {
             self.scoredStyleMatchCache = [:]
+            Self.scoredImageStyleMatchCache = [:]
         }
     }
     @Published public var currentTheme: Theme? {
         didSet {
             self.scoredStyleMatchCache = [:]
+            Self.scoredImageStyleMatchCache = [:]
         }
     }
 
     private var scoredStyleMatchCache: [StylistIdentifier: Style] = [:]
+    static var scoredImageStyleMatchCache: [StylistIdentifier: UIImage] = [:]
 
     let matcher = StylistIdentifierMatcher()
 
