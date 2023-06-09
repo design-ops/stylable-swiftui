@@ -204,9 +204,15 @@ extension StylistIdentifier {
                  bundle: Bundle? = nil,
                  compatibleWith traits: UITraitCollection? = nil,
                  theme: Theme? = nil) -> UIImage? {
-        self.potentialImageNames(separator: separator, theme: theme)
+        if let bestMatch = Stylist.scoredImageStyleMatchCache[self] {
+            return UIImage(named: bestMatch, in: bundle, compatibleWith: traits)
+        }
+
+        let bestMatch = self.potentialImageNames(separator: separator, theme: theme)
             .lazy
-            .compactMap { UIImage(named: $0, in: bundle, compatibleWith: traits) }
-            .first
+            .first { UIImage(named: $0, in: bundle, compatibleWith: traits) != nil }
+
+        Stylist.scoredImageStyleMatchCache[self] = bestMatch
+        return bestMatch.map { UIImage(named: $0, in: bundle, compatibleWith: traits) } ?? nil
     }
 }
