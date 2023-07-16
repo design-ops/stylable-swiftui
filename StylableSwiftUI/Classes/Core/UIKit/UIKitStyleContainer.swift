@@ -78,3 +78,6 @@ public extension UIKitStyleContainer {
         self.stylist.uiImage(for: identifier, separator: separator, bundle: bundle, compatibleWith: traits)
     }
 }
+
+// MARK: - Observable Object
+extension UIKitStyleContainer: ObservableObject { }
