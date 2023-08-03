@@ -186,3 +186,14 @@ private extension RandomAccessCollection  {
         self.count > 1 ? self[self.index(self.startIndex, offsetBy: 1)] : nil
     }
 }
+
+struct StyleCachKey: Hashable {
+    var identifier:StylistIdentifier
+    var theme:Theme?
+
+    init(identifier: StylistIdentifier, theme: Theme?) {
+        self.identifier = identifier
+        self.theme = theme
+    }
+
+}
