@@ -23,22 +23,22 @@ final class StarNodeProperties: NodePropertyMap, KeypathSearchable {
     if let innerRadiusKeyframes = star.innerRadius?.keyframes {
       innerRadius = NodeProperty(provider: KeyframeInterpolator(keyframes: innerRadiusKeyframes))
     } else {
-      innerRadius = NodeProperty(provider: SingleValueProvider(Vector1D(0)))
+      innerRadius = NodeProperty(provider: SingleValueProvider(LottieVector1D(0)))
     }
     if let innderRoundedness = star.innerRoundness?.keyframes {
       innerRoundedness = NodeProperty(provider: KeyframeInterpolator(keyframes: innderRoundedness))
     } else {
-      innerRoundedness = NodeProperty(provider: SingleValueProvider(Vector1D(0)))
+      innerRoundedness = NodeProperty(provider: SingleValueProvider(LottieVector1D(0)))
     }
     rotation = NodeProperty(provider: KeyframeInterpolator(keyframes: star.rotation.keyframes))
     points = NodeProperty(provider: KeyframeInterpolator(keyframes: star.points.keyframes))
     keypathProperties = [
-      "Position" : position,
+      PropertyName.position.rawValue : position,
       "Outer Radius" : outerRadius,
       "Outer Roundedness" : outerRoundedness,
       "Inner Radius" : innerRadius,
       "Inner Roundedness" : innerRoundedness,
-      "Rotation" : rotation,
+      PropertyName.rotation.rawValue : rotation,
       "Points" : points,
     ]
     properties = Array(keypathProperties.values)
@@ -52,13 +52,13 @@ final class StarNodeProperties: NodePropertyMap, KeypathSearchable {
   let properties: [AnyNodeProperty]
 
   let direction: PathDirection
-  let position: NodeProperty<Vector3D>
-  let outerRadius: NodeProperty<Vector1D>
-  let outerRoundedness: NodeProperty<Vector1D>
-  let innerRadius: NodeProperty<Vector1D>
-  let innerRoundedness: NodeProperty<Vector1D>
-  let rotation: NodeProperty<Vector1D>
-  let points: NodeProperty<Vector1D>
+  let position: NodeProperty<LottieVector3D>
+  let outerRadius: NodeProperty<LottieVector1D>
+  let outerRoundedness: NodeProperty<LottieVector1D>
+  let innerRadius: NodeProperty<LottieVector1D>
+  let innerRoundedness: NodeProperty<LottieVector1D>
+  let rotation: NodeProperty<LottieVector1D>
+  let points: NodeProperty<LottieVector1D>
 }
 
 // MARK: - StarNode
@@ -158,17 +158,17 @@ extension BezierPath {
     for i in 0..<numPoints {
       var radius = longSegment ? outerRadius : innerRadius
       var dTheta = halfAnglePerPoint
-      if partialPointRadius != 0 && i == numPoints - 2 {
+      if partialPointRadius != 0, i == numPoints - 2 {
         dTheta = anglePerPoint * partialPointAmount / 2
       }
-      if partialPointRadius != 0 && i == numPoints - 1 {
+      if partialPointRadius != 0, i == numPoints - 1 {
         radius = partialPointRadius
       }
       previousPoint = point
       point.x = (radius * cos(currentAngle))
       point.y = (radius * sin(currentAngle))
 
-      if innerRoundedness == 0 && outerRoundedness == 0 {
+      if innerRoundedness == 0, outerRoundedness == 0 {
         vertices.append(CurveVertex(point: point + position, inTangentRelative: .zero, outTangentRelative: .zero))
       } else {
         let cp1Theta = (atan2(previousPoint.y, previousPoint.x) - CGFloat.pi / 2)

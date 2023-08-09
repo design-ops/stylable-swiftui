@@ -7,8 +7,8 @@ import QuartzCore
 
 /// A `ShapeItem` that represents a gradient
 protocol GradientShapeItem: OpacityAnimationModel {
-  var startPoint: KeyframeGroup<Vector3D> { get }
-  var endPoint: KeyframeGroup<Vector3D> { get }
+  var startPoint: KeyframeGroup<LottieVector3D> { get }
+  var endPoint: KeyframeGroup<LottieVector3D> { get }
   var gradientType: GradientType { get }
   var numberOfColors: Int { get }
   var colors: KeyframeGroup<[Double]> { get }
@@ -29,26 +29,45 @@ extension GradientRenderLayer {
   // MARK: Internal
 
   /// Adds gradient-related animations to this layer, from the given `GradientFill`
-  func addGradientAnimations(for gradient: GradientShapeItem, context: LayerAnimationContext) throws {
-    // We have to set `colors` to a non-nil value with some valid number of colors
-    // for the color animation below to have any effect
-    colors = .init(
-      repeating: CGColor.rgb(0, 0, 0),
-      count: gradient.numberOfColors)
+  ///  - The RGB components and alpha components can have different color stops / locations,
+  ///    so have to be rendered in separate `CAGradientLayer`s.
+  func addGradientAnimations(
+    for gradient: GradientShapeItem,
+    type: GradientContentType,
+    context: LayerAnimationContext)
+    throws
+  {
+    // We have to set `colors` and `locations` to non-nil values
+    // for the animations below to actually take effect
+    locations = []
+
+    // The initial value for `colors` must be an array with the exact same number of colors
+    // as the gradient that will be applied in the `CAAnimation`
+    switch type {
+    case .rgb:
+      colors = .init(
+        repeating: CGColor.rgb(0, 0, 0),
+        count: gradient.numberOfColors)
+
+    case .alpha:
+      colors = .init(
+        repeating: CGColor.rgb(0, 0, 0),
+        count: gradient.colorConfiguration(from: gradient.colors.keyframes[0].value, type: .alpha).count)
+    }
 
     try addAnimation(
       for: .colors,
-      keyframes: gradient.colors.keyframes,
+      keyframes: gradient.colors,
       value: { colorComponents in
-        gradient.colorConfiguration(from: colorComponents).map { $0.color }
+        gradient.colorConfiguration(from: colorComponents, type: type).map { $0.color }
       },
       context: context)
 
     try addAnimation(
       for: .locations,
-      keyframes: gradient.colors.keyframes,
+      keyframes: gradient.colors,
       value: { colorComponents in
-        gradient.colorConfiguration(from: colorComponents).map { $0.location }
+        gradient.colorConfiguration(from: colorComponents, type: type).map { $0.location }
       },
       context: context)
 
@@ -75,7 +94,7 @@ extension GradientRenderLayer {
 
     try addAnimation(
       for: .startPoint,
-      keyframes: gradient.startPoint.keyframes,
+      keyframes: gradient.startPoint,
       value: { absoluteStartPoint in
         percentBasedPointInBounds(from: absoluteStartPoint.pointValue)
       },
@@ -83,7 +102,7 @@ extension GradientRenderLayer {
 
     try addAnimation(
       for: .endPoint,
-      keyframes: gradient.endPoint.keyframes,
+      keyframes: gradient.endPoint,
       value: { absoluteEndPoint in
         percentBasedPointInBounds(from: absoluteEndPoint.pointValue)
       },
@@ -93,54 +112,120 @@ extension GradientRenderLayer {
   private func addRadialGradientAnimations(for gradient: GradientShapeItem, context: LayerAnimationContext) throws {
     type = .radial
 
-    // To draw the correct gradients, we have to derive a custom `endPoint`
-    // relative to the `startPoint` value. Since calculating the `endPoint`
-    // at any given time requires knowing the current `startPoint`,
-    // we can't allow them to animate separately.
-    let absoluteStartPoint = try gradient.startPoint
-      .exactlyOneKeyframe(context: context, description: "gradient startPoint").value.pointValue
+    let combinedKeyframes = Keyframes.combined(
+      gradient.startPoint, gradient.endPoint,
+      makeCombinedResult: { absoluteStartPoint, absoluteEndPoint -> (startPoint: CGPoint, endPoint: CGPoint) in
+        // Convert the absolute start / end points to the relative structure used by Core Animation
+        let relativeStartPoint = percentBasedPointInBounds(from: absoluteStartPoint.pointValue)
+        let radius = absoluteStartPoint.pointValue.distanceTo(absoluteEndPoint.pointValue)
+        let relativeEndPoint = percentBasedPointInBounds(
+          from: CGPoint(
+            x: absoluteStartPoint.x + radius,
+            y: absoluteStartPoint.y + radius))
 
-    let absoluteEndPoint = try gradient.endPoint
-      .exactlyOneKeyframe(context: context, description: "gradient endPoint").value.pointValue
+        return (startPoint: relativeStartPoint, endPoint: relativeEndPoint)
+      })
 
-    startPoint = percentBasedPointInBounds(from: absoluteStartPoint)
+    try addAnimation(
+      for: .startPoint,
+      keyframes: combinedKeyframes,
+      value: \.startPoint,
+      context: context)
 
-    let radius = absoluteStartPoint.distanceTo(absoluteEndPoint)
-    endPoint = percentBasedPointInBounds(
-      from: CGPoint(
-        x: absoluteStartPoint.x + radius,
-        y: absoluteStartPoint.y + radius))
+    try addAnimation(
+      for: .endPoint,
+      keyframes: combinedKeyframes,
+      value: \.endPoint,
+      context: context)
   }
 }
 
+// MARK: - GradientContentType
+
+/// Each type of gradient that can be constructed from a `GradientShapeItem`
+enum GradientContentType {
+  case rgb
+  case alpha
+}
+
+/// `colors` and `locations` configuration for a `CAGradientLayer`
+typealias GradientColorConfiguration = [(color: CGColor, location: CGFloat)]
+
 extension GradientShapeItem {
-  /// Converts the compact `[Double]` color components representation
-  /// into an array of `CGColor`s and the location of those colors within the gradient
-  fileprivate func colorConfiguration(
-    from colorComponents: [Double])
-    -> [(color: CGColor, location: CGFloat)]
-  {
-    precondition(
-      colorComponents.count >= numberOfColors * 4,
-      "Each color must have RGB components and a location component")
 
-    var cgColors = [(color: CGColor, location: CGFloat)]()
+  // MARK: Internal
 
-    // Each group of four `Double` values represents a single `CGColor`,
-    // and its relative location within the gradient.
-    for colorIndex in 0..<numberOfColors {
-      let colorStartIndex = colorIndex * 4
+  /// Whether or not this `GradientShapeItem` includes an alpha component
+  /// that has to be rendered as a separate `CAGradientLayer` from the
+  /// layer that renders the rgb color components
+  var hasAlphaComponent: Bool {
+    for colorComponentsKeyframe in colors.keyframes {
+      let colorComponents = colorComponentsKeyframe.value
+      let alphaConfiguration = colorConfiguration(from: colorComponents, type: .alpha)
 
-      let location = CGFloat(colorComponents[colorStartIndex])
+      let notFullyOpaque = alphaConfiguration.contains(where: { color, _ in
+        color.alpha < 0.999
+      })
 
-      let color = CGColor.rgb(
-        CGFloat(colorComponents[colorStartIndex + 1]),
-        CGFloat(colorComponents[colorStartIndex + 2]),
-        CGFloat(colorComponents[colorStartIndex + 3]))
-
-      cgColors.append((color, location))
+      if notFullyOpaque {
+        return true
+      }
     }
 
-    return cgColors
+    return false
+  }
+
+  // MARK: Fileprivate
+
+  /// Converts the compact `[Double]` color components representation
+  /// into an array of `CGColor`s and the location of those colors within the gradient.
+  ///  - The color components array is a repeating list of `[location, red, green, blue]` values
+  ///    for each color in the gradient, followed by an optional repeating list of
+  ///    `[location, alpha]` values that control the colors' alpha values.
+  ///  - The RGB and alpha values can have different color stops / locations,
+  ///    so each has to be rendered in a separate `CAGradientLayer`.
+  fileprivate func colorConfiguration(
+    from colorComponents: [Double],
+    type: GradientContentType)
+    -> GradientColorConfiguration
+  {
+    switch type {
+    case .rgb:
+      precondition(
+        colorComponents.count >= numberOfColors * 4,
+        "Each color must have RGB components and a location component")
+
+      // Each group of four `Double` values represents a single `CGColor`,
+      // and its relative location within the gradient.
+      var colors = GradientColorConfiguration()
+
+      for colorIndex in 0..<numberOfColors {
+        let colorStartIndex = colorIndex * 4
+
+        let colorLocation = CGFloat(colorComponents[colorStartIndex])
+
+        let color = CGColor.rgb(
+          CGFloat(colorComponents[colorStartIndex + 1]),
+          CGFloat(colorComponents[colorStartIndex + 2]),
+          CGFloat(colorComponents[colorStartIndex + 3]))
+
+        colors.append((color: color, location: colorLocation))
+      }
+
+      return colors
+
+    case .alpha:
+      // After the rgb color components, there can be arbitrary number of repeating
+      // `[alphaLocation, alphaValue]` pairs that define a separate alpha gradient.
+      var alphaValues = GradientColorConfiguration()
+
+      for alphaIndex in stride(from: numberOfColors * 4, to: colorComponents.endIndex, by: 2) {
+        let alphaLocation = CGFloat(colorComponents[alphaIndex])
+        let alphaValue = CGFloat(colorComponents[alphaIndex + 1])
+        alphaValues.append((color: .rgba(0, 0, 0, alphaValue), location: alphaLocation))
+      }
+
+      return alphaValues
+    }
   }
 }

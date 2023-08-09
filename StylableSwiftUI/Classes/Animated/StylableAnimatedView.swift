@@ -53,10 +53,10 @@ extension AnimatedView {
 extension StylistIdentifier {
     func animatedFile(separator: String = StylableAnimatedView.defaultSeparator,
                       theme: Theme? = nil,
-                      bundle: Bundle = .main) -> Lottie.Animation? {
+                      bundle: Bundle = .main) -> LottieAnimation? {
         self.potentialImageNames(separator: separator, theme: theme)
             .lazy
-            .compactMap { Lottie.Animation.named($0, bundle: bundle) }
+            .compactMap { LottieAnimation.named($0, bundle: bundle) }
             .first
     }
 }

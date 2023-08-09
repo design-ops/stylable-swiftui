@@ -29,7 +29,7 @@
 
         ],
         "lottie-ios": [
-          "3.4.0"
+
         ]
       },
       "source_files": "StylableSwiftUI/Classes/Animated/**/*{.swift}"

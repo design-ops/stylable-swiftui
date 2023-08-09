@@ -1,5 +1,5 @@
 //
-//  Animation.swift
+//  LottieAnimation.swift
 //  lottie-swift
 //
 //  Created by Brandon Withrow on 1/7/19.
@@ -14,25 +14,25 @@ public enum CoordinateSpace: Int, Codable {
   case type3d
 }
 
-// MARK: - Animation
+// MARK: - LottieAnimation
 
-/// The `Animation` model is the top level model object in Lottie.
+/// The `LottieAnimation` model is the top level model object in Lottie.
 ///
-/// An `Animation` holds all of the animation data backing a Lottie Animation.
+/// A `LottieAnimation` holds all of the animation data backing a Lottie Animation.
 /// Codable, see JSON schema [here](https://github.com/airbnb/lottie-web/tree/master/docs/json).
-public final class Animation: Codable, DictionaryInitializable {
+public final class LottieAnimation: Codable, DictionaryInitializable {
 
   // MARK: Lifecycle
 
   required public init(from decoder: Decoder) throws {
-    let container = try decoder.container(keyedBy: Animation.CodingKeys.self)
+    let container = try decoder.container(keyedBy: LottieAnimation.CodingKeys.self)
     version = try container.decode(String.self, forKey: .version)
     type = try container.decodeIfPresent(CoordinateSpace.self, forKey: .type) ?? .type2d
     startFrame = try container.decode(AnimationFrameTime.self, forKey: .startFrame)
     endFrame = try container.decode(AnimationFrameTime.self, forKey: .endFrame)
     framerate = try container.decode(Double.self, forKey: .framerate)
-    width = try container.decode(Int.self, forKey: .width)
-    height = try container.decode(Int.self, forKey: .height)
+    width = try container.decode(Double.self, forKey: .width)
+    height = try container.decode(Double.self, forKey: .height)
     layers = try container.decode([LayerModel].self, ofFamily: LayerType.self, forKey: .layers)
     glyphs = try container.decodeIfPresent([Glyph].self, forKey: .glyphs)
     fonts = try container.decodeIfPresent(FontList.self, forKey: .fonts)
@@ -68,7 +68,7 @@ public final class Animation: Codable, DictionaryInitializable {
     let layerDictionaries: [[String: Any]] = try dictionary.value(for: CodingKeys.layers)
     layers = try [LayerModel].fromDictionaries(layerDictionaries)
     if let glyphDictionaries = dictionary[CodingKeys.glyphs.rawValue] as? [[String: Any]] {
-      glyphs = try glyphDictionaries.map({ try Glyph(dictionary: $0) })
+      glyphs = try glyphDictionaries.map { try Glyph(dictionary: $0) }
     } else {
       glyphs = nil
     }
@@ -83,7 +83,7 @@ public final class Animation: Codable, DictionaryInitializable {
       assetLibrary = nil
     }
     if let markerDictionaries = dictionary[CodingKeys.markers.rawValue] as? [[String: Any]] {
-      let markers = try markerDictionaries.map({ try Marker(dictionary: $0) })
+      let markers = try markerDictionaries.map { try Marker(dictionary: $0) }
       var markerMap: [String: Marker] = [:]
       for marker in markers {
         markerMap[marker.name] = marker
@@ -137,10 +137,10 @@ public final class Animation: Codable, DictionaryInitializable {
   let type: CoordinateSpace
 
   /// The height of the composition in points.
-  let width: Int
+  let width: Double
 
   /// The width of the composition in points.
-  let height: Int
+  let height: Double
 
   /// The list of animation layers
   let layers: [LayerModel]

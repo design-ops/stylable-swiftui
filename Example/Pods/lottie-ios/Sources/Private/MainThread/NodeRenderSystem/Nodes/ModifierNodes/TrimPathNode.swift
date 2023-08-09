@@ -34,9 +34,9 @@ final class TrimPathProperties: NodePropertyMap, KeypathSearchable {
   let properties: [AnyNodeProperty]
   let keypathName: String
 
-  let start: NodeProperty<Vector1D>
-  let end: NodeProperty<Vector1D>
-  let offset: NodeProperty<Vector1D>
+  let start: NodeProperty<LottieVector1D>
+  let end: NodeProperty<LottieVector1D>
+  let offset: NodeProperty<LottieVector1D>
   let type: TrimType
 }
 
@@ -133,7 +133,7 @@ final class TrimPathNode: AnimatorNode {
 
     /// First get the total length of all paths.
     var totalLength: CGFloat = 0
-    upstreamPaths.forEach({ totalLength = totalLength + $0.totalLength })
+    upstreamPaths.forEach { totalLength = totalLength + $0.totalLength }
 
     /// Now determine the start and end cut lengths
     let startLength = startPosition * totalLength
@@ -142,7 +142,6 @@ final class TrimPathNode: AnimatorNode {
 
     /// Now loop through all path containers
     for pathContainer in upstreamPaths {
-
       let pathEnd = pathStart + pathContainer.totalLength
 
       if
@@ -214,11 +213,10 @@ final class TrimPathNode: AnimatorNode {
         let subpaths = pathContainer.removePaths(updateFrame: frame)
         var subpathStart: CGFloat = 0
         for path in subpaths {
-
           let subpathEnd = subpathStart + path.length
 
           if
-            !startCutLength.isInRange(subpathStart, subpathEnd) &&
+            !startCutLength.isInRange(subpathStart, subpathEnd),
             !endCutLength.isInRange(subpathStart, subpathEnd)
           {
             // The whole path is included. Add
@@ -226,7 +224,7 @@ final class TrimPathNode: AnimatorNode {
             pathContainer.appendPath(path, updateFrame: frame)
 
           } else if
-            startCutLength.isInRange(subpathStart, subpathEnd) &&
+            startCutLength.isInRange(subpathStart, subpathEnd),
             !endCutLength.isInRange(subpathStart, subpathEnd)
           {
             /// The start of the path needs to be trimmed
@@ -235,7 +233,7 @@ final class TrimPathNode: AnimatorNode {
             let newPath = path.trim(fromPosition: cutLength / path.length, toPosition: 1, offset: 0, trimSimultaneously: false)
             pathContainer.appendPath(newPath, updateFrame: frame)
           } else if
-            !startCutLength.isInRange(subpathStart, subpathEnd) &&
+            !startCutLength.isInRange(subpathStart, subpathEnd),
             endCutLength.isInRange(subpathStart, subpathEnd)
           {
             // S|=======E----------------------|
@@ -244,7 +242,7 @@ final class TrimPathNode: AnimatorNode {
             pathContainer.appendPath(newPath, updateFrame: frame)
             break
           } else if
-            startCutLength.isInRange(subpathStart, subpathEnd) &&
+            startCutLength.isInRange(subpathStart, subpathEnd),
             endCutLength.isInRange(subpathStart, subpathEnd)
           {
             //  |-------S============E---------|
@@ -272,7 +270,6 @@ final class TrimPathNode: AnimatorNode {
 
       pathStart = pathEnd
     }
-
   }
 
   // MARK: Fileprivate
