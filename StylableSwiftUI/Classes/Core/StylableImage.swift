@@ -204,9 +204,22 @@ extension StylistIdentifier {
                  bundle: Bundle? = nil,
                  compatibleWith traits: UITraitCollection? = nil,
                  theme: Theme? = nil) -> UIImage? {
-        self.potentialImageNames(separator: separator, theme: theme)
+
+        let cacheKey = ImageCacheKey(identifier: self, theme: theme)
+
+        if let bestMatch = ImageCache.default.get(cacheKey) {
+            return UIImage(named: bestMatch, in: bundle, compatibleWith: traits)
+        }
+
+        let names = self.potentialImageNames(separator: separator, theme: theme)
+        let bestMatch = names
             .lazy
-            .compactMap { UIImage(named: $0, in: bundle, compatibleWith: traits) }
-            .first
+            .first { UIImage(named: $0, in: bundle, compatibleWith: traits) != nil }
+
+        if let bestMatch {
+            ImageCache.default.add(bestMatch, for: cacheKey)
+        }
+
+        return bestMatch.map { UIImage(named: $0, in: bundle, compatibleWith: traits) } ?? nil
     }
 }

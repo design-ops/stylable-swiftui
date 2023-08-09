@@ -14,6 +14,8 @@
 		60DEBF35D7A5FF647357B436 /* Pods_StylableSwiftUI_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 382E908B281D1A846E6302BC /* Pods_StylableSwiftUI_Tests.framework */; };
 		8CD3576D32D6169BA9088C6A /* Pods_StylableSwiftUI_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4FC7D92EC8ED86713D5E08 /* Pods_StylableSwiftUI_Example.framework */; };
 		8F06FCAA243F957D00D52B29 /* StylistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F06FCA9243F957D00D52B29 /* StylistTests.swift */; };
+		8F5C25972A83AEC800128508 /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5C25962A83AEC800128508 /* ImageCacheTests.swift */; };
+		8F5C25992A83B0DB00128508 /* CacheTestsMedia.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F5C25982A83B0DB00128508 /* CacheTestsMedia.xcassets */; };
 		8F8F18A026B3FB4E00E83CE4 /* ThemedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F189F26B3FB4E00E83CE4 /* ThemedView.swift */; };
 		8FB7656D28815A9A00857520 /* organism_element_like.json in Resources */ = {isa = PBXBuildFile; fileRef = 8FB7656A28815A9900857520 /* organism_element_like.json */; };
 		8FB7656E28815A9A00857520 /* like.json in Resources */ = {isa = PBXBuildFile; fileRef = 8FB7656B28815A9A00857520 /* like.json */; };
@@ -60,6 +62,8 @@
 		7DCB87A2860E3FA71FCC49EE /* Pods-SwiftUIStylist_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIStylist_Tests.debug.xcconfig"; path = "Target Support Files/Pods-SwiftUIStylist_Tests/Pods-SwiftUIStylist_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8418D4F9E00D256AAE0306FF /* Pods-SwiftUIStylist_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUIStylist_Example.release.xcconfig"; path = "Target Support Files/Pods-SwiftUIStylist_Example/Pods-SwiftUIStylist_Example.release.xcconfig"; sourceTree = "<group>"; };
 		8F06FCA9243F957D00D52B29 /* StylistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylistTests.swift; sourceTree = "<group>"; };
+		8F5C25962A83AEC800128508 /* ImageCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
+		8F5C25982A83B0DB00128508 /* CacheTestsMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CacheTestsMedia.xcassets; sourceTree = "<group>"; };
 		8F8F189F26B3FB4E00E83CE4 /* ThemedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemedView.swift; sourceTree = "<group>"; };
 		8FB7656A28815A9900857520 /* organism_element_like.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = organism_element_like.json; sourceTree = "<group>"; };
 		8FB7656B28815A9A00857520 /* like.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = like.json; sourceTree = "<group>"; };
@@ -162,6 +166,8 @@
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				8F06FCA9243F957D00D52B29 /* StylistTests.swift */,
 				A08DF29B24C46CCE005B7FC2 /* StylistIdentifierMatcherTests.swift */,
+				8F5C25962A83AEC800128508 /* ImageCacheTests.swift */,
+				8F5C25982A83B0DB00128508 /* CacheTestsMedia.xcassets */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -338,6 +344,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F5C25992A83B0DB00128508 /* CacheTestsMedia.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +454,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A08DF29C24C46CCE005B7FC2 /* StylistIdentifierMatcherTests.swift in Sources */,
+				8F5C25972A83AEC800128508 /* ImageCacheTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* StylistIdentifierTests.swift in Sources */,
 				A0927B7C23D73DEB0079B57A /* ImageStyleTests.swift in Sources */,
 				8F06FCAA243F957D00D52B29 /* StylistTests.swift in Sources */,
