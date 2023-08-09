@@ -30,7 +30,6 @@ public class Stylist: ObservableObject {
     @Published private var styles: [Style] {
         didSet {
             self.scoredStyleMatchCache = [:]
-            ImageCache.default.clear()
         }
     }
     @Published public var currentTheme: Theme? {
