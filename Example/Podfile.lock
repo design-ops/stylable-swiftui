@@ -1,10 +1,10 @@
 PODS:
   - lottie-ios (3.4.0)
   - StylableSwiftUI/Animated (3.0.0):
-    - lottie-ios
+    - lottie-ios (= 3.4.0)
     - StylableSwiftUI/Core
   - StylableSwiftUI/Core (3.0.0)
-  - SwiftLint (0.47.1)
+  - SwiftLint (0.52.4)
 
 DEPENDENCIES:
   - StylableSwiftUI/Animated (from `../`)
@@ -21,9 +21,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   lottie-ios: 69495122151a378fdc7d1bb4c5930347e37baf1f
-  StylableSwiftUI: 949269198a7e56ff8874f644319d12b10dc3fa75
-  SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
+  StylableSwiftUI: 8db8fe5d91f6540396d442aead553f595b52a26d
+  SwiftLint: 1cc5cd61ba9bacb2194e340aeb47a2a37fda00b3
 
 PODFILE CHECKSUM: 3eedd21623312536da46ad6fb7f13732d92f872f
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
