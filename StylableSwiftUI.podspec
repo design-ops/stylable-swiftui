@@ -23,7 +23,7 @@ Easily tag a SwiftUI library so it can be styled by multiple apps.
   s.subspec 'Animated' do |sub|
     sub.dependency 'StylableSwiftUI/Core'
     sub.source_files = 'StylableSwiftUI/Classes/Animated/**/*{.swift}'
-    sub.dependency 'lottie-ios'
+    sub.dependency 'lottie-ios', '3.4.0'
   end
 
 end
