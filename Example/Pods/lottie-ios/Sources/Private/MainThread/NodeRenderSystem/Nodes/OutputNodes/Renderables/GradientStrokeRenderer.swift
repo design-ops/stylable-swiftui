@@ -17,7 +17,7 @@ final class GradientStrokeRenderer: PassThroughOutputNode, Renderable {
   override init(parent: NodeOutput?) {
     strokeRender = StrokeRenderer(parent: nil)
     gradientRender = LegacyGradientFillRenderer(parent: nil)
-    strokeRender.color = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [1, 1, 1, 1])
+    strokeRender.color = .rgb(1, 1, 1)
     super.init(parent: parent)
   }
 
@@ -42,7 +42,7 @@ final class GradientStrokeRenderer: PassThroughOutputNode, Renderable {
   }
 
   func render(_ inContext: CGContext) {
-    guard inContext.path != nil && inContext.path!.isEmpty == false else {
+    guard inContext.path != nil, inContext.path!.isEmpty == false else {
       return
     }
 
@@ -56,7 +56,6 @@ final class GradientStrokeRenderer: PassThroughOutputNode, Renderable {
 
     /// Now draw the gradient.
     gradientRender.render(inContext)
-
   }
 
   func renderBoundsFor(_ boundingBox: CGRect) -> CGRect {

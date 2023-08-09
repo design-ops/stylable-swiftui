@@ -45,8 +45,8 @@ final class GradientRenderLayer: CAGradientLayer {
     }
 
     let pointInBounds = CGPoint(
-      x: referencePoint.x + gradientPadding,
-      y: referencePoint.y + gradientPadding)
+      x: referencePoint.x + CALayer.veryLargeLayerPadding,
+      y: referencePoint.y + CALayer.veryLargeLayerPadding)
 
     return CGPoint(
       x: CGFloat(pointInBounds.x) / bounds.width,
@@ -55,24 +55,21 @@ final class GradientRenderLayer: CAGradientLayer {
 
   // MARK: Private
 
-  /// Extra padding around the `gradientReferenceBounds` where the gradient is also rendered
-  ///  - This specific value is arbitrary and can be increased if necessary.
-  ///    Theoretically this should be "infinite", to match the behavior of
-  ///    `CGContext.drawLinearGradient` with `[.drawsAfterEndLocation, .drawsBeforeStartLocation]`.
-  private let gradientPadding: CGFloat = 2_000
-
   private func updateLayout() {
     anchorPoint = .zero
 
     bounds = CGRect(
       x: gradientReferenceBounds.origin.x,
       y: gradientReferenceBounds.origin.y,
-      width: gradientPadding + gradientReferenceBounds.width + gradientPadding,
-      height: gradientPadding + gradientReferenceBounds.height + gradientPadding)
+      width: CALayer.veryLargeLayerPadding + gradientReferenceBounds.width + CALayer.veryLargeLayerPadding,
+      height: CALayer.veryLargeLayerPadding + gradientReferenceBounds.height + CALayer.veryLargeLayerPadding)
+
+    // Align the center of this layer to be at the center point of its parent layer
+    let superlayerSize = superlayer?.frame.size ?? gradientReferenceBounds.size
 
     transform = CATransform3DMakeTranslation(
-      -gradientPadding,
-      -gradientPadding,
+      (superlayerSize.width - bounds.width) / 2,
+      (superlayerSize.height - bounds.height) / 2,
       0)
   }
 
@@ -83,5 +80,18 @@ final class GradientRenderLayer: CAGradientLayer {
 extension GradientRenderLayer: CustomLayoutLayer {
   func layout(superlayerBounds: CGRect) {
     gradientReferenceBounds = superlayerBounds
+
+    if let gradientMask = mask as? GradientRenderLayer {
+      gradientMask.layout(superlayerBounds: superlayerBounds)
+    }
   }
+}
+
+extension CALayer {
+  /// Extra padding to add around layers that should be very large or "infinite" in size.
+  /// Examples include `GradientRenderLayer` and `InfiniteOpaqueAnimationLayer`.
+  ///  - This specific value is arbitrary and can be increased if necessary.
+  ///  - Theoretically this should be "infinite", to match the behavior of
+  ///    `CGContext.drawLinearGradient` with `[.drawsAfterEndLocation, .drawsBeforeStartLocation]` etc.
+  static let veryLargeLayerPadding: CGFloat = 10_000
 }

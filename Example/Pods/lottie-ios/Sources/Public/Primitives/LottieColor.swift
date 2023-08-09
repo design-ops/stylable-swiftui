@@ -1,5 +1,5 @@
 //
-//  Color.swift
+//  LottieColor.swift
 //  lottie-swift
 //
 //  Created by Brandon Withrow on 2/4/19.
@@ -26,9 +26,9 @@ public enum ColorFormatDenominator: Hashable {
   }
 }
 
-// MARK: - Color
+// MARK: - LottieColor
 
-public struct Color: Hashable {
+public struct LottieColor: Hashable {
 
   public var r: Double
   public var g: Double

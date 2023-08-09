@@ -73,7 +73,7 @@ final class MaskContainerLayer: CALayer {
   // MARK: Internal
 
   func updateWithFrame(frame: CGFloat, forceUpdates: Bool) {
-    maskLayers.forEach({ $0.updateWithFrame(frame: frame, forceUpdates: forceUpdates) })
+    maskLayers.forEach { $0.updateWithFrame(frame: frame, forceUpdates: forceUpdates) }
   }
 
   // MARK: Fileprivate
@@ -84,10 +84,10 @@ final class MaskContainerLayer: CALayer {
 extension CGRect {
   static var veryLargeRect: CGRect {
     CGRect(
-      x: -100_000_000,
-      y: -100_000_000,
-      width: 200_000_000,
-      height: 200_000_000)
+      x: -10_000_000,
+      y: -10_000_000,
+      width: 20_000_000,
+      height: 20_000_000)
   }
 }
 
@@ -103,13 +103,12 @@ private class MaskLayer: CALayer {
     addSublayer(maskLayer)
     anchorPoint = .zero
     maskLayer.fillColor = mask.mode == .add
-      ? CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [1, 0, 0, 1])
-      : CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0, 1, 0, 1])
+      ? .rgb(1, 0, 0)
+      : .rgb(0, 1, 0)
     maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
     actions = [
       "opacity" : NSNull(),
     ]
-
   }
 
   override init(layer: Any) {
@@ -152,7 +151,6 @@ private class MaskLayer: CALayer {
       }
       maskLayer.path = path
     }
-
   }
 }
 
@@ -169,7 +167,7 @@ private class MaskNodeProperties: NodePropertyMap {
     shape = NodeProperty(provider: KeyframeInterpolator(keyframes: mask.shape.keyframes))
     expansion = NodeProperty(provider: KeyframeInterpolator(keyframes: mask.expansion.keyframes))
     propertyMap = [
-      "Opacity" : opacity,
+      PropertyName.opacity.rawValue : opacity,
       "Shape" : shape,
       "Expansion" : expansion,
     ]
@@ -185,7 +183,7 @@ private class MaskNodeProperties: NodePropertyMap {
   let mode: MaskMode
   let inverted: Bool
 
-  let opacity: NodeProperty<Vector1D>
+  let opacity: NodeProperty<LottieVector1D>
   let shape: NodeProperty<BezierPath>
-  let expansion: NodeProperty<Vector1D>
+  let expansion: NodeProperty<LottieVector1D>
 }

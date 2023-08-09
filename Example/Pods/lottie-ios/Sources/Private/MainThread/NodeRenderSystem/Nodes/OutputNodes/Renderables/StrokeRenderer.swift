@@ -140,7 +140,7 @@ final class StrokeRenderer: PassThroughOutputNode, Renderable {
   }
 
   func render(_ inContext: CGContext) {
-    guard inContext.path != nil && inContext.path!.isEmpty == false else {
+    guard inContext.path != nil, inContext.path!.isEmpty == false else {
       return
     }
     guard let color = color else { return }
@@ -160,7 +160,7 @@ final class StrokeRenderer: PassThroughOutputNode, Renderable {
     layer.lineDashPhase = dashPhase ?? 0
     layer.fillColor = nil
     if let dashPattern = dashLengths {
-      layer.lineDashPattern = dashPattern.map({ NSNumber(value: Double($0)) })
+      layer.lineDashPattern = dashPattern.map { NSNumber(value: Double($0)) }
     }
   }
 }

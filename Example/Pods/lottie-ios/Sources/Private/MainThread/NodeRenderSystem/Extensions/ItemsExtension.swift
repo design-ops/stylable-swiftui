@@ -19,7 +19,6 @@ final class NodeTree {
 
 extension Array where Element == ShapeItem {
   func initializeNodeTree() -> NodeTree {
-
     let nodeTree = NodeTree()
 
     for item in self {
@@ -69,11 +68,17 @@ extension Array where Element == ShapeItem {
         let node = TrimPathNode(parentNode: nodeTree.rootNode, trim: trim, upstreamPaths: nodeTree.paths)
         nodeTree.rootNode = node
         nodeTree.childrenNodes.append(node)
+      } else if let roundedCorners = item as? RoundedCorners {
+        let node = RoundedCornersNode(
+          parentNode: nodeTree.rootNode,
+          roundedCorners: roundedCorners,
+          upstreamPaths: nodeTree.paths)
+        nodeTree.rootNode = node
+        nodeTree.childrenNodes.append(node)
       } else if let xform = item as? ShapeTransform {
         nodeTree.transform = xform
         continue
       } else if let group = item as? Group {
-
         let tree = group.items.initializeNodeTree()
         let node = GroupNode(name: group.name, parentNode: nodeTree.rootNode, tree: tree)
         nodeTree.rootNode = node
@@ -81,6 +86,11 @@ extension Array where Element == ShapeItem {
         /// Now add all child paths to current tree
         nodeTree.paths.append(contentsOf: tree.paths)
         nodeTree.renderContainers.append(node.container)
+      } else if item is Repeater {
+        LottieLogger.shared.warn("""
+          The Main Thread rendering engine doesn't currently support repeaters.
+          To play an animation with repeaters, you can use the Core Animation rendering engine instead.
+          """)
       }
 
       if let pathNode = nodeTree.rootNode as? PathNode {

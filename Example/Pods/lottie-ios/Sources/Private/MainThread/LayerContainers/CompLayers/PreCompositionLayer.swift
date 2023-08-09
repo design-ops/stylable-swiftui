@@ -90,7 +90,7 @@ final class PreCompositionLayer: CompositionLayer {
   // MARK: Internal
 
   let frameRate: CGFloat
-  let remappingNode: NodeProperty<Vector1D>?
+  let remappingNode: NodeProperty<LottieVector1D>?
 
   override var keypathProperties: [String: AnyNodeProperty] {
     guard let remappingNode = remappingNode else {
@@ -107,12 +107,12 @@ final class PreCompositionLayer: CompositionLayer {
     } else {
       localFrame = (frame - startFrame) / timeStretch
     }
-    animationLayers.forEach( { $0.displayWithFrame(frame: localFrame, forceUpdates: forceUpdates) })
+    animationLayers.forEach { $0.displayWithFrame(frame: localFrame, forceUpdates: forceUpdates) }
   }
 
   override func updateRenderScale() {
     super.updateRenderScale()
-    animationLayers.forEach( { $0.renderScale = renderScale } )
+    animationLayers.forEach { $0.renderScale = renderScale }
   }
 
   // MARK: Fileprivate
