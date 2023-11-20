@@ -5,7 +5,7 @@ struct AnimatedView: UIViewRepresentable {
     let animation: LottieAnimation
     let repeats: Bool
 
-    func makeUIView(context: Context) -> some UIView {
+    func makeUIView(context: Context) -> UIView {
         let parent = UIView(frame: .zero)
 
         let animationView = LottieAnimationView(frame: .zero)
@@ -26,5 +26,5 @@ struct AnimatedView: UIViewRepresentable {
         return parent
     }
 
-    func updateUIView(_ uiView: UIViewType, context: Context) { }
+    func updateUIView(_ uiView: UIView, context: Context) { }
 }
