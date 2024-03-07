@@ -9,7 +9,9 @@ struct CurrentStylableGroupKey: EnvironmentKey {
     static let defaultValue: StylistIdentifier.Path? = nil
 }
 
-extension EnvironmentValues {
+public extension EnvironmentValues {
+
+    /// The current stylable group in the environment
     var currentStylableGroup: StylistIdentifier.Path? {
         get {
             return self[CurrentStylableGroupKey.self]
