@@ -4,7 +4,6 @@
 //
 //  Created by Sam Dean on 27/08/2020.
 //
-#if os(iOS)
 
 import Foundation
 
@@ -131,4 +130,3 @@ public extension WithStylistIdentifier {
         self.contents = { contents($0[0], $0[1], $0[2], $0[3], $0[4]) }
     }
 }
-#endif

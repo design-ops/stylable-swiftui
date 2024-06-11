@@ -4,13 +4,8 @@
 //
 //  Created by Kerr Marin Miller on 01/09/2020.
 //
-#if os(iOS)
-#if canImport(UIKit)
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
-typealias StylableImage = NSImage
-#endif
+
 
 public enum TextCase {
     case none
@@ -82,4 +77,4 @@ extension Array where Iterator.Element == StylistProperty {
         }.first
     }
 }
-#endif
+

@@ -1,7 +1,6 @@
 //
 //  DebugStylist.swift
 //
-#if os(iOS)
 import Foundation
 import SwiftUI
 
@@ -37,4 +36,3 @@ extension DebugCurrentStyleGroup where Content == Image {
         self.init(tag: tag, content: { Image("this is just to make sure we are rendered") })
     }
 }
-#endif

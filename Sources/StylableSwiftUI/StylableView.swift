@@ -1,7 +1,6 @@
 //
 //  StylableView.swift
 //
-#if os(iOS)
 import Foundation
 
 import SwiftUI
@@ -120,4 +119,3 @@ public struct Stylable: View {
         return self.style(apply: apply)
     }
 }
-#endif

@@ -1,7 +1,6 @@
 //
 //  View+style.swift
 //
-#if os(iOS)
 import Foundation
 import SwiftUI
 
@@ -16,4 +15,3 @@ extension View {
         return Stylable(self, identifier: identifier ?? "*")
     }
 }
-#endif

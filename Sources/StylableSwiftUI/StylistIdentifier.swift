@@ -1,7 +1,6 @@
 //
 //  StylistIdentifier.swift
 //
-#if os(iOS)
 import Foundation
 
 /// Identifies a section which can be styled
@@ -191,4 +190,3 @@ private extension RandomAccessCollection {
         self.count > 1 ? self[self.index(self.startIndex, offsetBy: 1)] : nil
     }
 }
-#endif

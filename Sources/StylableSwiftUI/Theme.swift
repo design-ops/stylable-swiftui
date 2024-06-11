@@ -4,7 +4,6 @@
 //
 //  Created by Kerr Marin Miller on 16/07/2021.
 //
-#if os(iOS)
 import Foundation
 
 public struct Theme: Equatable, Hashable {
@@ -42,4 +41,3 @@ extension Theme: ExpressibleByStringLiteral {
         self.init(name: value)
     }
 }
-#endif

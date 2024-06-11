@@ -4,7 +4,6 @@
 //
 //  Created by Sam Dean on 189/07/2020.
 //
-#if os(iOS)
 import Foundation
 
 typealias MatcherScore = Int
@@ -127,4 +126,3 @@ struct StylistIdentifierMatcher {
         return 0
     }
 }
-#endif

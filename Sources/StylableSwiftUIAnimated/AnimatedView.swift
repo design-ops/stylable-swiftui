@@ -1,4 +1,3 @@
-#if os(iOS)
 import SwiftUI
 import Lottie
 
@@ -29,4 +28,3 @@ struct AnimatedView: UIViewRepresentable {
 
     func updateUIView(_ uiView: UIView, context: Context) { }
 }
-#endif

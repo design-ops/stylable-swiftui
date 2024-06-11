@@ -1,16 +1,12 @@
 //
 //  Stylist.swift
 //
-#if os(iOS)
 import Foundation
 
 import SwiftUI
-#if canImport(UIKit)
+
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
-typealias StylableImage = NSImage
-#endif
+
 
 @available(iOS 13.0.0, *)
 public struct Style {
@@ -196,5 +192,4 @@ public struct StyleBuilder {
         styles.flatMap { $0.styles }
     }
 }
-#endif
 #endif

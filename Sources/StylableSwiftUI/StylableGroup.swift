@@ -1,7 +1,6 @@
 //
 //  StylableGroup.swift
 //
-#if os(iOS)
 import Foundation
 import SwiftUI
 
@@ -42,4 +41,3 @@ public struct StylableGroup<Content>: View where Content: View {
         self.content().environment(\.currentStylableGroup, self.path?.within(self.currentStylableGroup))
     }
 }
-#endif

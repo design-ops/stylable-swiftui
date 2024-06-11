@@ -4,14 +4,9 @@
 //
 //  Created by Kerr Marin Miller on 03/09/2020.
 //
-#if os(iOS)
 import Foundation
-#if canImport(UIKit)
+
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
-typealias StylableImage = NSImage
-#endif
 
 public final class UIKitStyleContainer {
     private var registeredProperties: [ThemedStylistIdentifier: [StylistProperty]]
@@ -87,4 +82,3 @@ public extension UIKitStyleContainer {
 
 // MARK: - Observable Object
 extension UIKitStyleContainer: ObservableObject { }
-#endif

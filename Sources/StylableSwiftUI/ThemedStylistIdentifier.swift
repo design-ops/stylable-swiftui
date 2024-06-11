@@ -4,7 +4,6 @@
 //
 //  Created by Kerr Marin Miller on 05/08/2021.
 //
-#if os(iOS)
 import Foundation
 
 public struct ThemedStylistIdentifier: Equatable, Hashable {
@@ -58,4 +57,3 @@ extension ThemedStylistIdentifier: ExpressibleByStringLiteral {
         }
     }
 }
-#endif

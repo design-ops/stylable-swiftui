@@ -1,4 +1,3 @@
-#if os(iOS)
 import Foundation
 import SwiftUI
 import Lottie
@@ -62,4 +61,3 @@ extension StylistIdentifier {
             .first
     }
 }
-#endif

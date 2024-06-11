@@ -4,7 +4,6 @@
 //
 //  Created by Kerr Marin Miller on 15/04/2020.
 //
-#if os(iOS)
 import Foundation
 import os
 
@@ -82,4 +81,3 @@ public final class Logger {
         self.log(items, separator: separator, level: .fault)
     }
 }
-#endif

@@ -1,15 +1,10 @@
 //
 //  StylableImage.swift
 //
-#if os(iOS)
 import Foundation
 import SwiftUI
-#if canImport(UIKit)
+
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
-typealias StylableImage = NSImage
-#endif
 
 public struct StylableImage: View {
 
@@ -228,4 +223,3 @@ extension StylistIdentifier {
         return bestMatch.map { UIImage(named: $0, in: bundle, compatibleWith: traits) } ?? nil
     }
 }
-#endif

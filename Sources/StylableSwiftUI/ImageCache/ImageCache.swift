@@ -1,7 +1,6 @@
 //
 //  ImageCache.swift
 //
-#if os(iOS)
 import Foundation
 
 typealias ImageName = String
@@ -26,4 +25,3 @@ final class ImageCache {
         self.cache = [:]
     }
 }
-#endif
