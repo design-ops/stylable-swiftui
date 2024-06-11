@@ -130,3 +130,4 @@ cobertura.xml
 # Python files for UITests
 *.pyc
 /.idea
+.build
