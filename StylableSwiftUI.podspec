@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'StylableSwiftUI'
   s.version          = '4.0.0'
-  s.summary          = 'StylableSwiftUI - Style SwifTUI apps and libraries'
+  s.summary          = 'StylableSwiftUI - Style SwiftUI apps and libraries'
   s.description      = <<-DESC
 Easily tag a SwiftUI library so it can be styled by multiple apps.
                        DESC
@@ -12,17 +12,17 @@ Easily tag a SwiftUI library so it can be styled by multiple apps.
   s.source           = { :git => 'https://github.com/design-ops/stylable-swiftUI.git', :tag => "v#{s.version}" }
 
   s.swift_version = '5.8'
-  s.ios.deployment_target = '14.0'
+  s.ios.deployment_target = '15.0'
 
   s.default_subspec = 'Core'
 
   s.subspec 'Core' do |sub|
-    sub.source_files = 'StylableSwiftUI/Classes/Core/**/*{.swift}'
+    sub.source_files = 'Sources/StylableSwiftUI/**/*{.swift}'
   end
 
   s.subspec 'Animated' do |sub|
     sub.dependency 'StylableSwiftUI/Core'
-    sub.source_files = 'StylableSwiftUI/Classes/Animated/**/*{.swift}'
+    sub.source_files = 'Sources/StylableSwiftUIAnimated/Animated/**/*{.swift}'
     sub.dependency 'lottie-ios'
   end
 
