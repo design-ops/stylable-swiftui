@@ -10,7 +10,6 @@ import Foundation
 import SwiftUI
 
 import StylableSwiftUI
-import StylableSwiftUIAnimated
 
 struct ExampleViews: View {
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1250"
-   version = "1.3">
+   LastUpgradeVersion = "1530"
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -17,21 +18,7 @@
                BlueprintIdentifier = "607FACCF1AFB9204008FA782"
                BuildableName = "StylableSwiftUI_Example.app"
                BlueprintName = "StylableSwiftUI_Example"
-               ReferencedContainer = "container:StylableSwiftUI.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "StylableSwiftUI_Tests.xctest"
-               BlueprintName = "StylableSwiftUI_Tests"
-               ReferencedContainer = "container:StylableSwiftUI.xcodeproj">
+               ReferencedContainer = "container:StylableSwiftUI-Demo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -41,17 +28,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "YES">
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0E12E449EA31D5414AB180DDBF51184C"
-            BuildableName = "StylableSwiftUI.framework"
-            BlueprintName = "StylableSwiftUI"
-            ReferencedContainer = "container:Pods/Pods.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
+      shouldAutocreateTestPlan = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -60,7 +37,7 @@
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
                BuildableName = "StylableSwiftUI_Tests.xctest"
                BlueprintName = "StylableSwiftUI_Tests"
-               ReferencedContainer = "container:StylableSwiftUI.xcodeproj">
+               ReferencedContainer = "container:StylableSwiftUI-Demo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -82,7 +59,7 @@
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
             BuildableName = "StylableSwiftUI_Example.app"
             BlueprintName = "StylableSwiftUI_Example"
-            ReferencedContainer = "container:StylableSwiftUI.xcodeproj">
+            ReferencedContainer = "container:StylableSwiftUI-Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -99,7 +76,7 @@
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
             BuildableName = "StylableSwiftUI_Example.app"
             BlueprintName = "StylableSwiftUI_Example"
-            ReferencedContainer = "container:StylableSwiftUI.xcodeproj">
+            ReferencedContainer = "container:StylableSwiftUI-Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

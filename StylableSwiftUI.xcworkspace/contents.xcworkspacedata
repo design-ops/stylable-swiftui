@@ -4,4 +4,7 @@
    <FileRef
       location = "group:StylableSwiftUI.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Demo/StylableSwiftUI-Demo.xcodeproj">
+   </FileRef>
 </Workspace>
