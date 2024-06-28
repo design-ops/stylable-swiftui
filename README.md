@@ -1,6 +1,6 @@
 ![CI](https://github.com/design-ops/stylable-swiftUI/workflows/CI/badge.svg?branch=master&event=push)
 
-# SwiftUIStylable
+# StylableSwiftUI
 
 An attempt to make SwiftUI components stylable by an external type and reusable across apps, based on the principles of Atomic Design (https://bradfrost.com/blog/post/atomic-web-design/).
 

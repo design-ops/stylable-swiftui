@@ -78,9 +78,10 @@
 		8FACB88C2C2F0D44009EE5AD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8FACB88D2C2F0D44009EE5AD /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		8FACB8B02C2F0DF0009EE5AD /* StylableSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StylableSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8FACB8C02C2F0FF1009EE5AD /* StylableSwiftUI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = StylableSwiftUI.xctestplan; path = Tests/StylableSwiftUI.xctestplan; sourceTree = "<group>"; };
+		8FACB8C02C2F0FF1009EE5AD /* StylableSwiftUI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = StylableSwiftUI.xctestplan; sourceTree = "<group>"; };
 		8FACB8D12C2F11B1009EE5AD /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8FACB8D22C2F11B5009EE5AD /* StylableSwiftUI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = StylableSwiftUI.podspec; sourceTree = "<group>"; };
+		8FACB8D32C2F1B60009EE5AD /* unittestall.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = unittestall.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +107,7 @@
 		1682B4D42C1759A700D73706 = {
 			isa = PBXGroup;
 			children = (
-				8FACB8C02C2F0FF1009EE5AD /* StylableSwiftUI.xctestplan */,
+				8FACB8D52C2F1B60009EE5AD /* .github */,
 				8FACB8692C2F0D44009EE5AD /* Gemfile */,
 				8FACB88B2C2F0D44009EE5AD /* LICENSE */,
 				8FACB86A2C2F0D44009EE5AD /* NDS.md */,
@@ -145,6 +146,7 @@
 		8FACB8732C2F0D44009EE5AD /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				8FACB8C02C2F0FF1009EE5AD /* StylableSwiftUI.xctestplan */,
 				8FACB8712C2F0D44009EE5AD /* StylableSwiftUITests */,
 				8FACB8722C2F0D44009EE5AD /* Info.plist */,
 			);
@@ -206,6 +208,22 @@
 				8FACB8892C2F0D44009EE5AD /* StylableSwiftUIAnimated */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		8FACB8D42C2F1B60009EE5AD /* workflows */ = {
+			isa = PBXGroup;
+			children = (
+				8FACB8D32C2F1B60009EE5AD /* unittestall.yml */,
+			);
+			path = workflows;
+			sourceTree = "<group>";
+		};
+		8FACB8D52C2F1B60009EE5AD /* .github */ = {
+			isa = PBXGroup;
+			children = (
+				8FACB8D42C2F1B60009EE5AD /* workflows */,
+			);
+			path = .github;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
