@@ -36,7 +36,11 @@ public struct StylistIdentifier: Equatable, Hashable {
 
     /// Given the identifier `header/searchBar/title` then the components are `[ "header", "searchBar" ]`
     public let path: Path
-
+    
+    /// Creates a new `StylistIdentifier` with a token and path
+    /// - Parameters:
+    ///   - token: Given the identifier `header/searchBar/title` then `title` is the token
+    ///   - path: Given the identifier `header/searchBar/title` then the components are `[ "header", "searchBar" ]`
     public init(token: String, path: Path) {
         self.token = token
         self.path = path
@@ -127,7 +131,7 @@ public extension StylistIdentifier {
         static let empty = Path(components: [])
     }
 
-     struct Component: CustomStringConvertible, Equatable, Hashable {
+    struct Component: CustomStringConvertible, Equatable, Hashable {
         let value: String
         let variant: String?
 
@@ -147,11 +151,10 @@ public extension StylistIdentifier {
             self.value = split.first.map(String.init) ?? ""
 
             // Get, validate, and store the variant (or just let it be `nil`)
-            guard
-                let variant = split.second.map(String.init).map({ $0.hasSuffix("]") ? String($0.dropLast()) : $0 }),
-                !variant.isEmpty else {
-                    self.variant = nil
-                    return
+            guard let variant = split.second.map(String.init).map({ $0.hasSuffix("]") ? String($0.dropLast()) : $0 }),
+                  !variant.isEmpty else {
+                self.variant = nil
+                return
             }
             self.variant = variant
         }
