@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "DC7F256F-CD7A-4489-8C2C-25AB999A95CA",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:StylableSwiftUI.xcodeproj",
+        "identifier" : "8FACB8AF2C2F0DF0009EE5AD",
+        "name" : "StylableSwiftUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -26,13 +26,11 @@ jobs:
     - name: Test StylableSwiftUI
       shell: bash
       run: |
-        pushd Example
         set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace ${workspace} -scheme ${scheme} -destination "${destination}"
-        popd
         pod lib lint --allow-warnings
       env:
         destination: ${{ matrix.destination }}
-        scheme: "StylableSwiftUI-Example"
+        scheme: "StylableSwiftUI"
         workspace: "StylableSwiftUI.xcworkspace"
         ONLY_ACTIVE_ARCH: "NO"
         CODE_SIGN_IDENTITY: ""
