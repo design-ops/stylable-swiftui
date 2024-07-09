@@ -1,6 +1,7 @@
 //
 //  ImageCacheKey.swift
 //
+
 import Foundation
 
 struct ImageCacheKey: Hashable {

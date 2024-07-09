@@ -4,9 +4,10 @@
 //
 //  Created by Kerr Marin Miller on 03/09/2020.
 //
-import Foundation
 
+import Foundation
 import UIKit
+import Combine
 
 public final class UIKitStyleContainer {
     private var registeredProperties: [ThemedStylistIdentifier: [StylistProperty]]

@@ -1,6 +1,7 @@
 //
 //  StylistIdentifier.swift
 //
+
 import Foundation
 
 /// Identifies a section which can be styled

@@ -1,6 +1,7 @@
 //
 //  ImageCache.swift
 //
+
 import Foundation
 
 typealias ImageName = String

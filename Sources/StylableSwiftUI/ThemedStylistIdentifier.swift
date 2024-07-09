@@ -4,6 +4,7 @@
 //
 //  Created by Kerr Marin Miller on 05/08/2021.
 //
+
 import Foundation
 
 public struct ThemedStylistIdentifier: Equatable, Hashable {
