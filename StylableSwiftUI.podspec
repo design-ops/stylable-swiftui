@@ -9,9 +9,9 @@ Easily tag a SwiftUI library so it can be styled by multiple apps.
   s.homepage         = 'https://github.com/design-ops/stylable-swiftUI'
   s.license          = { :type => 'MIT' }
   s.author           = 'deanWombourne'
-  s.source           = { :git => 'https://github.com/design-ops/stylable-swiftUI.git', :tag => "v#{s.version}" }
+  s.source           = { :git => 'https://github.com/design-ops/stylable-swiftUI.git', :tag => s.version.to_s }
 
-  s.swift_version = '5.8'
+  s.swift_version = '5.10'
   s.ios.deployment_target = '15.0'
 
   s.default_subspec = 'Core'
@@ -22,7 +22,7 @@ Easily tag a SwiftUI library so it can be styled by multiple apps.
 
   s.subspec 'Animated' do |sub|
     sub.dependency 'StylableSwiftUI/Core'
-    sub.source_files = 'Sources/StylableSwiftUIAnimated/Animated/**/*{.swift}'
+    sub.source_files = 'Sources/StylableSwiftUIAnimated/**/*{.swift}'
     sub.dependency 'lottie-ios'
   end
 

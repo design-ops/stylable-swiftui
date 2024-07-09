@@ -82,6 +82,7 @@
 		8FACB8D12C2F11B1009EE5AD /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8FACB8D22C2F11B5009EE5AD /* StylableSwiftUI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = StylableSwiftUI.podspec; sourceTree = "<group>"; };
 		8FACB8D32C2F1B60009EE5AD /* unittestall.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = unittestall.yml; sourceTree = "<group>"; };
+		8FAE548D2C3D6F60005E0335 /* RELEASE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RELEASE.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +111,7 @@
 				8FACB8D52C2F1B60009EE5AD /* .github */,
 				8FACB8692C2F0D44009EE5AD /* Gemfile */,
 				8FACB88B2C2F0D44009EE5AD /* LICENSE */,
+				8FAE548D2C3D6F60005E0335 /* RELEASE.md */,
 				8FACB86A2C2F0D44009EE5AD /* NDS.md */,
 				8FACB8D22C2F11B5009EE5AD /* StylableSwiftUI.podspec */,
 				8FACB8D12C2F11B1009EE5AD /* .swiftlint.yml */,
