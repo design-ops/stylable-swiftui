@@ -20,4 +20,4 @@ To release to CocoaPods you must:
 3. Commit these changes
 4. Tag the commit with the version number (do not add any prefix or suffix to the tag so it works with SPM too)
 5. Push the changes and tags to the remote repo
-6. Run `bundle exec pod repo push` to release to CocoaPods trunk 
+6. Run `bundle exec pod trunk push` to release to CocoaPods trunk 
