@@ -17,7 +17,11 @@ final class ImageCacheTests: XCTestCase {
         let longerIdentifier = "dark/home/searchBar[deselected]/label"
         let identifier = "dark/label"
 
+        #if !NOT_SPM
         let bundle = Bundle.module
+        #else
+        let bundle = Bundle(for: ImageCacheTests.self)
+        #endif
 
         self.measure {
             for _ in 1..<1000 {
