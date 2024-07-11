@@ -23,7 +23,10 @@ let package = Package(
                 ]),
         .testTarget(
             name: "StylableSwiftUITests",
-            dependencies: ["StylableSwiftUI", "StylableSwiftUIAnimated"]
+            dependencies: ["StylableSwiftUI", "StylableSwiftUIAnimated"],
+            resources: [
+                .process("Resources")
+            ]
         )
     ]
 )
