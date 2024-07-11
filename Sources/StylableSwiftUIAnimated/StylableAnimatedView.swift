@@ -1,7 +1,9 @@
 import Foundation
 import SwiftUI
 import Lottie
+#if !COCOAPODS
 import StylableSwiftUI
+#endif
 
 public struct StylableAnimatedView: View {
     public static let defaultSeparator = "_"
