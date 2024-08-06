@@ -16,7 +16,7 @@ public struct StylableImage: View {
     @EnvironmentObject private var stylist: Stylist
     @Environment(\.currentStylableGroup) var currentStylableGroup
 
-    private init(_ identifier: StylistIdentifier, factory: @escaping (StylistIdentifier, Theme?) -> Image) {
+    public init(_ identifier: StylistIdentifier, factory: @escaping (StylistIdentifier, Theme?) -> Image) {
         self.identifier = identifier
         self.factory = factory
     }
