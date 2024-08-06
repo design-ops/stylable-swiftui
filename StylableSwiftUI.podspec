@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'StylableSwiftUI'
-  s.version          = '5.0.1'
+  s.version          = '5.1.0'
   s.summary          = 'StylableSwiftUI - Style SwiftUI apps and libraries'
   s.description      = <<-DESC
 Easily tag a SwiftUI library so it can be styled by multiple apps.
