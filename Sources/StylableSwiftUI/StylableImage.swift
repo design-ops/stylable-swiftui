@@ -112,13 +112,13 @@ public extension StylistIdentifier {
 //    }
 
     func potentialImageNames(separator: String = StylableImage.defaultSeparator, theme: Theme? = nil) -> AnySequence<String> {
-        let reversedComponents = self.path.components.reversed()
+        let reversedComponents = Array(self.path.components.reversed())
 
         // Generate variant combinations lazily
         let options = VariantSequence(from: reversedComponents)
 
         // Transform options to include the token and theme (if available)
-        let optionsWithToken = options.lazy.flatMap { option -> [String] in
+        let optionsWithToken = options.lazy.flatMap { option -> [[String]] in
             let optionDescriptions = option.map(\.description)
             var results = [optionDescriptions + [self.token]]
             if let themeName = theme?.name {
@@ -140,7 +140,7 @@ private struct VariantSequence: Sequence, IteratorProtocol {
     typealias Component = StylistIdentifier.Component
 
     /// The original components used to create the breakdown
-    private let components: [String]
+    private let components: [Component]
 
     /// Calculate the maximum possible options to output for this sequence.
     private let maxIndex: Int
@@ -153,9 +153,9 @@ private struct VariantSequence: Sequence, IteratorProtocol {
     /// This is pretty inefficient - it would be better to work out how to not calculate them in the first place,
     /// but to keep the code 'simple' it's easier to use a bitmask and just drop masks which produce a component with
     /// a variant but not value - which is impossible in NDS.
-    private var deduplicate = Set<[String]>()
+    private var deduplicate = Set<[Component]>()
 
-    init(from components: [String]) {
+    init(from components: [Component]) {
         self.components = components
         self.maxIndex = Int(pow(2.0, Double(components.count)*2))
     }
@@ -209,10 +209,9 @@ private struct VariantSequence: Sequence, IteratorProtocol {
 //        return result
 //    }
 
-    mutating func next() -> [String]? {
+    mutating func next() -> [Component]? {
         while self.index < self.maxIndex {
-            var result: [String] = []
-            var isDuplicate = false
+            var result: [Component] = []
 
             for (i, component) in self.components.enumerated() {
                 let valueMask = 1 << (i * 2 + 1)
@@ -226,7 +225,7 @@ private struct VariantSequence: Sequence, IteratorProtocol {
 
                 if self.index & variantMask != 0 {
                     // Include only the value without the variant
-                    result.append(Component(value: component, variant: nil))
+                    result.append(Component(value: component.value, variant: nil))
                 } else {
                     // Include the full component
                     result.append(component)
