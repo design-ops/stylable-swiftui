@@ -89,26 +89,48 @@ extension Image {
 public extension StylistIdentifier {
 
     /// All the possible names for a image based on this identifier
+//    func potentialImageNames(separator: String = StylableImage.defaultSeparator, theme: Theme? = nil) -> AnySequence<String> {
+//        let components = Array(self.path.components.reversed())
+//
+//        let options = VariantSequence(from: components)
+//
+//        // Append the token to the end - it's always there.
+//        let optionsWithToken = options
+//            .lazy
+//            .flatMap { option -> [[String]] in
+//                if let theme = theme {
+//                    return [
+//                        [theme.name] + option.map { $0.description } + [self.token],
+//                        option.map { $0.description } + [self.token]
+//                    ]
+//                }
+//                return [ option.map { $0.description } + [self.token] ]
+//            }
+//
+//        // Return the sequence, joining the components with the requested separator
+//        return AnySequence(optionsWithToken.map { $0.joined(separator: separator) })
+//    }
+
     func potentialImageNames(separator: String = StylableImage.defaultSeparator, theme: Theme? = nil) -> AnySequence<String> {
-        let components = Array(self.path.components.reversed())
+        let reversedComponents = self.path.components.reversed()
 
-        let options = VariantSequence(from: components)
+        // Generate variant combinations lazily
+        let options = VariantSequence(from: reversedComponents)
 
-        // Append the token to the end - it's always there.
-        let optionsWithToken = options
-            .lazy
-            .flatMap { option -> [[String]] in
-                if let theme = theme {
-                    return [
-                        [theme.name] + option.map { $0.description } + [self.token],
-                        option.map { $0.description } + [self.token]
-                    ]
-                }
-                return [ option.map { $0.description } + [self.token] ]
+        // Transform options to include the token and theme (if available)
+        let optionsWithToken = options.lazy.flatMap { option -> [String] in
+            let optionDescriptions = option.map(\.description)
+            var results = [optionDescriptions + [self.token]]
+            if let themeName = theme?.name {
+                results.append([themeName] + optionDescriptions + [self.token])
             }
+            return results
+        }
 
-        // Return the sequence, joining the components with the requested separator
-        return AnySequence(optionsWithToken.map { $0.joined(separator: separator) })
+        // Lazily join components with the separator
+        let joinedOptions = optionsWithToken.lazy.map { $0.joined(separator: separator) }
+
+        return AnySequence(joinedOptions)
     }
 }
 
@@ -118,7 +140,7 @@ private struct VariantSequence: Sequence, IteratorProtocol {
     typealias Component = StylistIdentifier.Component
 
     /// The original components used to create the breakdown
-    private let components: [Component]
+    private let components: [String]
 
     /// Calculate the maximum possible options to output for this sequence.
     private let maxIndex: Int
@@ -131,61 +153,102 @@ private struct VariantSequence: Sequence, IteratorProtocol {
     /// This is pretty inefficient - it would be better to work out how to not calculate them in the first place,
     /// but to keep the code 'simple' it's easier to use a bitmask and just drop masks which produce a component with
     /// a variant but not value - which is impossible in NDS.
-    private var deduplicate = Set<[Component]>()
+    private var deduplicate = Set<[String]>()
 
-    init(from components: [Component]) {
-        self.components = Array(components)
+    init(from components: [String]) {
+        self.components = components
         self.maxIndex = Int(pow(2.0, Double(components.count)*2))
     }
 
-    mutating func next() -> [Component]? {
+//    mutating func next() -> [String]? {
+//
+//        // There's a bit of a while here - we don't want to return duplicate values from the sequence.
+//        // Originally, I recursed but Swift won't do tail-optimisation and the stack suffered :)
+//
+//        var result: [String]?
+//        while result == nil {
+//
+//            // If we hit the end of the sequence, just bail.
+//            guard self.index < self.maxIndex else { return nil }
+//
+//            result = self.components
+//                .enumerated()
+//                .compactMap { (index, component) -> String? in
+//
+//                    // Each component can have either the value, the variant, or neither masked out
+//                    let valueMask = 1 << (index*2+1)
+//
+//                    // If we are masking out the value, then we don't care about the variant so just return nil
+//                    if self.index & valueMask != 0 {
+//                        return nil
+//                    }
+//
+//                    let variantMask = 1 << (index*2)
+//
+//                    // If we are masking out the variant, return a new component
+//                    if self.index & variantMask != 0 {
+//                        return Component(value: component, variant: nil)
+//                    }
+//
+//                    // If we aren't masking anything in this component, just return it as-is
+//                    return component
+//            }
+//
+//            self.index += 1
+//
+//            // If we have a result, is it a duplicate?
+//            if let foundResult = result {
+//                if deduplicate.contains(foundResult) {
+//                    result = nil
+//                } else {
+//                    deduplicate.insert(foundResult)
+//                }
+//            }
+//        }
+//
+//        return result
+//    }
 
-        // There's a bit of a while here - we don't want to return duplicate values from the sequence.
-        // Originally, I recursed but Swift won't do tail-optimisation and the stack suffered :)
+    mutating func next() -> [String]? {
+        while self.index < self.maxIndex {
+            var result: [String] = []
+            var isDuplicate = false
 
-        var result: [Component]?
-        while result == nil {
+            for (i, component) in self.components.enumerated() {
+                let valueMask = 1 << (i * 2 + 1)
 
-            // If we hit the end of the sequence, just bail.
-            guard self.index < self.maxIndex else { return nil }
+                if self.index & valueMask != 0 {
+                    // Skip this component entirely
+                    continue
+                }
 
-            result = self.components
-                .enumerated()
-                .compactMap { (index, component) -> Component? in
+                let variantMask = 1 << (i * 2)
 
-                    // Each component can have either the value, the variant, or neither masked out
-                    let valueMask = 1 << (index*2+1)
-
-                    // If we are masking out the value, then we don't care about the variant so just return nil
-                    if self.index & valueMask != 0 {
-                        return nil
-                    }
-
-                    let variantMask = 1 << (index*2)
-
-                    // If we are masking out the variant, return a new component
-                    if self.index & variantMask != 0 {
-                        return Component(value: component.value, variant: nil)
-                    }
-
-                    // If we aren't masking anything in this component, just return it as-is
-                    return component
+                if self.index & variantMask != 0 {
+                    // Include only the value without the variant
+                    result.append(Component(value: component, variant: nil))
+                } else {
+                    // Include the full component
+                    result.append(component)
+                }
             }
 
             self.index += 1
 
-            // If we have a result, is it a duplicate?
-            if let foundResult = result {
-                if deduplicate.contains(foundResult) {
-                    result = nil
-                } else {
-                    deduplicate.insert(foundResult)
-                }
+            // Check for duplicates
+            if !deduplicate.insert(result).inserted {
+                // Duplicate found, skip to the next iteration
+                continue
             }
+
+            // Return the result if it's not a duplicate
+            return result
         }
 
-        return result
+        // End of sequence
+        return nil
     }
+
 }
 
 // MARK: - UIImage
@@ -212,7 +275,7 @@ extension StylistIdentifier {
         }
 
         let names = self.potentialImageNames(separator: separator, theme: theme)
-        print(names)
+
         let bestMatch = names
             .lazy
             .first { UIImage(named: $0, in: bundle, compatibleWith: traits) != nil }
