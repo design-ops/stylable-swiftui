@@ -212,6 +212,7 @@ extension StylistIdentifier {
         }
 
         let names = self.potentialImageNames(separator: separator, theme: theme)
+        print(names)
         let bestMatch = names
             .lazy
             .first { UIImage(named: $0, in: bundle, compatibleWith: traits) != nil }
