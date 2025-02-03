@@ -21,7 +21,7 @@ jobs:
     - name: Setup environment
       uses: ruby/setup-ruby@v1.182.0
       with:
-        ruby-version: '3.0.7'
+        ruby-version: '3.2.2'
         bundler-cache: true
     - name: Test StylableSwiftUI
       shell: bash
