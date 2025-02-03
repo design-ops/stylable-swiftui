@@ -19,7 +19,7 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Setup environment
-      uses: ruby/setup-ruby@v1.182.0
+      uses: ruby/setup-ruby@v1.202.0
       with:
         ruby-version: '3.2.2'
         bundler-cache: true
