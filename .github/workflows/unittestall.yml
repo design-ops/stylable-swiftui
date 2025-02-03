@@ -12,12 +12,12 @@ jobs:
     runs-on: macOS-latest
     strategy:
       matrix:
-        destination: ['platform=iOS Simulator,name=iPhone 16,OS=18.1']
+        destination: ['platform=iOS Simulator,name=iPhone 16']
     steps:
     - uses: actions/checkout@v3
     - uses: maxim-lobanov/setup-xcode@v1.6.0
       with:
-        xcode-version: latest-stable
+        xcode-version: "16.1"
     - name: Setup environment
       uses: ruby/setup-ruby@v1.202.0
       with:
