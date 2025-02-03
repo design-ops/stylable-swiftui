@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 import XCTest
 
 @testable import StylableSwiftUI
@@ -15,7 +14,7 @@ import XCTest
 final class StylistIdentifierMatcherTests: XCTestCase {
 
     func testStylistIdentifer_matches() {
-        let matcher = StylistIdentifierMatcher()
+        let matcher = StylistIdentifierMatcher(mode: .classic)
 
         // Given the element with identifier "home/header/searchBar/label"
         //
@@ -45,7 +44,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
     }
 
     func testStylistIdentifer_doesNotMatch() {
-        let matcher = StylistIdentifierMatcher()
+        let matcher = StylistIdentifierMatcher(mode: .classic)
 
         let specific = StylistIdentifier("home/header/searchBar/label")
         XCTAssertEqual(matcher.match(specific: specific, general: ""), 0)
@@ -54,7 +53,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
     }
 
     func testStylistIdentifier_matchesWithVariants() {
-        let matcher = StylistIdentifierMatcher()
+        let matcher = StylistIdentifierMatcher(mode: .classic)
 
         let specific: StylistIdentifier = "home/header[selected]/searchBar[deselected]/label"
         // NOTE - scores per component:    2(4)  8        16        32         64
@@ -72,7 +71,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
     }
 
     func testStylistIdentifier_invalidMatchesWithVariants() {
-        let matcher = StylistIdentifierMatcher()
+        let matcher = StylistIdentifierMatcher(mode: .classic)
 
         let specific: StylistIdentifier = "home/header[selected]/searchBar[deselected]/label"
         // NOTE - scores per component:    2(4)  8        16        32         64
@@ -85,23 +84,88 @@ final class StylistIdentifierMatcherTests: XCTestCase {
     }
 
     func testStylistIdentifier_themedIdentifier() {
-        let matcher = StylistIdentifierMatcher()
+        let matcher = StylistIdentifierMatcher(mode: .classic)
 
         let specific: StylistIdentifier = "home/header[selected]/searchBar[deselected]/label"
 
-        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/header[selected]/searchBar[deselected]/label"), MatcherScore.themedMax)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/header[selected]/searchBar[deselected]/label"), MatcherScore.unthemedMax + 1)
         XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/searchBar[deselected]/label"), 99)
         XCTAssertEqual(matcher.match(specific: specific, general: "@dark/label"), 2)
         XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label"), MatcherScore.unthemedMax)
     }
 
     func testStylistIdentifier_testExactMatchWithThemes() {
-        let matcher = StylistIdentifierMatcher()
+        let matcher = StylistIdentifierMatcher(mode: .classic)
 
         let specific: StylistIdentifier = "button-primary/title"
 
         XCTAssertEqual(matcher.match(specific: specific, general: "@dark/title"), 2)
         XCTAssertEqual(matcher.match(specific: specific, general: "button-primary/title"), MatcherScore.unthemedMax)
-        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/button-primary/title"), MatcherScore.themedMax)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/button-primary/title"), MatcherScore.unthemedMax+1)
+    }
+
+    func testStylistIdentifier_withThemes() {
+        let matcher = StylistIdentifierMatcher(mode: .classic)
+
+        let specific: StylistIdentifier = "settings/modal/form-group/form-field/form-type-group-list/form-type-select/background"
+
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/settings/modal/form-group/form-field/form-type-group-list/form-type-select/background"), MatcherScore.unthemedMax + 1)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/modal/form-group/form-field/form-type-group-list/form-type-select/background"), 2729)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/form-group/form-field/form-type-group-list/form-type-select/background"), 2721)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/form-field/form-type-group-list/form-type-select/background"), 2689)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/form-type-group-list/form-type-select/background"), 2561)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/form-type-select/background"), 2049)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/background"), 2)
+        XCTAssertEqual(matcher.match(specific: specific, general: "settings/modal/form-group/form-field/form-type-group-list/form-type-select/background"), MatcherScore.unthemedMax)
+        XCTAssertEqual(matcher.match(specific: specific, general: "modal/form-group/form-field/form-type-group-list/form-type-select/background"), 2728)
+        XCTAssertEqual(matcher.match(specific: specific, general: "form-group/form-field/form-type-group-list/form-type-select/background"), 2720)
+        XCTAssertEqual(matcher.match(specific: specific, general: "form-field/form-type-group-list/form-type-select/background"), 2688)
+        XCTAssertEqual(matcher.match(specific: specific, general: "form-type-group-list/form-type-select/background"), 2560)
+        XCTAssertEqual(matcher.match(specific: specific, general: "form-type-select/background"), 2048)
+        XCTAssertEqual(matcher.match(specific: specific, general: "background"), 1)
+
+    }
+
+    func testStylistIdentifier_themedIdentifier_inThemedPrecedence() {
+        let matcher = StylistIdentifierMatcher(mode: .themedPrecedence)
+
+        let specific: StylistIdentifier = "home/header[selected]/searchBar[deselected]/label"
+
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/header[selected]/searchBar[deselected]/label"), MatcherScore.unthemedMax*2)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/home/searchBar[deselected]/label"), MatcherScore.unthemedMax + 98)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/label"), MatcherScore.unthemedMax+1)
+        XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label"), MatcherScore.unthemedMax)
+    }
+
+    func testStylistIdentifier_testExactMatchWithThemes_inThemedPrecedence() {
+        let matcher = StylistIdentifierMatcher(mode: .themedPrecedence)
+
+        let specific: StylistIdentifier = "button-primary/title"
+
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/title"), MatcherScore.unthemedMax+1)
+        XCTAssertEqual(matcher.match(specific: specific, general: "button-primary/title"), MatcherScore.unthemedMax)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/button-primary/title"), MatcherScore.unthemedMax*2)
+    }
+
+    func testStylistIdentifier_withThemes_inThemedPrecedence() {
+        let matcher = StylistIdentifierMatcher(mode: .themedPrecedence)
+
+        let specific: StylistIdentifier = "settings/modal/form-group/form-field/form-type-group-list/form-type-select/background"
+
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/settings/modal/form-group/form-field/form-type-group-list/form-type-select/background"), MatcherScore.unthemedMax*2)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/modal/form-group/form-field/form-type-group-list/form-type-select/background"), MatcherScore.unthemedMax+2728)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/form-group/form-field/form-type-group-list/form-type-select/background"), MatcherScore.unthemedMax+2720)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/form-field/form-type-group-list/form-type-select/background"), MatcherScore.unthemedMax+2688)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/form-type-group-list/form-type-select/background"), MatcherScore.unthemedMax+2560)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/form-type-select/background"), MatcherScore.unthemedMax+2048)
+        XCTAssertEqual(matcher.match(specific: specific, general: "@dark/background"), MatcherScore.unthemedMax+1)
+        XCTAssertEqual(matcher.match(specific: specific, general: "settings/modal/form-group/form-field/form-type-group-list/form-type-select/background"), MatcherScore.unthemedMax)
+        XCTAssertEqual(matcher.match(specific: specific, general: "modal/form-group/form-field/form-type-group-list/form-type-select/background"), 2728)
+        XCTAssertEqual(matcher.match(specific: specific, general: "form-group/form-field/form-type-group-list/form-type-select/background"), 2720)
+        XCTAssertEqual(matcher.match(specific: specific, general: "form-field/form-type-group-list/form-type-select/background"), 2688)
+        XCTAssertEqual(matcher.match(specific: specific, general: "form-type-group-list/form-type-select/background"), 2560)
+        XCTAssertEqual(matcher.match(specific: specific, general: "form-type-select/background"), 2048)
+        XCTAssertEqual(matcher.match(specific: specific, general: "background"), 1)
+
     }
 }

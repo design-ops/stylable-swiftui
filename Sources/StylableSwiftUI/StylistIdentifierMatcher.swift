@@ -10,8 +10,7 @@ import Foundation
 typealias MatcherScore = Int
 
 extension MatcherScore {
-    static let unthemedMax = Int.max - 1
-    static let themedMax = Int.max
+    static let unthemedMax = Int.max/2 - 1
 }
 
 /// Use this to check whether two `StylistIdentifier`s match.
@@ -20,9 +19,11 @@ extension MatcherScore {
 struct StylistIdentifierMatcher {
 
     private let logger: Logger
+    private let mode: Stylist.Mode
 
-    init(logger: Logger = .default) {
+    init(logger: Logger = .default, mode: Stylist.Mode) {
         self.logger = logger
+        self.mode = mode
     }
 
     /// Returns a value > `0` if the lhs matches the partial identifier on the rhs, `0` otherwise.
@@ -42,7 +43,8 @@ struct StylistIdentifierMatcher {
         var score = 0 // The score we will return if it turns out to be a match
         if rhs.theme != nil {
             // we have a theme, so we want to override any non-themed, equally-specific identifier.
-            score += 1
+            // We add the "unthemedMax" to make sure that _all_ themed identifiers are larger than un-themed equivalents
+            score += self.mode == .classic ? 1 : .unthemedMax
         }
 
         // We might be able to save some time here:

@@ -24,6 +24,19 @@ public struct Style {
 
 public class Stylist: ObservableObject {
 
+    public enum Mode {
+        /// The mode where themes do not take absolute precende over
+        /// other identifiers e.g. with identifiers:
+        /// 1: "home/label", 2: "@dark/home/label" and 3: "@dark/label"
+        /// and an identifier to mark @dark/clients/home/label the order will be 2, 1, 3
+        case classic
+        /// The mode where themes take absolute precende over
+        /// unthemed identifiers e.g. with identifiers:
+        /// "home/label", "@dark/home/label" and "@dark/label"
+        /// and an identifier to mark @dark/clients/home/label the order will be 2, 3, 1
+        case themedPrecedence
+    }
+
     // All the styles this stylist knows about, in order of specificity (more specific -> more general)
     @Published private var styles: [Style] {
         didSet {
@@ -38,12 +51,13 @@ public class Stylist: ObservableObject {
 
     private var scoredStyleMatchCache: [StylistIdentifier: Style] = [:]
 
-    let matcher = StylistIdentifierMatcher()
+    let matcher: StylistIdentifierMatcher
 
     private var defaultStyle: Style?
 
-    public init() {
+    public init(mode: Mode = .classic) {
         self.styles = []
+        self.matcher = StylistIdentifierMatcher(mode: mode)
     }
 
     public func setDefaultStyle<V: View>(style: @escaping (Stylable) -> V) {
@@ -89,11 +103,11 @@ public class Stylist: ObservableObject {
         if let style = bestMatch {
             // Apply the style
             Logger.default.log("Applying", style.identifier.description, "to", identifier, level: .debug)
-            return AnyView(style.apply(view))
+            return style.apply(view)
         } else if let style = self.defaultStyle {
             // Apply the default style
             Logger.default.log("Applying default style", "to", identifier, level: .debug)
-            return AnyView(style.apply(view))
+            return style.apply(view)
         } else {
             // There is no style to apply
             Logger.default.log("No matching style found for", identifier, level: .error)
@@ -109,6 +123,7 @@ public class Stylist: ObservableObject {
 
         // Apply the best matching style
         let scored = self.styles
+            // We can apply non-themed styles to any theme, but not styles from a different theme
             .filter { $0.identifier.theme == nil || $0.identifier.theme == self.currentTheme }
             .compactMap { (candidate: Style) -> (score: Int, style: Style)? in
                 let score = self.matcher.match(specific: identifier, general: candidate.identifier)
