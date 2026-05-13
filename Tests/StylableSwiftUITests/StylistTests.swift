@@ -8,11 +8,11 @@
 
 import XCTest
 import SwiftUI
-
 @testable import StylableSwiftUI
 
-final class StylistTests: XCTestCase {
+nonisolated final class StylistTests: XCTestCase {
 
+    @MainActor
     func testStylist() throws {
         let stylist = Stylist()
 
@@ -36,6 +36,7 @@ final class StylistTests: XCTestCase {
         XCTAssertTrue(didApplySpecific)
     }
 
+    @MainActor
     func testStylistPerformance() {
         let stylist = Stylist()
         let styles = largeNumberOfStyles()
@@ -57,6 +58,7 @@ final class StylistTests: XCTestCase {
         Logger.default.level = previousLevel
     }
 
+    @MainActor
     func testTheming() {
         let stylist = Stylist()
 
@@ -92,6 +94,7 @@ final class StylistTests: XCTestCase {
         XCTAssertFalse(didApplyThemed)
     }
 
+    @MainActor
     func testThemePrecedence() {
         let stylist = Stylist()
 
@@ -126,6 +129,7 @@ final class StylistTests: XCTestCase {
         XCTAssertTrue(didApplyThemed)
     }
 
+    @MainActor
     func testThemeFallBackToDefault() {
         let stylist = Stylist()
 
@@ -151,6 +155,7 @@ final class StylistTests: XCTestCase {
         XCTAssertFalse(didApplyThemed)
     }
 
+    @MainActor
     func testPathComponentIdentifiersWithSpecialCharacters() {
         let stylist = Stylist()
 

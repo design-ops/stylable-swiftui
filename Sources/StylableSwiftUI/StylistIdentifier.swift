@@ -29,7 +29,7 @@ import Foundation
 ///
 /// `button[selected]/close` is a valid identifier. `button/close` will match this identifier, as will `*/close`.
 ///
-public struct StylistIdentifier: Equatable, Hashable {
+nonisolated public struct StylistIdentifier: Equatable, Hashable, Sendable {
 
     /// Given the identifier `header/searchBar/title` then `title` is the token
     public let token: String
@@ -87,7 +87,7 @@ extension StylistIdentifier: ExpressibleByStringLiteral {
 
 public extension StylistIdentifier {
 
-    struct Path: CustomStringConvertible, LosslessStringConvertible, ExpressibleByStringLiteral, Equatable, Hashable {
+    nonisolated struct Path: CustomStringConvertible, @MainActor LosslessStringConvertible, @MainActor ExpressibleByStringLiteral, Equatable, Hashable, Sendable {
 
         let components: [Component]
 
@@ -95,6 +95,7 @@ public extension StylistIdentifier {
             self.components = components
         }
 
+        @MainActor
         public init(_ value: String) {
             self.components = value
                 .split(separator: "/")
@@ -104,6 +105,7 @@ public extension StylistIdentifier {
                 .map { Component($0) }
         }
 
+        @MainActor
         public init(stringLiteral value: String) {
             self.init(value)
         }
@@ -131,7 +133,7 @@ public extension StylistIdentifier {
         static let empty = Path(components: [])
     }
 
-    struct Component: CustomStringConvertible, Equatable, Hashable {
+    nonisolated struct Component: CustomStringConvertible, Equatable, Hashable, Sendable {
         let value: String
         let variant: String?
 
@@ -140,6 +142,7 @@ public extension StylistIdentifier {
             self.variant = variant
         }
 
+        @MainActor
         public init(_ string: String) {
             // Split on [
             //  lhs: store as value

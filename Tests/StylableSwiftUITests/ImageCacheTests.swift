@@ -9,7 +9,7 @@
 import XCTest
 @testable import StylableSwiftUI
 
-final class ImageCacheTests: XCTestCase {
+nonisolated final class ImageCacheTests: XCTestCase {
 
     func testPerformanceOfCache() throws {
 
@@ -17,7 +17,7 @@ final class ImageCacheTests: XCTestCase {
         let longerIdentifier = "dark/home/searchBar[deselected]/label"
         let identifier = "dark/label"
 
-        #if !NOT_SPM
+        #if SWIFT_PACKAGE
         let bundle = Bundle.module
         #else
         let bundle = Bundle(for: ImageCacheTests.self)

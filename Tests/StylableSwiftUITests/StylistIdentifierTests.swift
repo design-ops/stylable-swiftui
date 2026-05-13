@@ -7,13 +7,13 @@ import XCTest
 
 @testable import StylableSwiftUI
 
-private extension StylistIdentifier {
+nonisolated private extension StylistIdentifier {
     var identifier: String? { self.token }
     var element: String? { self.path.component(at: 0)?.description }
     var section: String? { self.path.component(at: 1)?.description }
 }
 
-final class StylistIdentifierTests: XCTestCase {
+nonisolated final class StylistIdentifierTests: XCTestCase {
 
     func testStylistIdentifier_stringLiteral() {
         let identifier: StylistIdentifier = "a/b/c"

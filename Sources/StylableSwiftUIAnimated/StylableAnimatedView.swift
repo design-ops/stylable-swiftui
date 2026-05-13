@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 import Lottie
-#if !COCOAPODS
+#if SWIFT_PACKAGE
 import StylableSwiftUI
 #endif
 

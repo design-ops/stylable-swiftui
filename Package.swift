@@ -1,4 +1,4 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -13,9 +13,13 @@ let package = Package(
         .library(name: "StylableSwiftUIAnimated", targets: ["StylableSwiftUIAnimated"])
     ],
     dependencies: [
-        .package(url: "https://github.com/airbnb/lottie-ios.git", from: "4.4.3")],
+        .package(url: "https://github.com/airbnb/lottie-ios.git", from: "4.6.0")],
     targets: [
-        .target(name: "StylableSwiftUI"),
+        .target(name: "StylableSwiftUI",
+                swiftSettings: [
+                    .enableUpcomingFeature("InferIsolatedConformances"),
+                    .enableUpcomingFeature("NonisolatedNonsendingByDefault")
+                ]),
         .target(name: "StylableSwiftUIAnimated",
                 dependencies: [ 
                     "StylableSwiftUI",
@@ -28,5 +32,6 @@ let package = Package(
                 .process("Resources")
             ]
         )
-    ]
+    ],
+    swiftLanguageModes: [.v5, .v6]
 )
