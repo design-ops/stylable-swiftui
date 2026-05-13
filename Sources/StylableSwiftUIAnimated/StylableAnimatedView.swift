@@ -6,7 +6,6 @@ import StylableSwiftUI
 #endif
 
 public struct StylableAnimatedView: View {
-    public static let defaultSeparator = "_"
 
     private let identifier: StylistIdentifier
     private let factory: (StylistIdentifier, Theme?) -> AnimatedView?
@@ -15,7 +14,7 @@ public struct StylableAnimatedView: View {
     @Environment(\.currentStylableGroup) var currentStylableGroup
 
     public init(_ identifier: StylistIdentifier,
-                separator: String = defaultSeparator,
+                separator: String = Constants.defaultImageSeparator,
                 bundle: Bundle = .main,
                 repeats: Bool = true) {
         self.identifier = identifier
@@ -36,7 +35,7 @@ public struct StylableAnimatedView: View {
 
 extension AnimatedView {
     init?(_ identifier: StylistIdentifier,
-          separator: String = StylableAnimatedView.defaultSeparator,
+          separator: String = Constants.defaultImageSeparator,
           bundle: Bundle = .main,
           theme: Theme? = nil,
           repeats: Bool) {
@@ -54,7 +53,7 @@ extension AnimatedView {
 }
 
 extension StylistIdentifier {
-    func animatedFile(separator: String = "_",
+    func animatedFile(separator: String = Constants.defaultImageSeparator,
                       theme: Theme? = nil,
                       bundle: Bundle = .main) -> LottieAnimation? {
         self.potentialImageNames(separator: separator, theme: theme)

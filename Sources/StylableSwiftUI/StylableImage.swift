@@ -8,8 +8,6 @@ import UIKit
 
 public struct StylableImage: View {
 
-    public static let defaultSeparator = "_"
-
     private let identifier: StylistIdentifier
     private let factory: (StylistIdentifier, Theme?) -> Image
 
@@ -21,7 +19,7 @@ public struct StylableImage: View {
         self.factory = factory
     }
 
-    public init(_ identifier: StylistIdentifier, separator: String = defaultSeparator, bundle: Bundle? = nil, compatibleWith traitCollection: UITraitCollection? = nil) {
+    public init(_ identifier: StylistIdentifier, separator: String = Constants.defaultImageSeparator, bundle: Bundle? = nil, compatibleWith traitCollection: UITraitCollection? = nil) {
         self.identifier = identifier
         self.factory = { identifier, theme in Image(identifier: identifier,
                                                     theme: theme,

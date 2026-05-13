@@ -74,7 +74,7 @@ public extension UIKitStyleContainer {
 
 public extension UIKitStyleContainer {
     func uiImage(for identifier: StylistIdentifier,
-                 separator: String = "_",
+                 separator: String = Constants.defaultImageSeparator,
                  bundle: Bundle? = nil,
                  compatibleWith traits: UITraitCollection? = nil) -> UIImage? {
         self.stylist.uiImage(for: identifier, separator: separator, bundle: bundle, compatibleWith: traits)
