@@ -17,7 +17,6 @@ let package = Package(
     targets: [
         .target(name: "StylableSwiftUI",
                 swiftSettings: [
-                    .defaultIsolation(MainActor.self),
                     .enableUpcomingFeature("InferIsolatedConformances"),
                     .enableUpcomingFeature("NonisolatedNonsendingByDefault")
                 ]),
@@ -27,7 +26,6 @@ let package = Package(
                     .product(name: "Lottie", package: "lottie-ios")
                 ],
                 swiftSettings: [
-                    .defaultIsolation(MainActor.self),
                     .enableUpcomingFeature("InferIsolatedConformances"),
                     .enableUpcomingFeature("NonisolatedNonsendingByDefault")
                 ]),
