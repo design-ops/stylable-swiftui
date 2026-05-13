@@ -1,7 +1,3 @@
-# Exclude the "Pods" directory and the Example/Pods directory.
-excluded:
-    - "Example/Pods"
-
 included:
     - "StylableSwiftUI"
     - "Example"
