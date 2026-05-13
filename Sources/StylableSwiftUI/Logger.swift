@@ -32,19 +32,9 @@ public final class Logger: Sendable {
     public static let `default` = Logger()
 
 
-    private let level: OSAllocatedUnfairLock<Level> = OSAllocatedUnfairLock(initialState: .default)
+    private let level: OSAllocatedUnfairLock<Level> = OSAllocatedUnfairLock(initialState: .error)
 
     init() {
-        #if DEBUG
-        self.level.withLock {
-            $0 = .default
-        }
-        #else
-        self.level.withLock {
-            $0 = .error
-        }
-        #endif
-
 //        print(OSLogType.fault.rawValue) // 17
 //        print(OSLogType.error.rawValue) // 16
 //        print(OSLogType.debug.rawValue) // 2
