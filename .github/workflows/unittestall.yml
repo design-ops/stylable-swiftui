@@ -18,11 +18,6 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1.6.0
       with:
         xcode-version: "26"
-    - name: Setup environment
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '3.2.2'
-        bundler-cache: true
     - name: Test StylableSwiftUI
       shell: bash
       run: |

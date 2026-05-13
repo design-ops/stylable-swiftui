@@ -48,7 +48,6 @@
 /* Begin PBXFileReference section */
 		1682B4DE2C1759A700D73706 /* StylableSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StylableSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F980CAB2C402D34009F255A /* CacheTestsMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CacheTestsMedia.xcassets; sourceTree = "<group>"; };
-		8FACB8692C2F0D44009EE5AD /* Gemfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
 		8FACB86A2C2F0D44009EE5AD /* NDS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = NDS.md; sourceTree = "<group>"; };
 		8FACB86C2C2F0D44009EE5AD /* ImageCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
 		8FACB86D2C2F0D44009EE5AD /* ImageStyleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageStyleTests.swift; sourceTree = "<group>"; };
@@ -109,7 +108,6 @@
 			isa = PBXGroup;
 			children = (
 				8FACB8D52C2F1B60009EE5AD /* .github */,
-				8FACB8692C2F0D44009EE5AD /* Gemfile */,
 				8FACB88B2C2F0D44009EE5AD /* LICENSE */,
 				8FAE548D2C3D6F60005E0335 /* RELEASE.md */,
 				8FAE548E2C3D7E12005E0335 /* CHANGELOG.md */,
