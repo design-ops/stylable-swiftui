@@ -19,17 +19,17 @@ nonisolated final class StylistTests: XCTestCase {
         var didApplyGeneral = false
         var didApplySpecific = false
 
-        stylist.addStyle(identifier: "element/atom") { view -> AnyView in
+        stylist.addStyle(identifier: "element/atom") { view in
             didApplySpecific = true
-            return AnyView(view.foregroundColor(.red))
+            return view.foregroundColor(.red)
         }
 
-        stylist.addStyle(identifier: "organism/atom") { view -> AnyView in
+        stylist.addStyle(identifier: "organism/atom") { view in
             didApplyGeneral = true
-            return AnyView(view.foregroundColor(.blue))
+            return view.foregroundColor(.blue)
         }
 
-        let stylable = Stylable(AnyView(Text("Test")), identifier: "element/atom")
+        let stylable = Stylable(Text("Test"), identifier: "element/atom")
         _ = stylist.style(view: stylable, identifier: "element/atom")
 
         XCTAssertFalse(didApplyGeneral)
@@ -42,8 +42,8 @@ nonisolated final class StylistTests: XCTestCase {
         let styles = largeNumberOfStyles()
         stylist.addStyles(styles: { return styles })
 
-        let previousLevel = Logger.default.level
-        Logger.default.level = .fault
+        let previousLevel = Logger.default.getLevel()
+        Logger.default.setLevel(.fault)
 
         measure {
             let id1 = styles.randomElement()?.identifier
@@ -55,7 +55,7 @@ nonisolated final class StylistTests: XCTestCase {
             }
         }
 
-        Logger.default.level = previousLevel
+        Logger.default.setLevel(previousLevel)
     }
 
     @MainActor
@@ -65,19 +65,19 @@ nonisolated final class StylistTests: XCTestCase {
         var didApplyGeneric = false
         var didApplyThemed = false
 
-        stylist.addStyle(identifier: "element/atom") { view -> AnyView in
+        stylist.addStyle(identifier: "element/atom") { view in
             didApplyGeneric = true
-            return AnyView(view.foregroundColor(.red))
+            return view.foregroundColor(.red)
         }
 
-        stylist.addStyle(identifier: "@dark/element/atom") { view -> AnyView in
+        stylist.addStyle(identifier: "@dark/element/atom") { view in
             didApplyThemed = true
-            return AnyView(view.foregroundColor(.blue))
+            return view.foregroundColor(.blue)
         }
 
         stylist.currentTheme = Theme(name: "dark")
 
-        let stylable = Stylable(AnyView(Text("Test")), identifier: "element/atom")
+        let stylable = Stylable(Text("Test"), identifier: "element/atom")
         _ = stylist.style(view: stylable, identifier: "element/atom")
 
         XCTAssertFalse(didApplyGeneric)
@@ -101,19 +101,19 @@ nonisolated final class StylistTests: XCTestCase {
         var didApplyGeneric = false
         var didApplyThemed = false
 
-        stylist.addStyle(identifier: "element/searchBar/header/atom") { view -> AnyView in
+        stylist.addStyle(identifier: "element/searchBar/header/atom") { view in
             didApplyGeneric = true
-            return AnyView(view.foregroundColor(.red))
+            return view.foregroundColor(.red)
         }
 
-        stylist.addStyle(identifier: "@dark/atom") { view -> AnyView in
+        stylist.addStyle(identifier: "@dark/atom") { view in
             didApplyThemed = true
-            return AnyView(view.foregroundColor(.blue))
+            return view.foregroundColor(.blue)
         }
 
         stylist.currentTheme = Theme(name: "@dark")
 
-        var stylable = Stylable(AnyView(Text("Test")), identifier: "element/searchBar/header/atom")
+        var stylable = Stylable(Text("Test"), identifier: "element/searchBar/header/atom")
         _ = stylist.style(view: stylable, identifier: "element/searchBar/header/atom")
 
         XCTAssertTrue(didApplyGeneric)
@@ -122,7 +122,7 @@ nonisolated final class StylistTests: XCTestCase {
         didApplyGeneric = false
         didApplyThemed = false
 
-        stylable = Stylable(AnyView(Text("Test")), identifier: "header/atom")
+        stylable = Stylable(Text("Test"), identifier: "header/atom")
         _ = stylist.style(view: stylable, identifier: "header/atom")
 
         XCTAssertFalse(didApplyGeneric)
@@ -136,19 +136,19 @@ nonisolated final class StylistTests: XCTestCase {
         var didApplyGeneric = false
         var didApplyThemed = false
 
-        stylist.addStyle(identifier: "element/searchBar/header/atom") { view -> AnyView in
+        stylist.addStyle(identifier: "element/searchBar/header/atom") { view in
             didApplyGeneric = true
-            return AnyView(view.foregroundColor(.red))
+            return view.foregroundColor(.red)
         }
 
-        stylist.addStyle(identifier: "@dark/differentAtom") { view -> AnyView in
+        stylist.addStyle(identifier: "@dark/differentAtom") { view in
             didApplyThemed = true
-            return AnyView(view.foregroundColor(.blue))
+            return view.foregroundColor(.blue)
         }
 
         stylist.currentTheme = Theme(name: "dark")
 
-        let stylable = Stylable(AnyView(Text("Test")), identifier: "element/searchBar/header/atom")
+        let stylable = Stylable(Text("Test"), identifier: "element/searchBar/header/atom")
         _ = stylist.style(view: stylable, identifier: "element/searchBar/header/atom")
 
         XCTAssertTrue(didApplyGeneric)
@@ -162,17 +162,17 @@ nonisolated final class StylistTests: XCTestCase {
         var didApplySpecialCharacter = false
         var didApplyNoSpecialCharacter = false
 
-        stylist.addStyle(identifier: "element/@searchBar/heÆder/atõm") { view -> AnyView in
+        stylist.addStyle(identifier: "element/@searchBar/heÆder/atõm") { view in
             didApplySpecialCharacter = true
-            return AnyView(view.foregroundColor(.red))
+            return view.foregroundColor(.red)
         }
 
-        stylist.addStyle(identifier: "element/searchBar/header/atom") { view -> AnyView in
+        stylist.addStyle(identifier: "element/searchBar/header/atom") { view in
             didApplyNoSpecialCharacter = true
-            return AnyView(view.foregroundColor(.blue))
+            return view.foregroundColor(.blue)
         }
 
-        let stylable = Stylable(AnyView(Text("Test")), identifier: "element/@searchBar/heÆder/atõm")
+        let stylable = Stylable(Text("Test"), identifier: "element/@searchBar/heÆder/atõm")
         _ = stylist.style(view: stylable, identifier: "element/@searchBar/heÆder/atõm")
 
         XCTAssertTrue(didApplySpecialCharacter)
@@ -180,7 +180,7 @@ nonisolated final class StylistTests: XCTestCase {
     }
 }
 
-private var largeNumberOfStyles: () -> [Style] = {
+private let largeNumberOfStyles: @Sendable () -> [Style] = {
     let combinations = [
         "element1",
         "element2",

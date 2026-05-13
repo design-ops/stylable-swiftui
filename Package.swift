@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "StylableSwiftUI",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v17)
     ],
     products: [
         .library(name: "StylableSwiftUI", targets: ["StylableSwiftUI"]),
@@ -17,13 +17,19 @@ let package = Package(
     targets: [
         .target(name: "StylableSwiftUI",
                 swiftSettings: [
+                    .defaultIsolation(MainActor.self),
                     .enableUpcomingFeature("InferIsolatedConformances"),
                     .enableUpcomingFeature("NonisolatedNonsendingByDefault")
                 ]),
         .target(name: "StylableSwiftUIAnimated",
-                dependencies: [ 
+                dependencies: [
                     "StylableSwiftUI",
-                    .product(name: "Lottie", package: "lottie-ios") 
+                    .product(name: "Lottie", package: "lottie-ios")
+                ],
+                swiftSettings: [
+                    .defaultIsolation(MainActor.self),
+                    .enableUpcomingFeature("InferIsolatedConformances"),
+                    .enableUpcomingFeature("NonisolatedNonsendingByDefault")
                 ]),
         .testTarget(
             name: "StylableSwiftUITests",

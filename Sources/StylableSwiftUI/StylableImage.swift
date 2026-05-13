@@ -70,7 +70,7 @@ extension Image {
     ///
     init(identifier: StylistIdentifier,
          theme: Theme? = nil,
-         separator: String = StylableImage.defaultSeparator,
+         separator: String = Constants.defaultImageSeparator,
          bundle: Bundle? = nil,
          compatibleWith traitCollection: UITraitCollection? = nil) {
 
@@ -89,7 +89,7 @@ extension Image {
 public extension StylistIdentifier {
 
     /// All the possible names for a image based on this identifier
-    func potentialImageNames(separator: String = StylableImage.defaultSeparator, theme: Theme? = nil) -> AnySequence<String> {
+    func potentialImageNames(separator: String = Constants.defaultImageSeparator, theme: Theme? = nil) -> AnySequence<String> {
         let components = Array(self.path.components.reversed())
 
         let options = VariantSequence(from: components)
@@ -112,7 +112,7 @@ public extension StylistIdentifier {
     }
 }
 
-private struct VariantSequence: @MainActor Sequence, IteratorProtocol {
+private struct VariantSequence: Sequence, IteratorProtocol, Sendable {
 
     /// Save some typing in here.
     typealias Component = StylistIdentifier.Component
@@ -192,7 +192,7 @@ private struct VariantSequence: @MainActor Sequence, IteratorProtocol {
 
 public extension Stylist {
     func uiImage(for identifier: StylistIdentifier,
-                 separator: String = StylableImage.defaultSeparator,
+                 separator: String = Constants.defaultImageSeparator,
                  bundle: Bundle? = nil,
                  compatibleWith traits: UITraitCollection? = nil) -> UIImage? {
         return identifier.uiImage(separator: separator, bundle: bundle, compatibleWith: traits, theme: self.currentTheme)
@@ -200,7 +200,7 @@ public extension Stylist {
 }
 
 extension StylistIdentifier {
-    func uiImage(separator: String = StylableImage.defaultSeparator,
+    func uiImage(separator: String = Constants.defaultImageSeparator,
                  bundle: Bundle? = nil,
                  compatibleWith traits: UITraitCollection? = nil,
                  theme: Theme? = nil) -> UIImage? {

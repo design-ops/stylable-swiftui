@@ -54,7 +54,7 @@ extension AnimatedView {
 }
 
 extension StylistIdentifier {
-    func animatedFile(separator: String = StylableAnimatedView.defaultSeparator,
+    func animatedFile(separator: String = "_",
                       theme: Theme? = nil,
                       bundle: Bundle = .main) -> LottieAnimation? {
         self.potentialImageNames(separator: separator, theme: theme)
