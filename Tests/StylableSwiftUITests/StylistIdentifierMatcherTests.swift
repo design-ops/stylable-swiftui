@@ -11,8 +11,9 @@ import XCTest
 
 @testable import StylableSwiftUI
 
-final class StylistIdentifierMatcherTests: XCTestCase {
+nonisolated final class StylistIdentifierMatcherTests: XCTestCase {
 
+    @MainActor
     func testStylistIdentifer_matches() {
         let matcher = StylistIdentifierMatcher(mode: .classic)
 
@@ -43,6 +44,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         XCTAssertEqual(matcher.match(specific: specific, general: "label"), 1)
     }
 
+    @MainActor
     func testStylistIdentifer_doesNotMatch() {
         let matcher = StylistIdentifierMatcher(mode: .classic)
 
@@ -52,6 +54,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         XCTAssertEqual(matcher.match(specific: specific, general: "home/header/searchBar/label/extra"), 0)
     }
 
+    @MainActor
     func testStylistIdentifier_matchesWithVariants() {
         let matcher = StylistIdentifierMatcher(mode: .classic)
 
@@ -70,6 +73,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         XCTAssertEqual(matcher.match(specific: specific, general: "home/label"), 2)
     }
 
+    @MainActor
     func testStylistIdentifier_invalidMatchesWithVariants() {
         let matcher = StylistIdentifierMatcher(mode: .classic)
 
@@ -83,6 +87,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         XCTAssertEqual(matcher.match(specific: specific, general: "header[normal]/label"), 0)
     }
 
+    @MainActor
     func testStylistIdentifier_themedIdentifier() {
         let matcher = StylistIdentifierMatcher(mode: .classic)
 
@@ -94,6 +99,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label"), MatcherScore.unthemedMax)
     }
 
+    @MainActor
     func testStylistIdentifier_testExactMatchWithThemes() {
         let matcher = StylistIdentifierMatcher(mode: .classic)
 
@@ -104,6 +110,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         XCTAssertEqual(matcher.match(specific: specific, general: "@dark/button-primary/title"), MatcherScore.unthemedMax+1)
     }
 
+    @MainActor
     func testStylistIdentifier_withThemes() {
         let matcher = StylistIdentifierMatcher(mode: .classic)
 
@@ -126,6 +133,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
 
     }
 
+    @MainActor
     func testStylistIdentifier_themedIdentifier_inThemedPrecedence() {
         let matcher = StylistIdentifierMatcher(mode: .themedPrecedence)
 
@@ -137,6 +145,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         XCTAssertEqual(matcher.match(specific: specific, general: "home/header[selected]/searchBar[deselected]/label"), MatcherScore.unthemedMax)
     }
 
+    @MainActor
     func testStylistIdentifier_testExactMatchWithThemes_inThemedPrecedence() {
         let matcher = StylistIdentifierMatcher(mode: .themedPrecedence)
 
@@ -147,6 +156,7 @@ final class StylistIdentifierMatcherTests: XCTestCase {
         XCTAssertEqual(matcher.match(specific: specific, general: "@dark/button-primary/title"), MatcherScore.unthemedMax*2)
     }
 
+    @MainActor
     func testStylistIdentifier_withThemes_inThemedPrecedence() {
         let matcher = StylistIdentifierMatcher(mode: .themedPrecedence)
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Theme: Equatable, Hashable {
+public struct Theme: Equatable, Hashable, Sendable {
     public let name: String
 
     static let identifierPrefix = "@"

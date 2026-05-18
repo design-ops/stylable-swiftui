@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct ImageCacheKey: Hashable {
+struct ImageCacheKey: Hashable, Sendable {
     var identifier: StylistIdentifier
     var theme: Theme?
 }

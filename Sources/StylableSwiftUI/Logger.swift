@@ -8,10 +8,10 @@
 import Foundation
 import os
 
-public final class Logger {
+public final class Logger: Sendable {
 
     // Logging level. Given the raw values of OSLogType I'm not sure I trust it enough.
-    public enum Level: Int {
+    public enum Level: Int, Sendable {
         case `default` = 0
         case info = 1
         case debug = 2
@@ -31,15 +31,10 @@ public final class Logger {
 
     public static let `default` = Logger()
 
-    public var level: Level
+
+    private let level: OSAllocatedUnfairLock<Level> = OSAllocatedUnfairLock(initialState: .error)
 
     init() {
-        #if debug
-            self.level = .default
-        #else
-            self.level = .error
-        #endif
-
 //        print(OSLogType.fault.rawValue) // 17
 //        print(OSLogType.error.rawValue) // 16
 //        print(OSLogType.debug.rawValue) // 2
@@ -48,7 +43,9 @@ public final class Logger {
     }
 
     private func shouldLog(_ level: Level) -> Bool {
-        return self.level.rawValue <= level.rawValue
+        return self.level.withLock {
+            return $0.rawValue <= level.rawValue
+        }
     }
 
     private func log(_ items: [Any], separator: String = " ", level: Level = .default) {
@@ -60,6 +57,16 @@ public final class Logger {
             .joined(separator: separator)
 
         os_log("%@", log: .default, type: level.osLogType, printString)
+    }
+
+    public func setLevel(_ level: Level) {
+        self.level.withLock {
+            $0 = level
+        }
+    }
+
+    public func getLevel() -> Level {
+        return self.level.withLock { $0 }
     }
 
     public func log(_ items: Any..., separator: String = " ", level: Level = .default) {

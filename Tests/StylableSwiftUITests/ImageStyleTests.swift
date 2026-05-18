@@ -8,10 +8,9 @@
 
 import Foundation
 import XCTest
-
 @testable import StylableSwiftUI
 
-final class StylistIdentifierImageNameTests: XCTestCase {
+nonisolated final class StylistIdentifierImageNameTests: XCTestCase {
 
     func testStylistIdentifier_produceImageNames_forSingleComponentIdentifier() {
         let identifier: StylistIdentifier = "hello"
@@ -84,7 +83,7 @@ final class StylistIdentifierImageNameTests: XCTestCase {
     }
 }
 
-final class StylistIdentifierPerformanceTests: XCTestCase {
+nonisolated final class StylistIdentifierPerformanceTests: XCTestCase {
 
     private let identifier: StylistIdentifier = "a/b/c/d/e/f/g/h/i/j"
 

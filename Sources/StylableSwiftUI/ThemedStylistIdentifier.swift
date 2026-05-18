@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ThemedStylistIdentifier: Equatable, Hashable {
+public struct ThemedStylistIdentifier: Equatable, Hashable, Sendable {
     let identifier: StylistIdentifier
 
     /// The theme for this identifier, if any.

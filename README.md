@@ -8,7 +8,7 @@ An attempt to make SwiftUI components stylable by an external type and reusable 
 
 - Create a library of SwiftUI components which can be reused across apps, and can be styled without modification.
 
-- Library of components can be distributed as a Cocoapod (or Carthage, or \<gulp> a Swift Package)
+- Library of components can be distributed as a Swift Package
 
 - As little intrusion as possible, and ideomatic SwiftUI code wherever possible
 

@@ -7,8 +7,8 @@ import SwiftUI
 import UIKit
 import Combine
 
-public struct Style {
-    public typealias StyleApplyFunction = (Stylable) -> AnyView
+public struct Style: Sendable {
+    public typealias StyleApplyFunction = @MainActor @Sendable (Stylable) -> AnyView
 
     let identifier: ThemedStylistIdentifier
     let apply: StyleApplyFunction
@@ -16,13 +16,13 @@ public struct Style {
     /// A value to pass into the apply: parameter when creating a `Style`, making it clear that no style is being applied to an identifier.
     public static let unstyled: StyleApplyFunction = { AnyView.lift($0) }
 
-    public init<T: View>(_ identifier: ThemedStylistIdentifier, apply: @escaping (Stylable) -> T) {
+    public init<T: View>(_ identifier: ThemedStylistIdentifier, apply: @MainActor @escaping @Sendable (Stylable) -> T) {
         self.identifier = identifier
         self.apply = { AnyView.lift(apply($0)) }
     }
 }
 
-public class Stylist: ObservableObject {
+@MainActor public class Stylist: ObservableObject {
 
     public enum Mode {
         /// The mode where themes do not take absolute precende over
@@ -60,12 +60,12 @@ public class Stylist: ObservableObject {
         self.matcher = StylistIdentifierMatcher(mode: mode)
     }
 
-    public func setDefaultStyle<V: View>(style: @escaping (Stylable) -> V) {
+    public func setDefaultStyle<V: View>(style: @escaping @Sendable (Stylable) -> V) {
         self.defaultStyle = Style(.unique, apply: style)
     }
 
     /// Convenience method to easily create and add a single style.
-    public func addStyle<V: View>(identifier: ThemedStylistIdentifier, style: @escaping (Stylable) -> V) {
+    public func addStyle<V: View>(identifier: ThemedStylistIdentifier, style: @MainActor @escaping @Sendable (Stylable) -> V) {
         self.addStyles([Style(identifier, apply: style)])
     }
 

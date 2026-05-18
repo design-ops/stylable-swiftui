@@ -29,7 +29,7 @@ import Foundation
 ///
 /// `button[selected]/close` is a valid identifier. `button/close` will match this identifier, as will `*/close`.
 ///
-public struct StylistIdentifier: Equatable, Hashable {
+public struct StylistIdentifier: Equatable, Hashable, Codable, Sendable {
 
     /// Given the identifier `header/searchBar/title` then `title` is the token
     public let token: String
@@ -87,7 +87,7 @@ extension StylistIdentifier: ExpressibleByStringLiteral {
 
 public extension StylistIdentifier {
 
-    struct Path: CustomStringConvertible, LosslessStringConvertible, ExpressibleByStringLiteral, Equatable, Hashable {
+    struct Path: CustomStringConvertible, LosslessStringConvertible, ExpressibleByStringLiteral, Equatable, Hashable, Sendable, Codable {
 
         let components: [Component]
 
@@ -131,7 +131,7 @@ public extension StylistIdentifier {
         static let empty = Path(components: [])
     }
 
-    struct Component: CustomStringConvertible, Equatable, Hashable {
+    struct Component: CustomStringConvertible, Equatable, Hashable, Codable, Sendable {
         let value: String
         let variant: String?
 
@@ -193,4 +193,8 @@ private extension RandomAccessCollection {
     var second: Element? {
         self.count > 1 ? self[self.index(self.startIndex, offsetBy: 1)] : nil
     }
+}
+
+public enum Constants {
+    public static let defaultImageSeparator = "_"
 }
